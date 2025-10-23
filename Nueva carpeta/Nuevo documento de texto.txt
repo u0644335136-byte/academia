@@ -1,0 +1,2 @@
+- DB_USERNAME=academia_user
+      - DB_PASSWORD=${DB_PASSWORD}
