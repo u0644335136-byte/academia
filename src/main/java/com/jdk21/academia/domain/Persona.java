@@ -1,7 +1,9 @@
-package com.jdk21.academia.persona.domain;
+package com.jdk21.academia.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,19 +23,22 @@ public class Persona implements Serializable{
     @ToString.Include
     private Long id_persona;
 
-    @Column(name = "nombre", nullable = false)
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PersonaRol> roles = new HashSet<>();
+
+    @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "activo", nullable = false)
-    private Boolean activo;
+    @Column(name = "apellido")
+    private String apellido;
 
-    @Column(name = "surname")
-    private String surname;
+    @Column(name = "activo")
+    private Boolean activo;
 
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
-    @Column(name = "telefono", unique = true, nullable = false)
+    @Column(name = "telefono", unique = true)
     private Integer telefono;
 
     @Column(name = "email")
@@ -63,6 +68,13 @@ public class Persona implements Serializable{
     @Column(name = "provincia")
     private String provincia;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_discapacidad")
+    private Discapacidad id_discapacidad;
+
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private java.time.LocalDate fechaCreacion;
+    private java.time.LocalDateTime fechaCreacion;
+    
+    @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
+    private java.time.LocalDateTime fechaActualizacion;
 }
