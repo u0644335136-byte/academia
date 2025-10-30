@@ -1,4 +1,4 @@
-package com.jdk21.academia.centro.domain;
+package com.jdk21.academia.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 
-public class Centro {
+public class Centro implements Serializable {
     //clave primaria (campo existente en BD)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Centro {
     private Long id;
 
     // Campos mapeados directamente a columnas existentes
-    @Column(name = "codigo_centro", nullable = false)
+    @Column(name = "codigo_centro", nullable = false, unique = true)
     private String codigo_centro;
 
     @Column(name = "responsable", nullable = false)
@@ -66,13 +66,18 @@ public class Centro {
 
     @Column(name = "provincia")
     private String provincia;
-/* 
+
     // Si hay FK (por ejemplo, id_comunidad_autonoma)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_empresa")
     private Empresa empresa;
 
     // Campo gestionado por trigger o default en BD (solo lectura)
+@Column(name= "fecha_creacion", insertable = false,updatable = false)
+private java.time.LocalDate createdDate;
+@Column(name= "fecha_actualiza", insertable = false,updatable = false)
+
+private java.time.LocalDate updatedDate;
+
     
-*/
 }
