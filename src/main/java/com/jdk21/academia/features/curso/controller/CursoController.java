@@ -27,7 +27,7 @@ public class CursoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Curso> eliminarC(@PathVariable Long id) {
+    public ResponseEntity<Curso> eliminarCurso(@PathVariable Long id) {
         return cursoService.eliminarCurso(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

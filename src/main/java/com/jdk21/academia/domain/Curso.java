@@ -13,12 +13,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Entity
 @Table(name = "curso", schema = "public")
 public class Curso {
-
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_curso")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // Jackson ignora en POST
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY)     // Swagger lo muestra solo en respuestas
+    @Column(name = "id_curso", updatable = false, nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY) 
     private Long idCurso;
 
     @Column(name = "id_materia")
