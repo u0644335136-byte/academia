@@ -1,6 +1,7 @@
 package com.jdk21.academia.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +19,7 @@ public class Discapacidad implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
+    @Column(name = "id_discapacidad")
     private Integer idDiscapacidad;
 
     @Column(name = "tipo")
@@ -25,9 +27,6 @@ public class Discapacidad implements Serializable{
 
     @Column(name = "porcentaje")
     private Integer porcentaje;
-
-    @Column(name = "activo")
-    private Boolean activo;
 
     @Column(name = "reconocida", nullable = false)
     private Boolean reconocida;
@@ -42,9 +41,13 @@ public class Discapacidad implements Serializable{
     @Column(name = "fecha_reconocimiento")
     private java.time.LocalDate fecha_reconocimiento;
 
+    
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private java.time.LocalDateTime fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
-    private java.time.LocalDateTime fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
+
+    @Column(name = "activo", insertable = false)
+    private boolean activo;
 }
