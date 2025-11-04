@@ -49,7 +49,6 @@ public class Matricula {
     @JoinColumn(name = "id_convocatoria", referencedColumnName = "id_convocatoria")
     private Convocatoria convocatoria;
 
-    @ManyToOne
-    @JoinColumn(name = "id_alumno", referencedColumnName = "id_persona")
-    private Persona idAlumno;
+    @Column(name = "id_alumno")
+    private Long idAlumno;
 }

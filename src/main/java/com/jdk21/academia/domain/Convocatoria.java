@@ -54,9 +54,8 @@ public class Convocatoria {
     private Long idCatalogo;
 
 
-    @ManyToOne
-    @JoinColumn(name = "id_profesor", referencedColumnName = "id_persona")
-    private Persona idProfesor;
+    @Column(name = "id_profesor")
+    private Long idProfesor;
 
     @Column(name = "id_centro")
     private Long idCentro;
