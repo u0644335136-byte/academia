@@ -4,6 +4,7 @@ package com.jdk21.academia.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,13 +15,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
-public class Empresa {
+public class Empresa implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private Long id;
+    private Long id_empresa;
 
     @Column(name = "cif", nullable = false, unique = true)
     private String cif;
@@ -37,20 +38,15 @@ public class Empresa {
     @Column(name = "activo")
     private Boolean activo = true;
 
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    // Si hay FK (por ejemplo, id_comunidad_autonoma)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_persona")
+    private Empresa empresa;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    // Campo gestionado por trigger o default en BD (solo lectura)
+@Column(name= "fecha_creacion", insertable = false,updatable = false)
+private java.time.LocalDate createdDate;
+@Column(name= "fecha_actualiza", insertable = false,updatable = false)
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+private java.time.LocalDate updatedDate;
 }

@@ -20,7 +20,7 @@ public class Contrato implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private Long id;
+    private Long id_contrato;
 
     // Campos mapeados directamente a columnas existentes
     @Column(name = "salario", nullable = false)

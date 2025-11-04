@@ -19,7 +19,7 @@ public class Centro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private Long id;
+    private Long id_centro;
 
     // Campos mapeados directamente a columnas existentes
     @Column(name = "codigo_centro", nullable = false, unique = true)
@@ -67,7 +67,7 @@ public class Centro implements Serializable {
     @Column(name = "provincia")
     private String provincia;
 
-    // Si hay FK (por ejemplo, id_comunidad_autonoma)
+    // Si hay FK (por ejemplo, id_empresa)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_empresa")
     private Empresa empresa;
