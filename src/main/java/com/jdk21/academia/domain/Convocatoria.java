@@ -1,6 +1,9 @@
 package com.jdk21.academia.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.sql.Date;
+
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,25 +23,25 @@ public class Convocatoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    @Column(name = "id_calificacion")
-    private Long idCalificacion;
+    @Column(name = "id_convocatoria")
+    private Long idConvocatoria;
 
     @Column(name = "codigo")
-    private Long codigo;
+    private String codigo;
 
     @Column(name = "fecha_inicio")
-    private LocalDate fechaInicio;
+    private Date fechaInicio;
 
     @Column(name = "fecha_fin")
-    private LocalDate fechaFin;
+    private Date fechaFin;
 
 
     //Auto-incluidos
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
-    private LocalDate fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     @Column(name = "activo", insertable = false)
     private boolean activo;
@@ -50,8 +53,10 @@ public class Convocatoria {
     @Column(name = "id_catalogo")
     private Long idCatalogo;
 
-    @Column(name = "id_profesor")
-    private Long idProfesor;
+
+    @ManyToOne
+    @JoinColumn(name = "id_profesor", referencedColumnName = "id_persona")
+    private Persona idProfesor;
 
     @Column(name = "id_centro")
     private Long idCentro;

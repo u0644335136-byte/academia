@@ -1,6 +1,8 @@
 package com.jdk21.academia.domain;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,17 +26,17 @@ public class Calificacion {
     private Long idCalificacion;
 
     @Column(name = "fecha")
-    private LocalDate fecha;
+    private Date fecha;
 
     @Column(name = "nota")
     private int nota;
 
     //Auto-incluidos
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
-    private LocalDate fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     @Column(name = "activo", insertable = false)
     private boolean activo;

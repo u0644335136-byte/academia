@@ -1,4 +1,4 @@
-package com.jdk21.academia.features.convocatoria.repository;
+package com.jdk21.academia.features.calificacion.repository;
 
 import org.springframework.stereotype.Repository;
 

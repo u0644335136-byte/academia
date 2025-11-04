@@ -1,6 +1,9 @@
 package com.jdk21.academia.domain;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.sql.Date;
+
+
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,11 +22,11 @@ public class Matricula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    @Column(name = "id_calificacion")
-    private Long idCalificacion;
+    @Column(name = "id_matricula")
+    private Long idMatricula;
 
     @Column(name = "fecha")
-    private LocalDate fecha;
+    private Date fecha;
 
     @Column(name = "codigo")
     private String codigo;
@@ -33,10 +36,10 @@ public class Matricula {
 
     //Auto-incluidos
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
-    private LocalDate fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     @Column(name = "activo", insertable = false)
     private boolean activo;
@@ -46,7 +49,7 @@ public class Matricula {
     @JoinColumn(name = "id_convocatoria", referencedColumnName = "id_convocatoria")
     private Convocatoria convocatoria;
 
-    //Llaves foraneas 
-    @Column(name = "id_alumno")
-    private Long idAlumno;
+    @ManyToOne
+    @JoinColumn(name = "id_alumno", referencedColumnName = "id_persona")
+    private Persona idAlumno;
 }
