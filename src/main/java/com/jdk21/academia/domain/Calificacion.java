@@ -40,7 +40,8 @@ public class Calificacion {
     private boolean activo;
 
     //Llaves foraneas 
-    @Column(name = "id_matricula")
-    private Long idMatricula;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_matricula", referencedColumnName = "id_matricula")
+    private Matricula matricula;
 
 }

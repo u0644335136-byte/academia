@@ -42,8 +42,9 @@ public class Matricula {
     private boolean activo;
 
     //Llaves foraneas 
-    @Column(name = "id_convocatoria")
-    private Long idConvocatoria;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_convocatoria", referencedColumnName = "id_convocatoria")
+    private Convocatoria convocatoria;
 
     //Llaves foraneas 
     @Column(name = "id_alumno")
