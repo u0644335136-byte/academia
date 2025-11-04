@@ -1,6 +1,7 @@
 package com.jdk21.academia.features.curso.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -33,6 +34,11 @@ public class CursoDto {
 
     @Schema(description = "Descripción del curso", example = "Curso básico de Java para principiantes")
     private String descripcion;
+
+    @Column(name= "fecha_creacion", insertable = false,updatable = false)
+    private java.time.LocalDate createdDate;
+    @Column(name= "fecha_actualizacion", insertable = false,updatable = false)
+
 
     @Schema(description = "Duración en horas", example = "40")
     @PositiveOrZero(message = "La duración debe ser cero o positiva")

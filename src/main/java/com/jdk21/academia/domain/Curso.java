@@ -2,6 +2,8 @@ package com.jdk21.academia.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,7 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Builder
 @Entity
 @Table(name = "curso", schema = "public")
-public class Curso {
+public class Curso implements Serializable {
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
