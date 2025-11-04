@@ -1,4 +1,4 @@
-package com.jdk21.academia.features.centro.repository;
+package com.jdk21.academia.features.contrato.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
