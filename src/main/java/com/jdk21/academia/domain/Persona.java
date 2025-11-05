@@ -21,7 +21,8 @@ public class Persona implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private Long id_persona;
+    @Column(name = "id_persona")
+    private Long idPersona;
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PersonaRol> roles = new HashSet<>();
@@ -70,7 +71,7 @@ public class Persona implements Serializable{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_discapacidad")
-    private Discapacidad id_discapacidad;
+    private Discapacidad idDiscapacidad;
 
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
     private java.time.LocalDateTime fechaCreacion;

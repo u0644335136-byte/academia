@@ -51,7 +51,7 @@ public class PersonaService {
         // Asignar discapacidad si se proporciona
         if (createDTO.idDiscapacidad() != null) {
             Optional<Discapacidad> discapacidad = discapacidadRepository.findById(createDTO.idDiscapacidad());
-            persona.setId_discapacidad(discapacidad.orElse(null));
+            persona.setIdDiscapacidad(discapacidad.orElse(null));
         }
         
         // Establecer valores por defecto
@@ -64,9 +64,9 @@ public class PersonaService {
         
         // Asignar roles si se proporcionaron
         if (createDTO.roles() != null && !createDTO.roles().isEmpty()) {
-            asignarRoles(personaGuardada.getId_persona(), createDTO.roles());
+            asignarRoles(personaGuardada.getIdPersona(), createDTO.roles());
             // Recargar la persona con los roles
-            personaGuardada = personaRepository.findById(personaGuardada.getId_persona())
+            personaGuardada = personaRepository.findById(personaGuardada.getIdPersona())
                 .orElseThrow(() -> new RuntimeException("Error al recargar la persona creada"));
         }
         
@@ -106,7 +106,7 @@ public class PersonaService {
         // Actualizar discapacidad si se proporciona
         if (updateDTO.idDiscapacidad() != null) {
             Optional<Discapacidad> discapacidad = discapacidadRepository.findById(updateDTO.idDiscapacidad());
-            persona.setId_discapacidad(discapacidad.orElse(null));
+            persona.setIdDiscapacidad(discapacidad.orElse(null));
         }
         
         // Actualizar roles si se proporcionan
@@ -148,7 +148,7 @@ public class PersonaService {
             
             if (!yaAsignado) {
                 PersonaRol personaRol = new PersonaRol();
-                personaRol.setIdPersona(persona.getId_persona());
+                personaRol.setIdPersona(persona.getIdPersona());
                 personaRol.setIdRol(rol.getIdRol());
                 personaRol.setPersona(persona);
                 personaRol.setRol(rol);
