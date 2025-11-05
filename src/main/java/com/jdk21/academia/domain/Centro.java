@@ -19,7 +19,8 @@ public class Centro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private Long id_centro;
+    @Column(name = "id_centro")
+    private Long idCentro;
 
     // Campos mapeados directamente a columnas existentes
     @Column(name = "codigo_centro", nullable = false, unique = true)
