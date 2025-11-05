@@ -1,8 +1,10 @@
 package com.jdk21.academia.features.curso.service;
 
-import com.jdk21.academia.domain.Curso; 
+import com.jdk21.academia.domain.Curso;
 import com.jdk21.academia.features.curso.repository.CursoRepository;
 import com.jdk21.academia.features.curso.dto.CursoDto;
+import com.jdk21.academia.features.curso.mapper.CursoMapper;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,30 +16,24 @@ import java.util.Optional;
 public class CursoService {
 
     private final CursoRepository cursoRepository;
+    private final CursoMapper cursoMapper = CursoMapper.INSTANCE;
 
     public Curso crearCurso(CursoDto dto) {
-        Curso curso = Curso.builder()
-                .idMateria(dto.getIdMateria())
-                .idFormato(dto.getIdFormato())
-                .nombre(dto.getNombre())
-                .descripcion(dto.getDescripcion())
-                .duracionHoras(dto.getDuracionHoras())
-                .activo(true)
-                .fechaCreacion(LocalDateTime.now())
-                .fechaActualizacion(LocalDateTime.now())
-                .build();
+        Curso curso = cursoMapper.toEntity(dto);
+        curso.setActivo(true);
+        curso.setFechaCreacion(LocalDateTime.now());
+        curso.setFechaActualizacion(LocalDateTime.now());
         return cursoRepository.save(curso);
     }
 
     public Optional<Curso> actualizarCurso(Long id, CursoDto dto) {
         return cursoRepository.findById(id).map(curso -> {
-            curso.setNombre(dto.getNombre());
-            curso.setDescripcion(dto.getDescripcion());
-            curso.setIdMateria(dto.getIdMateria());
-            curso.setIdFormato(dto.getIdFormato());
-            curso.setDuracionHoras(dto.getDuracionHoras());
-            curso.setFechaActualizacion(LocalDateTime.now());
-            return cursoRepository.save(curso);
+            Curso actualizado = cursoMapper.toEntity(dto);
+            actualizado.setIdCurso(curso.getIdCurso());
+            actualizado.setFechaCreacion(curso.getFechaCreacion());
+            actualizado.setFechaActualizacion(LocalDateTime.now());
+            actualizado.setActivo(curso.getActivo());
+            return cursoRepository.save(actualizado);
         });
     }
 
