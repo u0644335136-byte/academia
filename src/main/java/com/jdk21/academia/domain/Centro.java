@@ -31,11 +31,7 @@ public class Centro implements Serializable {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "capacidad_max")
-    private int capacidad_max;
 
-    @Column(name = "activo")
-    private Boolean activo;
 
     @Column(name = "telefono")
     private int telefono;
@@ -73,11 +69,12 @@ public class Centro implements Serializable {
     private Empresa empresa;
 
     // Campo gestionado por trigger o default en BD (solo lectura)
-@Column(name= "fecha_creacion", insertable = false,updatable = false)
-private java.time.LocalDate createdDate;
-@Column(name= "fecha_actualiza", insertable = false,updatable = false)
+    @Column(name= "fecha_creacion", insertable = false,updatable = false)
+    private java.time.LocalDateTime fechaCreacion;
+    @Column(name= "fecha_actualizacion", insertable = false,updatable = false)
+    private java.time.LocalDateTime fechaActualizacion;
 
-private java.time.LocalDate updatedDate;
-
+    @Column(name = "activo")
+    private Boolean activo;
     
 }

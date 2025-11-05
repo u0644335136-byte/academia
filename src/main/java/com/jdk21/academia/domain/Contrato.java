@@ -1,6 +1,8 @@
 package com.jdk21.academia.domain;
 
 import java.io.Serializable;
+import java.sql.Date;
+
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -20,7 +22,8 @@ public class Contrato implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private Long id_contrato;
+    @Column(name = "id_contrato")
+    private Long idContrato;
 
     // Campos mapeados directamente a columnas existentes
     @Column(name = "salario", nullable = false)
@@ -36,10 +39,10 @@ public class Contrato implements Serializable {
     private String tipo;
 
     @Column(name = "fecha_inicio", nullable = false)
-    private LocalDateTime fecha_inicio;
+    private Date fecha_inicio;
 
     @Column(name = "fecha_fin", nullable = false)
-    private LocalDateTime fecha_fin;
+    private Date fecha_fin;
 
     /*
      * // Si hay FK (por ejemplo, id_persona)
@@ -52,8 +55,8 @@ public class Contrato implements Serializable {
 
     // Campo gestionado por trigger o default en BD (solo lectura)
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private java.time.LocalDate createdDate;
-    @Column(name = "fecha_actualiza", insertable = false, updatable = false)
-    private java.time.LocalDate updatedDate;
+    private java.time.LocalDateTime fechaCreacion;
+    @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
+    private java.time.LocalDateTime fechaActualizacion;
 
 }
