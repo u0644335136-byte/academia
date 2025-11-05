@@ -26,8 +26,8 @@ public interface PersonaMapper {
      * Convierte una entidad Persona a PersonaDTO.
      * Mapea campos básicos y convierte la colección de roles a nombres de roles.
      */
-    @Mapping(target = "idPersona", source = "id_persona")
-    @Mapping(target = "idDiscapacidad", source = "id_discapacidad.idDiscapacidad")
+    @Mapping(target = "idPersona", source = "idPersona")
+    @Mapping(target = "idDiscapacidad", source = "idDiscapacidad.idDiscapacidad")
     @Mapping(target = "roles", expression = "java(extractRoleNames(persona))")
     PersonaDTO toDTO(Persona persona);
 
@@ -35,9 +35,9 @@ public interface PersonaMapper {
      * Convierte CreatePersonaDTO a entidad Persona.
      * Se usa al crear una nueva persona.
      */
-    @Mapping(target = "id_persona", ignore = true)
+    @Mapping(target = "idPersona", ignore = true)
     @Mapping(target = "roles", ignore = true)
-    @Mapping(target = "id_discapacidad", ignore = true)
+    @Mapping(target = "idDiscapacidad", ignore = true)
     @Mapping(target = "fechaCreacion", ignore = true)
     @Mapping(target = "fechaActualizacion", ignore = true)
     Persona toEntity(CreatePersonaDTO dto);
@@ -46,9 +46,9 @@ public interface PersonaMapper {
      * Actualiza una entidad Persona existente con datos de UpdatePersonaDTO.
      * Solo actualiza los campos que no son null en el DTO.
      */
-    @Mapping(target = "id_persona", ignore = true)
+    @Mapping(target = "idPersona", ignore = true)
     @Mapping(target = "roles", ignore = true)
-    @Mapping(target = "id_discapacidad", ignore = true)
+    @Mapping(target = "idDiscapacidad", ignore = true)
     @Mapping(target = "fechaCreacion", ignore = true)
     @Mapping(target = "fechaActualizacion", ignore = true)
     void updateEntityFromDTO(UpdatePersonaDTO dto, @MappingTarget Persona persona);

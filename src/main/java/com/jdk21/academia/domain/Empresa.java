@@ -20,7 +20,8 @@ public class Empresa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private Long id;
+    @Column(name = "id_empresa")
+    private Long idEmpresa;
 
     @Column(name = "cif", nullable = false, unique = true)
     private String cif;
@@ -34,23 +35,24 @@ public class Empresa {
     @Column(name = "representante")
     private String representante;
 
-    @Column(name = "activo")
-    private Boolean activo = true;
+    //Auto-incluidos
+    @Column(name = "fecha_creacion", insertable = false, updatable = false)
+    private LocalDateTime fechaCreacion;
 
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
+    private LocalDateTime fechaActualizacion;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "activo", insertable = false)
+    private boolean activo;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
+//     @PrePersist
+//     protected void onCreate() {
+//         fechaCreacion = LocalDateTime.now();
+//         fechaActualizacion = LocalDateTime.now();
+//     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+//     @PreUpdate
+//     protected void onUpdate() {
+//         fechaActualizacion = LocalDateTime.now();
+//     }
 }
