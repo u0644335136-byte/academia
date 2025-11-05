@@ -32,8 +32,6 @@ public class Centro implements Serializable {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-
-
     @Column(name = "telefono")
     private int telefono;
 
