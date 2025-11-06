@@ -4,6 +4,7 @@ import com.jdk21.academia.domain.Materia;
 import com.jdk21.academia.features.materia.dto.MateriaDto;
 import com.jdk21.academia.features.materia.service.MateriaService;
 import lombok.RequiredArgsConstructor;
+import java.util.List; 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,4 +33,17 @@ public class MateriaController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<List<MateriaDto>> getAll() {
+        return ResponseEntity.ok(materiaService.obtenerTodas());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MateriaDto> getById(@PathVariable Long id) {
+        return materiaService.obtenerPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    } 
+    
 }

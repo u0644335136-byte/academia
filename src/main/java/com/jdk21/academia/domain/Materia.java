@@ -28,13 +28,13 @@ public class Materia {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "activo", insertable = false)
+    @Column(name = "activo")
     private Boolean activo;
 
-    @Column(name = "fecha_creacion", insertable = false, updatable = false)
+    @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
 
-    @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
+    @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
 
 }

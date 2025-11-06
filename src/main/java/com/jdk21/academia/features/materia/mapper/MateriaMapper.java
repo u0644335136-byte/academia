@@ -7,7 +7,10 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface MateriaMapper {
+
     MateriaMapper INSTANCE = Mappers.getMapper(MateriaMapper.class);
-    MateriaDto toDto(Materia materia);
+
     Materia toEntity(MateriaDto dto);
+
+    MateriaDto toDto(Materia materia);
 }
