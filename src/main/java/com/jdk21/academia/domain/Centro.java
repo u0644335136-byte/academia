@@ -12,15 +12,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
-
-public class Centro implements Serializable {
-    //clave primaria (campo existente en BD)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Column(name = "id_centro")
-    private Long idCentro;
+@AttributeOverride(name = "id", column = @Column(name = "id_centro"))
+public class Centro extends BaseEntity implements Serializable {
 
     // Campos mapeados directamente a columnas existentes
     @Column(name = "codigo_centro", nullable = false, unique = true)
@@ -31,6 +24,8 @@ public class Centro implements Serializable {
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
+
+
 
     @Column(name = "telefono")
     private int telefono;
