@@ -1,6 +1,5 @@
 package com.jdk21.academia.domain;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.sql.Date;
 

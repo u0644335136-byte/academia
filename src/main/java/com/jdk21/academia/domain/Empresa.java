@@ -2,9 +2,10 @@
 
 package com.jdk21.academia.domain;
 
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "empresa")
@@ -14,15 +15,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
-public class Empresa {
+@AttributeOverride(name = "id", column = @Column(name = "id_empresa"))
+public class Empresa extends BaseEntity implements Serializable {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Column(name = "id_empresa")
-    private Long idEmpresa;
-
     @Column(name = "cif", nullable = false, unique = true)
     private String cif;
 
@@ -35,24 +30,5 @@ public class Empresa {
     @Column(name = "representante")
     private String representante;
 
-    //Auto-incluidos
-    @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private LocalDateTime fechaCreacion;
-
-    @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
-    private LocalDateTime fechaActualizacion;
-
-    @Column(name = "activo", insertable = false)
-    private boolean activo;
-
-//     @PrePersist
-//     protected void onCreate() {
-//         fechaCreacion = LocalDateTime.now();
-//         fechaActualizacion = LocalDateTime.now();
-//     }
-
-//     @PreUpdate
-//     protected void onUpdate() {
-//         fechaActualizacion = LocalDateTime.now();
-//     }
 }
+
