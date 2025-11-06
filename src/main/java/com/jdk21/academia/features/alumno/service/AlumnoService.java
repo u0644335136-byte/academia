@@ -24,8 +24,8 @@ public class AlumnoService {
     // Método para crear: Recibe DTO validado, convierte a entidad, comprueba email único, salva y retorna DTO.
     public AlumnoDto createAlumno(AlumnoDto alumnoDTO) {
         // Si email existe, lanza excepción
-        if (alumnoRepository.findByEmail(alumnoDTO.email()).isPresent()) {
-            throw new RuntimeException("El email ya existe: " + alumnoDTO.email());
+        if (alumnoRepository.findByEmail(alumnoDTO.getEmail()).isPresent()) {
+            throw new RuntimeException("El email ya existe: " + alumnoDTO.getEmail());
         }
 
         // Convertimos DTO a entidad con mapper.
@@ -69,21 +69,21 @@ public class AlumnoService {
                 .orElseThrow(() -> new RuntimeException("Alumno no encontrado con id: " + id));
 
         // Comprobamos email: Si cambiado y existe otro con mismo email.
-        if (!existingAlumno.getEmail().equals(alumnoDTO.email()) &&
-            alumnoRepository.findByEmail(alumnoDTO.email()).isPresent()) {
+        if (!existingAlumno.getEmail().equals(alumnoDTO.getEmail()) &&
+            alumnoRepository.findByEmail(alumnoDTO.getEmail()).isPresent()) {
             throw new RuntimeException("El email ya existe: ");
         }
 
         // Nota: Podríamos agregar @Mapping(target="...", source="...") en mapper para update, pero por simplicidad manual.
-        existingAlumno.setNombre(alumnoDTO.nombre());
-        existingAlumno.setApellidos(alumnoDTO.apellidos());
-        existingAlumno.setTelefono(alumnoDTO.telefono());
-        existingAlumno.setEmail(alumnoDTO.email());
-        existingAlumno.setContrasenia(alumnoDTO.contrasenia());
-        existingAlumno.setFecha_nacimiento(alumnoDTO.fecha_nacimiento());
-        existingAlumno.setLocalidad(alumnoDTO.localidad());
-        existingAlumno.setProvincia(alumnoDTO.provincia());
-        existingAlumno.setActivo(alumnoDTO.activo());
+        existingAlumno.setNombre(alumnoDTO.getNombre());
+        existingAlumno.setApellidos(alumnoDTO.getApellidos());
+        existingAlumno.setTelefono(alumnoDTO.getTelefono());
+        existingAlumno.setEmail(alumnoDTO.getEmail());
+        existingAlumno.setContrasenia(alumnoDTO.getContrasenia());
+        existingAlumno.setFecha_nacimiento(alumnoDTO.getFecha_nacimiento());
+        existingAlumno.setLocalidad(alumnoDTO.getLocalidad());
+        existingAlumno.setProvincia(alumnoDTO.getProvincia());
+        existingAlumno.setActivo(alumnoDTO.getActivo());
 
         Alumno updatedAlumno = alumnoRepository.save(existingAlumno);
 

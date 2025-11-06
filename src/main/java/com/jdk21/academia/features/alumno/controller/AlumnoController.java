@@ -29,8 +29,8 @@ public class AlumnoController {
     private AlumnoService alumnoService;
 
     @PostMapping
-    public ResponseEntity<AlumnoDto> createAlumno(@Valid @RequestBody AlumnoDto alumnoDTO) {
-        AlumnoDto created = alumnoService.createAlumno(alumnoDTO);
+    public ResponseEntity<AlumnoDto> createAlumno(@Valid @RequestBody AlumnoDto alumnoDto) {
+        AlumnoDto created = alumnoService.createAlumno(alumnoDto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
