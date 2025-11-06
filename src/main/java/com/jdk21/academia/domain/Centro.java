@@ -61,12 +61,12 @@ public class Centro implements Serializable {
 
     @Column(name = "provincia")
     private String provincia;
-
+/*
     // Si hay FK (por ejemplo, id_empresa)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_empresa")
     private Empresa empresa;
-
+*/
     // Campo gestionado por trigger o default en BD (solo lectura)
     @Column(name= "fecha_creacion", insertable = false,updatable = false)
     private java.time.LocalDateTime fechaCreacion;

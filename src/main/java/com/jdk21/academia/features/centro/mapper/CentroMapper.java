@@ -13,19 +13,14 @@ import com.jdk21.academia.features.centro.dto.UpdateCentroDTO;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CentroMapper {
     
-    //@Mapping(target = "idempresa",source = "empresa.id")
-    @Mapping(target = "empresaNombre", source = "empresa.nombreLegal")
-    
     CentroDTO toDTO(Centro centro);
     
     @Mapping(target = "idCentro", ignore = true)
-    @Mapping(target = "empresa", ignore = true)
     @Mapping(target = "fechaCreacion", ignore = true)
     @Mapping(target = "fechaActualizacion", ignore = true)
     Centro toEntity(CreateCentroDTO createDTO);
     
     @Mapping(target = "idCentro", ignore = true)
-    @Mapping(target = "empresa", ignore = true)
     @Mapping(target = "fechaCreacion", ignore = true)
     @Mapping(target = "fechaActualizacion", ignore = true)
     void updateEntityFromDTO(UpdateCentroDTO updateDTO, @MappingTarget Centro centro);

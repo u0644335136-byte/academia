@@ -3,19 +3,14 @@ package com.jdk21.academia.features.centro.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.jdk21.academia.domain.Centro;
-import com.jdk21.academia.domain.Empresa;
 import com.jdk21.academia.features.centro.dto.CentroDTO;
 import com.jdk21.academia.features.centro.dto.CreateCentroDTO;
 import com.jdk21.academia.features.centro.dto.UpdateCentroDTO;
 import com.jdk21.academia.features.centro.mapper.CentroMapper;
 import com.jdk21.academia.features.centro.repository.CentroRepository;
-import com.jdk21.academia.features.empresa.repository.EmpresaRepository;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 public class CentroService {
 
     private final CentroRepository centroRepository;
-    private final EmpresaRepository empresaRepository;
     private final CentroMapper centroMapper;
 
     @Transactional
@@ -40,12 +34,13 @@ public class CentroService {
         
         // Convertir DTO a Entity
         Centro centro = centroMapper.toEntity(createDTO);
-        
+        /*
         // Asignar empresa
         Empresa empresa = empresaRepository.findById(createDTO.empresaId())
             .orElseThrow(() -> new IllegalArgumentException("No se encontró la empresa con ID: " + createDTO.empresaId()));
         centro.setEmpresa(empresa);
-        
+        */
+
         // Establecer valores por defecto
         if (centro.getActivo() == null) {
             centro.setActivo(true);
@@ -131,7 +126,7 @@ public class CentroService {
             .map(centroMapper::toDTO)
             .collect(Collectors.toList());
     }
-
+/* 
     @Transactional(readOnly = true)
     public List<CentroDTO> getCentrosByEmpresa(Long idEmpresa) {
         log.info("Obteniendo centros por empresa ID: {}", idEmpresa);
@@ -144,7 +139,7 @@ public class CentroService {
             .map(centroMapper::toDTO)
             .collect(Collectors.toList());
     }
-
+*/
     @Transactional(readOnly = true)
     public boolean existsByCodigoCentro(String codigoCentro) {
         return centroRepository.existsByCodigoCentro(codigoCentro);
