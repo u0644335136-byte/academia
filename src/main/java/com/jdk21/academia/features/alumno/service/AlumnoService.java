@@ -92,9 +92,12 @@ public class AlumnoService {
 
     // Eliminar
     public void deleteAlumno(Long id) {
-        if (!alumnoRepository.existsById(id)) {
-            throw new RuntimeException("Alumno no encontrado con id: " + id);
+        Alumno existingAlumno = alumnoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Alumno no encontrado con id: " + id));
+        if (Boolean.FALSE.equals(existingAlumno.getActivo())) {
+            return;
         }
-        alumnoRepository.deleteById(id);
+        existingAlumno.setActivo(false);
+        alumnoRepository.save(existingAlumno);
     }
 }
