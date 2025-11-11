@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Table(name="centro")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)

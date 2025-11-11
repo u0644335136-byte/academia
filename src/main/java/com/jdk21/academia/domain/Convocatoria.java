@@ -13,6 +13,7 @@ import lombok.*;
 @Table(name = "convocatoria")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
