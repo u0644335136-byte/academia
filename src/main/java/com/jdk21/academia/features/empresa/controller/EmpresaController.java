@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/empresas")
-public class EmpresaController 
-        extends BaseController<Empresa, EmpresaRequestDTO, EmpresaResponseDTO, Long> {
+public class EmpresaController extends BaseController<Empresa, EmpresaRequestDTO, EmpresaResponseDTO, Long> {
 
     public EmpresaController(EmpresaService service) {
         super(service);
