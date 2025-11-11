@@ -2,6 +2,8 @@ package com.jdk21.academia.features.comunidad.controller;
 
 import com.jdk21.academia.features.comunidad.dto.ComunidadDto;
 import com.jdk21.academia.features.comunidad.service.ComunidadService;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
