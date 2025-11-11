@@ -2,25 +2,17 @@ package com.jdk21.academia.features.convocatoria.service;
 
 import org.springframework.stereotype.Service;
 
-import com.jdk21.academia.features.convocatoria.repository.ConvocatoriaRepository;
-import com.jdk21.academia.features.convocatoria.repository.ViewConvocatoriaRepository;
+import com.jdk21.academia.domain.Convocatoria;
+import com.jdk21.academia.features.baseFeature.repository.BaseRepository;
+import com.jdk21.academia.features.baseFeature.service.BaseService;
+import com.jdk21.academia.features.convocatoria.dto.ConvocatoriaRequestDTO;
+import com.jdk21.academia.features.convocatoria.dto.ConvocatoriaResponseDTO;
+import com.jdk21.academia.features.convocatoria.mapper.ConvocatoriaMapper;
 
 @Service
-public class ConvocatoriaService {
+public class ConvocatoriaService extends BaseService<Convocatoria, ConvocatoriaRequestDTO, ConvocatoriaResponseDTO, Long> {
 
-    private final ConvocatoriaRepository repository;
-    private final ViewConvocatoriaRepository viewRepository;
-
-
-    public ConvocatoriaService(ConvocatoriaRepository repository, ViewConvocatoriaRepository viewRepository){
-        this.repository=repository;
-        this.viewRepository = viewRepository;
+    public ConvocatoriaService(BaseRepository<Convocatoria> repository, ConvocatoriaMapper mapper) {
+        super(repository, mapper);
     }
-
-    // @Transactional
-    // public MatriculaDTO crearMatricula(CrearMatriculaDTO crearMatriculaDTO){
-
-    // }
-
-
 }

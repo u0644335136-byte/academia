@@ -10,6 +10,7 @@ import lombok.*;
 @Table(name = "alumno", schema = "public")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
