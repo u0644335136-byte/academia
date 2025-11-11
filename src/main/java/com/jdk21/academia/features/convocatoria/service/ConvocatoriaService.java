@@ -1,7 +1,6 @@
 package com.jdk21.academia.features.convocatoria.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.jdk21.academia.features.convocatoria.repository.ConvocatoriaRepository;
 import com.jdk21.academia.features.convocatoria.repository.ViewConvocatoriaRepository;
