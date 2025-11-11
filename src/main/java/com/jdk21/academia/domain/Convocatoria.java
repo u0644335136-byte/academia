@@ -1,6 +1,7 @@
 package com.jdk21.academia.domain;
 
 import java.time.LocalDateTime;
+import java.io.Serializable;
 import java.sql.Date;
 
 
@@ -16,14 +17,8 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
-public class Convocatoria {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Column(name = "id_convocatoria")
-    private Long idConvocatoria;
+@AttributeOverride(name = "id", column = @Column(name = "id_convocatoria"))
+public class Convocatoria extends BaseEntity implements Serializable{
 
     @Column(name = "codigo")
     private String codigo;
@@ -33,17 +28,6 @@ public class Convocatoria {
 
     @Column(name = "fecha_fin")
     private Date fechaFin;
-
-
-    //Auto-incluidos
-    @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private LocalDateTime fechaCreacion;
-
-    @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
-    private LocalDateTime fechaActualizacion;
-
-    @Column(name = "activo", insertable = false)
-    private boolean activo;
 
     //Llaves foraneas 
 

@@ -26,7 +26,7 @@ public abstract class BaseService<E extends BaseEntity, I, O, ID> {
     // Crear
     public O create(I dto) {
         E entity = mapper.toEntity(dto);
-        System.out.println("Mapped entity: " + entity);
+        // System.out.println("Mapped entity: " + entity);
         return mapper.toDto(repository.save(entity));
     }
 
