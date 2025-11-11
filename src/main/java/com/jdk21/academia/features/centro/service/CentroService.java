@@ -24,12 +24,12 @@ public class CentroService {
 
     @Transactional
     public CentroDTO createCentro(CreateCentroDTO createcentroDTO) {
-        log.info("Creando nuevo centro con código: {}", createcentroDTO.codigoCentro());
+        log.info("Creando nuevo centro con código: {}", createcentroDTO.codigo_centro());
 
         // Validar unicidad de código de centro
-        Optional<Centro> existingByCodigo = centroRepository.findByCodigoCentro(createcentroDTO.codigoCentro());
+        Optional<Centro> existingByCodigo = centroRepository.findByCodigo_centro(createcentroDTO.codigo_centro());
         if (existingByCodigo.isPresent()) {
-            throw new IllegalArgumentException("Ya existe un centro con el código: " + createcentroDTO.codigoCentro());
+            throw new IllegalArgumentException("Ya existe un centro con el código: " + createcentroDTO.codigo_centro());
         }
 
         // Convertir DTO a Entity
@@ -71,10 +71,10 @@ public class CentroService {
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró el centro con ID: " + id));
 
         // Validar unicidad de código si se está cambiando
-        if (!updatecentroDTO.codigoCentro().equals(centro.getCodigoCentro())) {
-            Optional<Centro> existingByCodigo = centroRepository.findByCodigoCentro(updatecentroDTO.codigoCentro());
+        if (!updatecentroDTO.codigo_centro().equals(centro.getCodigo_centro())) {
+            Optional<Centro> existingByCodigo = centroRepository.findByCodigo_centro(updatecentroDTO.codigo_centro());
             if (existingByCodigo.isPresent()) {
-                throw new IllegalArgumentException("Ya existe otro centro con el código: " + updatecentroDTO.codigoCentro());
+                throw new IllegalArgumentException("Ya existe otro centro con el código: " + updatecentroDTO.codigo_centro());
             }
         }
 
@@ -89,11 +89,11 @@ public class CentroService {
     // ========== MÉTODOS ADICIONALES ==========
 
     @Transactional(readOnly = true)
-    public CentroDTO getCentroByCodigo(String codigoCentro) {
-        log.info("Buscando centro por código: {}", codigoCentro);
-        Centro centro = centroRepository.findByCodigoCentro(codigoCentro)
+    public CentroDTO getCentroByCodigo(String codigo_centro) {
+        log.info("Buscando centro por código: {}", codigo_centro);
+        Centro centro = centroRepository.findByCodigo_centro(codigo_centro)
                 .orElseThrow(
-                        () -> new IllegalArgumentException("No se encontró el centro con código: " + codigoCentro));
+                        () -> new IllegalArgumentException("No se encontró el centro con código: " + codigo_centro));
         return centroMapper.toDTO(centro);
     }
 
@@ -106,8 +106,8 @@ public class CentroService {
     }
 
     @Transactional(readOnly = true)
-    public boolean existsByCodigoCentro(String codigoCentro) {
-        return centroRepository.existsByCodigoCentro(codigoCentro);
+    public boolean existsByCodigo_centro(String codigo_centro) {
+        return centroRepository.existsByCodigo_centro(codigo_centro);
     }
 
     @Transactional

@@ -29,7 +29,7 @@ public interface CentroMapper {
     CentroDTO toDTO(Centro centro);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "codigoCentro", source = "codigoCentro")
+    @Mapping(target = "codigo_centro", source = "codigo_centro")
     @Mapping(target = "codigo_postal", source = "codigoPostal")
     @Mapping(target = "fechaActualizacion", ignore = true)
     @Mapping(target = "fechaCreacion", ignore = true)

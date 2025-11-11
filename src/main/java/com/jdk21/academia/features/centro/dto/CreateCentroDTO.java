@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record CreateCentroDTO(
     @NotBlank(message = "El código del centro es obligatorio")
-    String codigoCentro,
+    String codigo_centro,
     
     @NotBlank(message = "El nombre del centro es obligatorio")
     String nombre,

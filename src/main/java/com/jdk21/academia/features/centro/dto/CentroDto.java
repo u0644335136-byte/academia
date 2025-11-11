@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public record CentroDTO(
 
     Long idCentro,
-    String codigoCentro,
+    String codigo_centro,
     String nombre,
     String responsable,
     Integer capacidadMax,

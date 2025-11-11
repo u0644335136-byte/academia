@@ -17,7 +17,7 @@ public class Centro extends BaseEntity implements Serializable {
 
     // Campos mapeados directamente a columnas existentes
     @Column(name = "codigo_centro", nullable = false, unique = true)
-    private String codigoCentro;
+    private String codigo_centro;
 
     @Column(name = "responsable", nullable = false)
     private String responsable;
