@@ -49,4 +49,4 @@ public class Comunidad implements Serializable {
 
     @Column(name = "activo", insertable = false)
     private boolean activo;
-}
+    }
