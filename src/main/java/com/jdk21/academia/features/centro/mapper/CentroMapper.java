@@ -4,7 +4,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.factory.Mappers;
 import com.jdk21.academia.domain.Centro;
 import com.jdk21.academia.features.centro.dto.CentroDTO;
 import com.jdk21.academia.features.centro.dto.CreateCentroDTO;
@@ -15,9 +14,6 @@ import com.jdk21.academia.features.centro.dto.UpdateCentroDTO;
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface CentroMapper {
-    
-    CentroMapper INSTANCE = Mappers.getMapper(CentroMapper.class);
-    
     /// Mapeo de Centro a CentroDTO
     @Mapping(target = "idCentro", source = "id")
     @Mapping(target = "codigoPostal", source = "codigo_postal")

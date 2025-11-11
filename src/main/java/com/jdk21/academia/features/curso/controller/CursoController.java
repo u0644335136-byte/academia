@@ -2,6 +2,7 @@ package com.jdk21.academia.features.curso.controller;
 
 import com.jdk21.academia.features.curso.dto.CursoDto;
 import com.jdk21.academia.features.curso.service.CursoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class CursoController {
     private final CursoService cursoService;
 
     @PostMapping
-    public ResponseEntity<CursoDto> crearCurso(@RequestBody CursoDto dto) {
+    public ResponseEntity<CursoDto> crearCurso(@Valid @RequestBody CursoDto dto) {
         return ResponseEntity.ok(cursoService.crearCurso(dto));
     }
 

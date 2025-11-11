@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public record CentroDTO(
-
     Long idCentro,
     String codigo_centro,
     String nombre,
@@ -27,7 +26,5 @@ public record CentroDTO(
     LocalDateTime fechaCreacion,
     LocalDateTime fechaActualiza
 ) implements Serializable {
-private static final long serialVersionUID = 1L;
-
-
+    private static final long serialVersionUID = 1L;
 }
