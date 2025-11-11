@@ -4,6 +4,8 @@ import com.jdk21.academia.domain.Curso;
 import com.jdk21.academia.features.curso.dto.CursoDto;
 import com.jdk21.academia.features.curso.mapper.CursoMapper;
 import com.jdk21.academia.features.curso.repository.CursoRepository;
+import com.jdk21.academia.features.materia.repository.MateriaRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +19,19 @@ import java.util.stream.Collectors;
 public class CursoService {
 
     private final CursoRepository cursoRepository;
+    private final MateriaRepository materiaRepository;
     private final CursoMapper cursoMapper = CursoMapper.INSTANCE;
 
     public CursoDto crearCurso(CursoDto dto) {
+        // 3. ¡VALIDACIÓN CLAVE! Comprueba si la Materia existe
+        if (!materiaRepository.existsById(dto.getIdMateria())) {
+            throw new IllegalArgumentException("La materia con ID " + dto.getIdMateria() + " no existe.");
+        }
         Curso curso = cursoMapper.toEntity(dto);
         curso.setActivo(true);
         curso.setFechaCreacion(LocalDateTime.now());
         curso.setFechaActualizacion(LocalDateTime.now());
+        
         Curso guardado = cursoRepository.save(curso);
         return cursoMapper.toDto(guardado);
     }
@@ -32,7 +40,6 @@ public class CursoService {
         return cursoRepository.findById(id).map(curso -> {
             Curso actualizado = cursoMapper.toEntity(dto);
             actualizado.setIdCurso(curso.getIdCurso());
-            actualizado.setFechaCreacion(curso.getFechaCreacion());
             actualizado.setFechaActualizacion(LocalDateTime.now());
             actualizado.setActivo(curso.getActivo());
             Curso guardado = cursoRepository.save(actualizado);
