@@ -1,0 +1,40 @@
+### Create a new Empresa
+POST http://localhost:8080/api/empresas
+Content-Type: application/json
+
+{
+  "cif": "B12345678",
+  "nombreLegal": "Empresa Legal S.A.",
+  "razonSocial": "Empresa RS",
+  "representante": "Juan Pérez"
+}
+
+###
+
+### Get all Empresas
+GET http://localhost:8080/api/empresas
+Accept: application/json
+
+###
+
+### Get Empresa by ID
+GET http://localhost:8080/api/empresas/11
+Accept: application/json
+
+###
+
+### Update Empresa
+PUT http://localhost:8080/api/empresas/12
+Content-Type: application/json
+
+{
+  "cif": "B876543212",
+  "nombreLegal": "Empresa Legal Actualizada S.A.",
+  "razonSocial": "Empresa RS Actualizada",
+  "representante": "Ana López"
+}
+
+###
+
+### Soft Delete Empresa
+DELETE http://localhost:8080/api/empresas/11

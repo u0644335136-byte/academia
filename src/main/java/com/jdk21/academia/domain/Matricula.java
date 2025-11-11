@@ -45,7 +45,7 @@ public class Matricula {
     private boolean activo;
 
     //Llaves foraneas 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_convocatoria", referencedColumnName = "id_convocatoria")
     private Convocatoria convocatoria;
 
