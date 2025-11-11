@@ -1,6 +1,6 @@
 package com.jdk21.academia.features.profesor.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -50,9 +50,10 @@ public class ProfesorDto {
     @Schema(description = "Provincia del profesor", example = "Madrid")
     @Size(max = 30, message = "La dirección del profesor no puede superar 30 caracteres")
     private String provincia;
+    private boolean activo;
 
     
-    private LocalDateTime fechaNacimiento;
+    private LocalDate fechaNacimiento;
 
     
     private String contrasenia;

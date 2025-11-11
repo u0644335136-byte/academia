@@ -2,6 +2,8 @@ package com.jdk21.academia.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -52,7 +54,7 @@ public class Profesor {
     private String provincia;
 
     @Column(name = "fecha_nacimiento")
-    private LocalDateTime fechaNacimiento;
+    private LocalDate fechaNacimiento;
 
     @Column(name = "contrasenia")
     private String contrasenia;
