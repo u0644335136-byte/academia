@@ -1,7 +1,7 @@
 package com.jdk21.academia.features.centro.dto;
 
+import java.io.Serializable;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public record CreateCentroDTO(
     @NotBlank(message = "El código del centro es obligatorio")
@@ -12,9 +12,6 @@ public record CreateCentroDTO(
     
     @NotBlank(message = "El responsable es obligatorio")
     String responsable,
-    
-    @NotNull(message = "La empresa es obligatoria")
-    Long empresaId,
     
     Integer capacidadMax,
     Boolean activo,
@@ -28,4 +25,6 @@ public record CreateCentroDTO(
     String codigoPostal,
     String localidad,
     String provincia
-) {}
+) implements Serializable {
+    private static final long serialVersionUID = 1L;
+}

@@ -4,24 +4,45 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.factory.Mappers;
 import com.jdk21.academia.domain.Centro;
 import com.jdk21.academia.features.centro.dto.CentroDTO;
 import com.jdk21.academia.features.centro.dto.CreateCentroDTO;
 import com.jdk21.academia.features.centro.dto.UpdateCentroDTO;
 
-
-@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(
+    componentModel = "spring",
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+)
 public interface CentroMapper {
     
+    CentroMapper INSTANCE = Mappers.getMapper(CentroMapper.class);
+    
+    /// Mapeo de Centro a CentroDTO
+    @Mapping(target = "idCentro", source = "id")
+    @Mapping(target = "codigoPostal", source = "codigo_postal")
+    @Mapping(target = "fechaActualiza", source = "fechaActualizacion")
+    @Mapping(target = "capacidadMax", ignore = true)
+    @Mapping(target = "idempresa", ignore = true)
+    @Mapping(target = "idcomunidad", ignore = true)
+    @Mapping(target = "empresaNombre", ignore = true)
     CentroDTO toDTO(Centro centro);
-    
-    @Mapping(target = "idCentro", ignore = true)
-    @Mapping(target = "fechaCreacion", ignore = true)
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "codigoCentro", source = "codigoCentro")
+    @Mapping(target = "codigo_postal", source = "codigoPostal")
     @Mapping(target = "fechaActualizacion", ignore = true)
-    Centro toEntity(CreateCentroDTO createDTO);
-    
-    @Mapping(target = "idCentro", ignore = true)
     @Mapping(target = "fechaCreacion", ignore = true)
+    Centro toEntity (CreateCentroDTO createCentroDTO);
+    
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "codigo_postal", source = "codigoPostal")
     @Mapping(target = "fechaActualizacion", ignore = true)
+    @Mapping(target = "fechaCreacion", ignore = true)
     void updateEntityFromDTO(UpdateCentroDTO updateDTO, @MappingTarget Centro centro);
+    
+    
+
+        
 }
+

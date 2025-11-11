@@ -9,8 +9,8 @@ import com.jdk21.academia.domain.Centro;
 public interface CentroRepository extends JpaRepository<Centro, Long>{
 
 // Solo los métodos esenciales para empezar
-    Optional<Centro> findByCodigoCentro(String codigoCentro);
-    boolean existsByCodigoCentro(String codigoCentro);
+    Optional<Centro> findByCodigoCentro(String codigo_centro);
+    boolean existsByCodigoCentro(String codigo_centro);
     Optional<Centro> findByActivoTrue();
     
 }

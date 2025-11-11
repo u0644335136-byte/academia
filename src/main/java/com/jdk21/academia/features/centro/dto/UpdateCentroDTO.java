@@ -1,5 +1,6 @@
 package com.jdk21.academia.features.centro.dto;
 
+import java.io.Serializable;
 import jakarta.validation.constraints.NotBlank;
 
 public record UpdateCentroDTO(
@@ -24,4 +25,7 @@ public record UpdateCentroDTO(
     String codigoPostal,
     String localidad,
     String provincia
-) {}
+
+) implements Serializable {
+private static final long serialVersionUID = 1L;
+}

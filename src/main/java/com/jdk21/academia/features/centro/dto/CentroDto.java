@@ -1,6 +1,5 @@
 package com.jdk21.academia.features.centro.dto;
 
-import java.util.Set;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
