@@ -36,7 +36,7 @@ public class CursoDto {
     private String descripcion;
 
     @Column(name= "fecha_creacion", insertable = false,updatable = false)
-    private java.time.LocalDate createdDate;
+    private java.time.LocalDate fechaCreacion;
     @Column(name= "fecha_actualizacion", insertable = false,updatable = false)
 
 
