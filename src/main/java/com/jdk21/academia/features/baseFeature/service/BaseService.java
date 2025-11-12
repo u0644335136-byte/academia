@@ -35,7 +35,6 @@ public abstract class BaseService<E extends BaseEntity, I, O, ID> {
         E existing = repository.findById((Long) id)
                 .orElseThrow(() -> new RuntimeException("Entidad no encontrada"));
 
-        // Use MapStruct to update the existing entity in place
         mapper.updateEntityFromDto(dto, existing);
 
         return mapper.toDto(repository.save(existing));
