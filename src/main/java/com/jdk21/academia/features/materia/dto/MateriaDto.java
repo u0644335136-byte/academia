@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MateriaDto {
+public class MateriaDTO {
 
     @Schema(description = "ID de la materia (solo para actualización)", example = "1")
     @Positive(message = "El ID de la materia debe ser positivo")

@@ -1,7 +1,7 @@
 package com.jdk21.academia.features.materia.service;
 
 import com.jdk21.academia.domain.Materia;
-import com.jdk21.academia.features.materia.dto.MateriaDto;
+import com.jdk21.academia.features.materia.dto.MateriaDTO;
 import com.jdk21.academia.features.materia.mapper.MateriaMapper;
 import com.jdk21.academia.features.materia.repository.MateriaRepository;
 
@@ -20,7 +20,7 @@ public class MateriaService {
     private final MateriaRepository materiaRepository;
     private final MateriaMapper materiaMapper = MateriaMapper.INSTANCE;
 
-    public MateriaDto crearMateria(MateriaDto dto) {
+    public MateriaDTO crearMateria(MateriaDTO dto) {
         Materia materia = materiaMapper.toEntity(dto);
         materia.setActivo(true);
         materia.setFechaCreacion(LocalDateTime.now());
@@ -29,7 +29,7 @@ public class MateriaService {
         return materiaMapper.toDto(saved);
     }
 
-    public Optional<MateriaDto> actualizarMateria(Long id, MateriaDto dto) {
+    public Optional<MateriaDTO> actualizarMateria(Long id, MateriaDTO dto) {
         return materiaRepository.findById(id).map(materia -> {
             Materia actualizada = materiaMapper.toEntity(dto);
             actualizada.setIdMateria(materia.getIdMateria());
@@ -41,7 +41,7 @@ public class MateriaService {
         });
     }
 
-    public Optional<MateriaDto> eliminarMateria(Long id) {
+    public Optional<MateriaDTO> eliminarMateria(Long id) {
         return materiaRepository.findById(id).map(materia -> {
             materia.setActivo(false);
             materia.setFechaActualizacion(LocalDateTime.now());
@@ -50,14 +50,14 @@ public class MateriaService {
         });
     }
 
-    public List<MateriaDto> obtenerTodas() {
+    public List<MateriaDTO> obtenerTodas() {
         return materiaRepository.findAll()
                 .stream()
                 .map(materiaMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<MateriaDto> obtenerPorId(Long id) {
+    public Optional<MateriaDTO> obtenerPorId(Long id) {
         return materiaRepository.findById(id)
                 .map(materiaMapper::toDto);
     }

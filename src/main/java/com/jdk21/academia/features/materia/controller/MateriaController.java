@@ -1,6 +1,6 @@
 package com.jdk21.academia.features.materia.controller;
 
-import com.jdk21.academia.features.materia.dto.MateriaDto;
+import com.jdk21.academia.features.materia.dto.MateriaDTO;
 import com.jdk21.academia.features.materia.service.MateriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,33 +16,33 @@ public class MateriaController {
     private final MateriaService materiaService;
 
     @PostMapping
-    public ResponseEntity<MateriaDto> crearMateria(@RequestBody MateriaDto dto) {
-        MateriaDto created = materiaService.crearMateria(dto);
+    public ResponseEntity<MateriaDTO> crearMateria(@RequestBody MateriaDTO dto) {
+        MateriaDTO created = materiaService.crearMateria(dto);
         return ResponseEntity.ok(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MateriaDto> actualizarMateria(@PathVariable Long id, @RequestBody MateriaDto dto) {
+    public ResponseEntity<MateriaDTO> actualizarMateria(@PathVariable Long id, @RequestBody MateriaDTO dto) {
         return materiaService.actualizarMateria(id, dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MateriaDto> eliminarMateria(@PathVariable Long id) {
+    public ResponseEntity<MateriaDTO> eliminarMateria(@PathVariable Long id) {
         return materiaService.eliminarMateria(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public ResponseEntity<List<MateriaDto>> getAll() {
-        List<MateriaDto> lista = materiaService.obtenerTodas();
+    public ResponseEntity<List<MateriaDTO>> getAll() {
+        List<MateriaDTO> lista = materiaService.obtenerTodas();
         return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MateriaDto> getById(@PathVariable Long id) {
+    public ResponseEntity<MateriaDTO> getById(@PathVariable Long id) {
         return materiaService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

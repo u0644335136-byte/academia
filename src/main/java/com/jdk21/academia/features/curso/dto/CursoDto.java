@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CursoDto {
+public class CursoDTO {
 
     @Schema(description = "ID del curso (solo para actualización, no enviar al crear)", example = "1")
     @JsonProperty("idCurso")

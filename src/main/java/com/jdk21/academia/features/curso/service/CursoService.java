@@ -1,7 +1,7 @@
 package com.jdk21.academia.features.curso.service;
 
 import com.jdk21.academia.domain.Curso;
-import com.jdk21.academia.features.curso.dto.CursoDto;
+import com.jdk21.academia.features.curso.dto.CursoDTO;
 import com.jdk21.academia.features.curso.mapper.CursoMapper;
 import com.jdk21.academia.features.curso.repository.CursoRepository;
 import com.jdk21.academia.features.materia.repository.MateriaRepository;
@@ -22,7 +22,7 @@ public class CursoService {
     private final MateriaRepository materiaRepository;
     private final CursoMapper cursoMapper = CursoMapper.INSTANCE;
 
-    public CursoDto crearCurso(CursoDto dto) {
+    public CursoDTO crearCurso(CursoDTO dto) {
         // Validar que idMateria no sea null
         if (dto.getIdMateria() == null) {
             throw new IllegalArgumentException("El ID de la materia es obligatorio");
@@ -42,7 +42,7 @@ public class CursoService {
         return cursoMapper.toDto(guardado);
     }
 
-    public Optional<CursoDto> actualizarCurso(Long id, CursoDto dto) {
+    public Optional<CursoDTO> actualizarCurso(Long id, CursoDTO dto) {
         return cursoRepository.findById(id).map(curso -> {
             Curso actualizado = cursoMapper.toEntity(dto);
             actualizado.setIdCurso(curso.getIdCurso());
@@ -53,7 +53,7 @@ public class CursoService {
         });
     }
 
-    public Optional<CursoDto> eliminarCurso(Long id) {
+    public Optional<CursoDTO> eliminarCurso(Long id) {
         return cursoRepository.findById(id).map(curso -> {
             curso.setActivo(false);
             curso.setFechaActualizacion(LocalDateTime.now());
@@ -62,14 +62,14 @@ public class CursoService {
         });
     }
 
-    public List<CursoDto> obtenerTodos() {
+    public List<CursoDTO> obtenerTodos() {
         return cursoRepository.findAll()
                 .stream()
                 .map(cursoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<CursoDto> obtenerPorId(Long id) {
+    public Optional<CursoDTO> obtenerPorId(Long id) {
         return cursoRepository.findById(id)
                 .map(cursoMapper::toDto);
     }

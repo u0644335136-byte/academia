@@ -1,7 +1,7 @@
 package com.jdk21.academia.features.materia.mapper;
 
 import com.jdk21.academia.domain.Materia;
-import com.jdk21.academia.features.materia.dto.MateriaDto;
+import com.jdk21.academia.features.materia.dto.MateriaDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -10,7 +10,7 @@ public interface MateriaMapper {
 
     MateriaMapper INSTANCE = Mappers.getMapper(MateriaMapper.class);
 
-    Materia toEntity(MateriaDto dto);
+    Materia toEntity(MateriaDTO dto);
 
-    MateriaDto toDto(Materia materia);
+    MateriaDTO toDto(Materia materia);
 }
