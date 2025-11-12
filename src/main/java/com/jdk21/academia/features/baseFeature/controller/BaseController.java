@@ -77,7 +77,7 @@ public abstract class BaseController<E extends BaseEntity, I, O, ID> {
 
     // GET ALL
     @GetMapping
-    @Operation(summary = "Elimina todas las entidades activas")
+    @Operation(summary = "Recupera todas las entidades activas")
     public ResponseEntity<List<O>> getAll() {
         List<O> list = service.getAll();
         return ResponseEntity.ok(list);

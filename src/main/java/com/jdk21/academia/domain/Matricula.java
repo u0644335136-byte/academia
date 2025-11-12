@@ -1,9 +1,7 @@
 package com.jdk21.academia.domain;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 import java.sql.Date;
-
-
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,18 +10,13 @@ import lombok.*;
 @Table(name = "matricula")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
-public class Matricula {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Column(name = "id_matricula")
-    private Long idMatricula;
+@AttributeOverride(name = "id", column = @Column(name = "id_matricula"))
+public class Matricula extends BaseEntity implements Serializable {
 
     @Column(name = "fecha")
     private Date fecha;
@@ -34,21 +27,12 @@ public class Matricula {
     @Column(name = "precio")
     private int precio;
 
-    //Auto-incluidos
-    @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private LocalDateTime fechaCreacion;
-
-    @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
-    private LocalDateTime fechaActualizacion;
-
-    @Column(name = "activo", insertable = false)
-    private boolean activo;
-
     //Llaves foraneas 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_convocatoria", referencedColumnName = "id_convocatoria")
     private Convocatoria convocatoria;
 
-    @Column(name = "id_alumno")
-    private Long idAlumno;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_alumno", referencedColumnName = "id_alumno   ")
+    private Alumno alumno;
 }
