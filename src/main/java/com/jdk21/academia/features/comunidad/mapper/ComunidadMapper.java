@@ -9,7 +9,6 @@ public class ComunidadMapper {
 
     public ComunidadDto toDto(Comunidad entidad) {
         if (entidad == null) return null;
-
         return ComunidadDto.builder()
                 .idComunidad(entidad.getIdComunidad())
                 .codigo(entidad.getCodigo())
@@ -17,21 +16,25 @@ public class ComunidadMapper {
                 .capital(entidad.getCapital())
                 .fechaCreacion(entidad.getFechaCreacion())
                 .fechaActualizacion(entidad.getFechaActualizacion())
-                .activo(entidad.isActivo()) // boolean → Boolean
+                .activo(entidad.isActivo())
                 .build();
     }
 
     public Comunidad toEntity(ComunidadDto dto) {
         if (dto == null) return null;
-
         Comunidad entidad = new Comunidad();
-        entidad.setIdComunidad(dto.getIdComunidad());
+
+        // ⚠️ Solo asignamos ID si existe (PUT), nunca en POST
+        if (dto.getIdComunidad() != null) {
+            entidad.setIdComunidad(dto.getIdComunidad());
+        }
+
         entidad.setCodigo(dto.getCodigo());
         entidad.setNombre(dto.getNombre());
         entidad.setCapital(dto.getCapital());
-        entidad.setFechaCreacion(dto.getFechaCreacion());
-        entidad.setFechaActualizacion(dto.getFechaActualizacion());
-        entidad.setActivo(dto.getActivo() != null && dto.getActivo()); // evita null pointer
+        entidad.setActivo(dto.getActivo() != null && dto.getActivo());
+
+        // Fechas manejadas por la BD, no se setean manualmente
         return entidad;
     }
 }
