@@ -39,7 +39,7 @@ public class Profesor {
     private String apellidos;
 
     @Column(name = "telefono")
-    private int telefono;
+    private String telefono;
 
     @Column(name = "email")
     private String email;
