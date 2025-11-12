@@ -32,15 +32,17 @@ public class Convocatoria extends BaseEntity implements Serializable{
 
     //Llaves foraneas 
 
+    //Entidad Catálago está pendiente de implementar
+    @Column(name = "id_catalogo")
+    private Long idCatalago;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
     private Curso curso;
 
-    @Column(name = "id_catalogo")
-    private Long idCatalogo;
-
-    @Column(name = "id_profesor")
-    private Long idProfesor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_profesor", referencedColumnName = "id_profesor")
+    private Profesor profesor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_centro", referencedColumnName = "id_centro")

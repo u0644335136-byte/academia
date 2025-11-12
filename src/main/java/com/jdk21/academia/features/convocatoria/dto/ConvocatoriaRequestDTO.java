@@ -1,11 +1,11 @@
 package com.jdk21.academia.features.convocatoria.dto;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public record ConvocatoriaRequestDTO(
     String codigo,
-    LocalDate fechaInicio,
-    LocalDate fechaFin,
+    Date fechaInicio,
+    Date fechaFin,
     Long idCurso,
     Long idCatalogo,
     Long idProfesor,

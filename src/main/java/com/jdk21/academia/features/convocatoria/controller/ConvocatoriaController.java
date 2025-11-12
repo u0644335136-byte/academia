@@ -11,7 +11,7 @@ import com.jdk21.academia.features.convocatoria.service.ConvocatoriaService;
 
 @RestController
 @RequestMapping("/api/convocatoria")
-public class ConvocatoriaController  extends BaseController<Convocatoria, ConvocatoriaRequestDTO, ConvocatoriaResponseDTO, Long> {
+public class ConvocatoriaController extends BaseController<Convocatoria, ConvocatoriaRequestDTO, ConvocatoriaResponseDTO, Long> {
 
     public ConvocatoriaController(ConvocatoriaService service) {
         super(service);
