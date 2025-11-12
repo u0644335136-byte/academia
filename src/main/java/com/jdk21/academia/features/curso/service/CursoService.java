@@ -23,11 +23,17 @@ public class CursoService {
     private final CursoMapper cursoMapper = CursoMapper.INSTANCE;
 
     public CursoDto crearCurso(CursoDto dto) {
-        // 3. ¡VALIDACIÓN CLAVE! Comprueba si la Materia existe
+        // Validar que idMateria no sea null
+        if (dto.getIdMateria() == null) {
+            throw new IllegalArgumentException("El ID de la materia es obligatorio");
+        }
+        // Validar que la Materia existe
         if (!materiaRepository.existsById(dto.getIdMateria())) {
             throw new IllegalArgumentException("La materia con ID " + dto.getIdMateria() + " no existe.");
         }
         Curso curso = cursoMapper.toEntity(dto);
+        // Ignorar idCurso al crear (se genera automáticamente)
+        curso.setIdCurso(null);
         curso.setActivo(true);
         curso.setFechaCreacion(LocalDateTime.now());
         curso.setFechaActualizacion(LocalDateTime.now());

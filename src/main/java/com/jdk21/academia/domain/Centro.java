@@ -25,9 +25,8 @@ public class Centro extends BaseEntity implements Serializable {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-
     @Column(name = "telefono")
-    private int telefono;
+    private Integer telefono;
 
     @Column(name = "email")
     private String email;
@@ -39,16 +38,16 @@ public class Centro extends BaseEntity implements Serializable {
     private String direccion;
 
     @Column(name = "numero")
-    private int numero;
+    private Integer numero;
 
     @Column(name = "piso")
-    private int piso;
+    private Integer piso;
 
     @Column(name = "puerta")
     private String puerta;
 
     @Column(name = "codigo_postal")
-    private int codigo_postal;
+    private Integer codigo_postal;
 
     @Column(name = "localidad")
     private String localidad;
@@ -56,9 +55,13 @@ public class Centro extends BaseEntity implements Serializable {
     @Column(name = "provincia")
     private String provincia;
 
-    // Si hay FK (por ejemplo, id_comunidad_autonoma)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_empresa")
-    private Empresa empresa;
+    // Campo gestionado por trigger o default en BD (solo lectura)
+    @Column(name= "fecha_creacion", insertable = false,updatable = false)
+    private java.time.LocalDateTime fechaCreacion;
+    @Column(name= "fecha_actualizacion", insertable = false,updatable = false)
+    private java.time.LocalDateTime fechaActualizacion;
 
+    @Column(name = "activo")
+    private Boolean activo;
+    
 }

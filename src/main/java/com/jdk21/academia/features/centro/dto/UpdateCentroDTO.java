@@ -1,13 +1,18 @@
 package com.jdk21.academia.features.centro.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import jakarta.validation.constraints.NotBlank;
 
-public record CentroDTO(
-    Long idCentro,
+public record UpdateCentroDTO(
+    @NotBlank(message = "El código del centro es obligatorio")
     String codigo_centro,
+    
+    @NotBlank(message = "El nombre del centro es obligatorio")
     String nombre,
+    
+    @NotBlank(message = "El responsable es obligatorio")
     String responsable,
+    
     Integer capacidadMax,
     Boolean activo,
     String telefono,
@@ -19,12 +24,8 @@ public record CentroDTO(
     String puerta,
     String codigoPostal,
     String localidad,
-    String provincia,
-    Long idempresa,
-    Long idcomunidad,
-    String empresaNombre,
-    LocalDateTime fechaCreacion,
-    LocalDateTime fechaActualiza
+    String provincia
+
 ) implements Serializable {
-    private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 }
