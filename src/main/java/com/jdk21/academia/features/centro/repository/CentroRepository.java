@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.jdk21.academia.domain.Centro;
+import com.jdk21.academia.features.baseFeature.repository.BaseRepository;
 
-@Repository
 public interface CentroRepository extends JpaRepository<Centro, Long>{
 
     @Query("SELECT c FROM Centro c WHERE c.codigo_centro = :codigo")

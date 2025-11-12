@@ -11,6 +11,7 @@ import lombok.*;
 @Table(name = "empresa")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
