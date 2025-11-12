@@ -1,0 +1,20 @@
+type Profesor {
+  idProfesor: ID!
+  nombre: String!
+  apellidos: String
+  telefono: String
+  email: String!
+  direccion: String
+  localidad: String
+  provincia: String
+  activo: Boolean!
+}
+
+type Query {
+  profesores: [Profesor!]!
+  profesorById(id: ID!): Profesor
+}
+
+type Mutation {
+  crearProfesor(nombre: String!, apellidos: String, telefono: String, email: String!, direccion: String, localidad: String, provincia: String): Profesor!
+}
