@@ -1,6 +1,8 @@
 package com.jdk21.academia.features.comunidad.controller;
 
+import com.jdk21.academia.domain.Comunidad;
 import com.jdk21.academia.features.comunidad.dto.ComunidadDto;
+import com.jdk21.academia.features.comunidad.repository.ComunidadRepository;
 import com.jdk21.academia.features.comunidad.service.ComunidadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ComunidadController {
 
     private final ComunidadService service;
+    private final ComunidadRepository ComunidadRepository;
 
     @GetMapping
     @Operation(summary = "Listar todas las comunidades")
@@ -47,12 +50,12 @@ public class ComunidadController {
         return (actualizada != null) ? ResponseEntity.ok(actualizada) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Eliminar una comunidad por ID")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        service.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
+@DeleteMapping("/{id}")
+@Operation(summary = "Eliminar una comunidad por ID")
+public ResponseEntity<String> deleteComunidad(@PathVariable Long idComunidad) {
+    service.deleteComunidad(idComunidad);
+    return ResponseEntity.ok("✅ Comunidad desactivada correctamente");
+}
 }
 
 

@@ -3,6 +3,7 @@ package com.jdk21.academia.features.comunidad.service;
 import com.jdk21.academia.features.comunidad.dto.ComunidadDto;
 import com.jdk21.academia.features.comunidad.mapper.ComunidadMapper;
 import com.jdk21.academia.features.comunidad.repository.ComunidadRepository;
+import com.jdk21.academia.domain.Alumno;
 import com.jdk21.academia.domain.Comunidad;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,16 @@ public class ComunidadService {
                 .orElse(null);
     }
 
-    public void eliminar(Long idComunidad) {
-        repository.deleteById(idComunidad);
+public void deleteComunidad(Long idComunidad) {
+    Comunidad existingComunidad = repository.findById(idComunidad)
+            .orElseThrow(() -> new RuntimeException("Comunidad no encontrada con id: " + idComunidad));
+
+    if (Boolean.FALSE.equals(existingComunidad.isActivo())) {
+        // Ya está desactivada, no hace nada
+        return;
     }
+
+    existingComunidad.setActivo(false);
+    repository.save(existingComunidad);
+}
 }
