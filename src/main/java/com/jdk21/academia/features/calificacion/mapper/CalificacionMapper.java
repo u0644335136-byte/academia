@@ -5,8 +5,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import com.jdk21.academia.domain.Alumno;
-import com.jdk21.academia.domain.Convocatoria;
 import com.jdk21.academia.domain.Matricula;
 import com.jdk21.academia.domain.Calificacion;
 import com.jdk21.academia.features.baseFeature.mapper.BaseMapper;
