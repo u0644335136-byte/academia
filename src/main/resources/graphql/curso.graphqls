@@ -1,0 +1,27 @@
+type Curso {
+  idCurso: ID
+  idMateria: Int!
+  idFormato: Int!
+  nombre: String!
+  descripcion: String
+  duracionHoras: Int
+}
+
+input CursoInput {
+  idMateria: Int!
+  idFormato: Int!
+  nombre: String!
+  descripcion: String
+  duracionHoras: Int
+}
+
+extend type Query {
+  allCursos: [Curso!]!
+  cursoById(id: ID!): Curso
+}
+
+extend type Mutation {
+  createCurso(input: CursoInput!): Curso
+  updateCurso(id: ID!, input: CursoInput!): Curso
+  deleteCurso(id: ID!): Boolean
+}
