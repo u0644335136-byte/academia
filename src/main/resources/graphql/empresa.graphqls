@@ -6,7 +6,7 @@ type Empresa {
     representante: String
 }
 
-type Query {
+extend type Query {
     allEmpresas: [Empresa!]!
     empresaById(id: ID!): Empresa
 }
@@ -20,7 +20,7 @@ input EmpresaInput {
 }
 
 
-type Mutation {
+extend type Mutation {
     createEmpresa(input: EmpresaInput!): Empresa!
     updateEmpresa(id: ID!, input: EmpresaInput!): Empresa!
     deleteEmpresa(id: ID!): Boolean!
