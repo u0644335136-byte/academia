@@ -17,4 +17,5 @@ type Query {
 
 type Mutation {
   crearProfesor(nombre: String!, apellidos: String, telefono: String, email: String!, direccion: String, localidad: String, provincia: String): Profesor!
+  actualizarProfesor(id: ID!, nombre: String!, apellidos: String, telefono: String, email: String!, direccion: String, localidad: String, provincia: String, activo: Boolean): Profesor!
 }

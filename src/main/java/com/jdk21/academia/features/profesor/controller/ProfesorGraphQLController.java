@@ -67,4 +67,39 @@ public class ProfesorGraphQLController {
             throw new RuntimeException("Error al crear profesor: " + e.getMessage());
         }
     }
+
+    @MutationMapping
+    public ProfesorDto actualizarProfesor(
+            @Argument Long id,
+            @Argument String nombre,
+            @Argument String apellidos,
+            @Argument String telefono,
+            @Argument String email,
+            @Argument String direccion,
+            @Argument String localidad,
+            @Argument String provincia,
+            @Argument Boolean activo) {
+        try {
+            // Construye el DTO con los valores proporcionados
+            ProfesorDto dto = ProfesorDto.builder()
+                    .idProfesor(id)  // Establece el ID para identificar el profesor a actualizar
+                    .nombre(nombre)
+                    .apellidos(apellidos)
+                    .telefono(telefono)
+                    .email(email)
+                    .direccion(direccion)
+                    .localidad(localidad)
+                    .provincia(provincia)
+                    .activo(activo != null ? activo : true)  // Usa el valor proporcionado o true por defecto
+                    .build();
+
+            // Llama al servicio para actualizar el profesor
+            Optional<ProfesorDto> updatedProfesor = profesorService.actualizarProfesor(id, dto);
+            return updatedProfesor.orElseThrow(() -> new IllegalArgumentException("Profesor no encontrado para actualización"));
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Error de validación al actualizar profesor: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar profesor: " + e.getMessage());
+        }
+    }
 }
