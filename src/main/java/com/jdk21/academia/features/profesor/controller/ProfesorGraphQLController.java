@@ -48,7 +48,8 @@ public class ProfesorGraphQLController {
             @Argument String email,
             @Argument String direccion,
             @Argument String localidad,
-            @Argument String provincia) {
+            @Argument String provincia,
+            @Argument String contrasenia) {
         try {
             ProfesorDto dto = ProfesorDto.builder()
                     .nombre(nombre)
@@ -58,6 +59,7 @@ public class ProfesorGraphQLController {
                     .direccion(direccion)
                     .localidad(localidad)
                     .provincia(provincia)
+                    .contrasenia(contrasenia)
                     .activo(true)
                     .build();
             return profesorService.crearProfesor(dto);
