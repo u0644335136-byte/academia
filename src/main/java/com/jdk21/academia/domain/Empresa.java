@@ -1,5 +1,3 @@
-
-
 package com.jdk21.academia.domain;
 
 import java.io.Serializable;
