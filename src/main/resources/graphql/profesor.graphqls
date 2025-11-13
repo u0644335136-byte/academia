@@ -8,14 +8,15 @@ type Profesor {
   localidad: String
   provincia: String
   activo: Boolean!
+  contrasenia: String!
 }
 
-type Query {
+extend type Query {
   profesores: [Profesor!]!
   profesorById(id: ID!): Profesor
 }
 
-type Mutation {
-  crearProfesor(nombre: String!, apellidos: String, telefono: String, email: String!, direccion: String, localidad: String, provincia: String): Profesor!
+extend type Mutation {
+  crearProfesor(nombre: String!, apellidos: String, telefono: String, email: String!, direccion: String, localidad: String, provincia: String, contrasenia: String!): Profesor!
   actualizarProfesor(id: ID!, nombre: String!, apellidos: String, telefono: String, email: String!, direccion: String, localidad: String, provincia: String, activo: Boolean): Profesor!
 }
