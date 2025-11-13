@@ -1,0 +1,24 @@
+type MateriaDto {
+  idMateria: ID
+  nombre: String
+  descripcion: String
+  activo: Boolean
+  fechaCreacion: String
+  fechaActualizacion: String
+}
+
+extend type Query {
+  retornarTodasMaterias: [MateriaDto]
+  materiaPorId(id: ID!): MateriaDto
+}
+
+extend type Mutation {
+  crearMateria(input: MateriaInput!): MateriaDto
+  actualizarMateria(id: ID!, input: MateriaInput!): MateriaDto
+  eliminarMateria(id: ID!): MateriaDto
+}
+
+input MateriaInput {
+  nombre: String
+  descripcion: String
+}
