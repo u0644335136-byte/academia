@@ -9,14 +9,19 @@ import org.springframework.stereotype.Repository;
 import com.jdk21.academia.domain.Centro;
 import com.jdk21.academia.features.baseFeature.repository.BaseRepository;
 
-public interface CentroRepository extends JpaRepository<Centro, Long>{
+public interface CentroRepository extends JpaRepository<Centro, Long> {
+
+Optional<Centro> findByCodigo_centro(String codigo_centro);
+
+    List<Centro> findByActivoTrue();
+    /*
 
     @Query("SELECT c FROM Centro c WHERE c.codigo_centro = :codigo")
-    Optional<Centro> findByCodigo_centro(@Param("codigo") String codigo_centro);
-    
+    Optional<Centro> findByCodigo(@Param("codigo") String codigo_centro);
+
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Centro c WHERE c.codigo_centro = :codigo")
     boolean existsByCodigo_centro(@Param("codigo") String codigo_centro);
-    
-    List<Centro> findByActivoTrue();
-    
+
+     */
+
 }

@@ -1,0 +1,69 @@
+type Centro {
+    id_centro: ID!
+    codigo_centro: String
+    nombre: String!
+    responsable: String
+    capacidad_maxima: Int
+    activo: Boolean
+    telefono: String
+    email: String
+    web: String
+    direccion: String
+    numero: Int
+    piso: Int
+    puerta: String
+    codigo_postal: Int
+    localidad: String
+    provincia: String
+    fechaCreacion: String
+    fechaActualizacion: String
+}
+
+input CreateCentroDTO {
+    codigo_centro: String!
+    nombre: String!
+    responsable: String
+    capacidad_maxima: Int
+    activo: Boolean
+    telefono: String
+    email: String
+    web: String
+    direccion: String
+    numero: Int
+    piso: Int
+    puerta: String
+    codigo_postal: Int
+    localidad: String
+    provincia: String
+}
+
+input UpdateCentroDTO {
+    codigo_centro: String
+    nombre: String
+    responsable: String
+    capacidad_maxima: Int
+    activo: Boolean
+    telefono: String
+    email: String
+    web: String
+    direccion: String
+    numero: Int
+    piso: Int
+    puerta: String
+    codigo_postal: Int
+    localidad: String
+    provincia: String
+}
+
+type Query {
+    getAllCentros: [Centro!]!
+    getCentroById(id: ID!): Centro
+    getCentroByCodigo(codigo_centro: String!): Centro!
+    getCentrosActivos: [Centro]
+}
+
+type Mutation {
+    createCentro(input: CreateCentroDTO!): Centro
+    updateCentro(id: ID!, updateDTO: UpdateCentroDTO!): Centro
+    desactivarCentro(id: ID!): Centro
+}

@@ -19,17 +19,20 @@ public class CentroController {
     
     private final CentroService centroService;
     
+@GetMapping
+    public ResponseEntity<List<CentroDTO>> getAllCentros() {
+        List<CentroDTO> centros = centroService.getAllCentros();
+        return ResponseEntity.ok(centros);
+    }
+}
+/*
     @PostMapping
     public ResponseEntity<CentroDTO> createCentro(@Valid @RequestBody CreateCentroDTO createDTO) {
         CentroDTO centroDTO = centroService.createCentro(createDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(centroDTO);
     }
     
-    @GetMapping
-    public ResponseEntity<List<CentroDTO>> getAllCentros() {
-        List<CentroDTO> centros = centroService.getAllCentros();
-        return ResponseEntity.ok(centros);
-    }
+    
     
     @GetMapping("/{id}")
     public ResponseEntity<CentroDTO> getCentroById(@PathVariable Long id) {
@@ -59,3 +62,4 @@ public class CentroController {
     }
 
 }
+    */
