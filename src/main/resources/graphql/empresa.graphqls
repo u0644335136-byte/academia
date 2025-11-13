@@ -1,0 +1,27 @@
+type Empresa {
+    id: ID!
+    cif: String!
+    nombreLegal: String!
+    razonSocial: String
+    representante: String
+}
+
+type Query {
+    allEmpresas: [Empresa!]!
+    empresaById(id: ID!): Empresa
+}
+
+
+input EmpresaInput {
+    cif: String!
+    nombreLegal: String!
+    razonSocial: String
+    representante: String
+}
+
+
+type Mutation {
+    createEmpresa(input: EmpresaInput!): Empresa!
+    updateEmpresa(id: ID!, input: EmpresaInput!): Empresa!
+    deleteEmpresa(id: ID!): Boolean!
+}
