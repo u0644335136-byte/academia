@@ -5,7 +5,7 @@ type Centro {
     responsable: String
     capacidad_maxima: Int
     activo: Boolean
-    telefono: String
+    telefono: Int
     email: String
     web: String
     direccion: String
@@ -22,10 +22,10 @@ type Centro {
 input CreateCentroDTO {
     codigo_centro: String!
     nombre: String!
-    responsable: String
-    capacidad_maxima: Int
+    responsable: String!
+    capacidadMax: Int
     activo: Boolean
-    telefono: String
+    telefono: Int
     email: String
     web: String
     direccion: String
@@ -41,9 +41,9 @@ input UpdateCentroDTO {
     codigo_centro: String
     nombre: String
     responsable: String
-    capacidad_maxima: Int
+    capacidadMax: Int
     activo: Boolean
-    telefono: String
+    telefono: Int
     email: String
     web: String
     direccion: String

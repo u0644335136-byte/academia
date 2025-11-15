@@ -45,21 +45,17 @@ public class CentroGraphQlController {
         return centroService.getCentrosActivos();
     }
 
-}
-
-
-    /* 
     // ===============
     //    MUTATIONS
     // ===============
 
     @MutationMapping
-    public CentroDTO createCentro(@Argument CreateCentroDTO input) {
+    public CentroDTO createCentro(@Argument("input") CreateCentroDTO input) {
         return centroService.createCentro(input);
     }
 
     @MutationMapping
-    public CentroDTO updateCentro(@Argument Long id, @Argument UpdateCentroDTO updateDTO) {
+    public CentroDTO updateCentro(@Argument Long id, @Argument("updateDTO") UpdateCentroDTO updateDTO) {
         return centroService.updateCentro(id, updateDTO);
     }
 
@@ -69,7 +65,7 @@ public class CentroGraphQlController {
     }
 
     // ================================
-    //  MAPEOS DE CAMPOS "RAROS" (snake_case)
+    //  MAPEOS DE CAMPOS (snake_case)
     // ================================
 
     @SchemaMapping(typeName = "Centro", field = "id_centro")
@@ -89,97 +85,17 @@ public class CentroGraphQlController {
 
     @SchemaMapping(typeName = "Centro", field = "id_empresa")
     public Long id_empresa(CentroDTO centro) {
-        return centro.idempresa();
+        return centro.id_empresa();
     }
 
-    @SchemaMapping(typeName = "Centro", field = "id_comunidad")
-    public Long id_comunidad(CentroDTO centro) {
-        return centro.idcomunidad();
+    @SchemaMapping(typeName = "Centro", field = "fechaCreacion")
+    public String fechaCreacion(CentroDTO centro) {
+        return centro.fechaCreacion() != null ? centro.fechaCreacion().toString() : null;
     }
 
-    
+    @SchemaMapping(typeName = "Centro", field = "fechaActualizacion")
+    public String fechaActualizacion(CentroDTO centro) {
+        return centro.fechaActualizacion() != null ? centro.fechaActualizacion().toString() : null;
+    }
+
 }
-
-
-*/
-
-
-/*
-package com.jdk21.academia.features.centro.controller;
-
-import com.jdk21.academia.features.centro.dto.CentroDTO;
-import com.jdk21.academia.features.centro.dto.CreateCentroDTO;
-import com.jdk21.academia.features.centro.dto.UpdateCentroDTO;
-import com.jdk21.academia.features.centro.mapper.CentroMapper;
-import com.jdk21.academia.features.centro.service.CentroService;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.stereotype.Controller;
-import java.util.List;
-
-@Controller
-public class CentroGraphQlController {
-
-    private final CentroService service;
-    private final CentroMapper mapper;
-    
-    public CentroGraphQlController (CentroService service, CentroMapper mapper){
-        this.service = service;
-        this.mapper = mapper;
-    }
-    // ========== QUERIES ==========
-
-    @QueryMapping
-    public List<CentroDTO> getAllCentros() {
-        return service.getAllCentros();
-    }
-
-    @QueryMapping
-    public CentroDTO getCentroById(@Argument Long id) {
-
-        return service.getCentroById(id);
-    }
-
-    @QueryMapping
-    public CentroDTO getCentroByCodigo(@Argument String codigoCentro) {
-
-        return service.getCentroByCodigo(codigoCentro);
-    }
-
-    @QueryMapping
-    public List<CentroDTO> getCentrosActivos() {
-
-        return service.getCentrosActivos();
-    }
-
-    // ========== MUTATIONS ==========
-/*
-    @MutationMapping
-    public CentroDTO createCentro(@Argument CreateCentroDTO createDTO) {
-
-        return service.createCentro(createDTO);
-    }
-        //
-    @MutationMapping
-    public CentroDTO createCentro(@Argument ("input") CreateCentroDTO centroDTO) {
-        try {
-            return service.createCentro(centroDTO);
-        } catch (Exception e) {
-            throw new RuntimeException("Error creating centro: " + e.getMessage());
-        }
-    }
-
-    @MutationMapping
-    public CentroDTO updateCentro(@Argument ("input") Long id, @Argument UpdateCentroDTO updateDTO) {
-
-        return service.updateCentro(id, updateDTO);
-    }
-
-    @MutationMapping
-    public CentroDTO desactivarCentro(@Argument Long id) {
-
-        return service.desactivarCentro(id);
-    }
-}
-*/

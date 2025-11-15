@@ -22,8 +22,6 @@ public record CentroDTO(
         Integer codigo_postal,
         String localidad,
         String provincia,
-        Long idempresa,
-        Long idcomunidad,
         LocalDateTime fechaCreacion,
         LocalDateTime fechaActualizacion) implements Serializable {
     private static final long serialVersionUID = 1L;

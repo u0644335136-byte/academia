@@ -10,12 +10,8 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@AttributeOverride(name = "id", column = @Column(name = "id_centro"))
 public class Centro extends BaseEntity implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // IMPORTANTE
-    @Column(name = "id_centro")
-    private Long idCentro;
 
     // Campos mapeados directamente a columnas existentes
     @Column(name = "codigo_centro", nullable = false, unique = true)
@@ -27,11 +23,13 @@ public class Centro extends BaseEntity implements Serializable {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "id_empresa", nullable = false)
-    private String id_empresa;
+    //@Column(name = "id_empresa", nullable = false)
+    @Transient
+    private Long id_empresa;
 
-    @Column(name = "id_comunidad", nullable = false)
-    private String id_comunidad;
+    // Campo no existe en la BD - marcado como @Transient para que Hibernate lo ignore
+    @Transient
+    private Long id_comunidad;
 
     @Column(name = "telefono")
     private Integer telefono;
@@ -62,14 +60,5 @@ public class Centro extends BaseEntity implements Serializable {
 
     @Column(name = "provincia")
     private String provincia;
-
-    // Campo gestionado por trigger o default en BD (solo lectura)
-    @Column(name = "fecha_creacion", insertable = false, updatable = false)
-    private java.time.LocalDateTime fechaCreacion;
-    @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
-    private java.time.LocalDateTime fechaActualizacion;
-
-    @Column(name = "activo")
-    private Boolean activo;
 
 }

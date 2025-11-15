@@ -15,14 +15,14 @@ public record CreateCentroDTO(
     
     Integer capacidadMax,
     Boolean activo,
-    String telefono,
+    Integer telefono,
     String email,
     String web,
     String direccion,
-    String numero,
-    String piso,
+    Integer numero,
+    Integer piso,
     String puerta,
-    String codigoPostal,
+    Integer codigo_postal,
     String localidad,
     String provincia
 ) implements Serializable {
