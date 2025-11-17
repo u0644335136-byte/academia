@@ -12,17 +12,19 @@ public record CreateCentroDTO(
     
     @NotBlank(message = "El responsable es obligatorio")
     String responsable,
+    Long id_empresa,
+    Long id_comunidad,
     
     Integer capacidadMax,
     Boolean activo,
-    String telefono,
+    Integer telefono,
     String email,
     String web,
     String direccion,
-    String numero,
-    String piso,
+    Integer numero,
+    Integer piso,
     String puerta,
-    String codigoPostal,
+    Integer codigo_postal,
     String localidad,
     String provincia
 ) implements Serializable {
