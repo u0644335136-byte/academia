@@ -19,24 +19,24 @@ public class CentroController {
     
     private final CentroService centroService;
     
-    @PostMapping
-    public ResponseEntity<CentroDTO> createCentro(@Valid @RequestBody CreateCentroDTO createDTO) {
-        CentroDTO centroDTO = centroService.createCentro(createDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(centroDTO);
-    }
-    
     @GetMapping
     public ResponseEntity<List<CentroDTO>> getAllCentros() {
         List<CentroDTO> centros = centroService.getAllCentros();
         return ResponseEntity.ok(centros);
     }
-    
+
+    @PostMapping
+    public ResponseEntity<CentroDTO> createCentro(@Valid @RequestBody CreateCentroDTO createDTO) {
+        CentroDTO centroDTO = centroService.createCentro(createDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(centroDTO);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CentroDTO> getCentroById(@PathVariable Long id) {
         CentroDTO centro = centroService.getCentroById(id);
         return ResponseEntity.ok(centro);
     }
-    
+
     @PutMapping("/{id}")
     public ResponseEntity<CentroDTO> updateCentro(
             @PathVariable Long id,
@@ -48,8 +48,9 @@ public class CentroController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PatchMapping("/{id}/desactivar")
-    public ResponseEntity<?> desactivarCentro(@PathVariable Long id) {
+    public ResponseEntity<CentroDTO> desactivarCentro(@PathVariable Long id) {
         try {
             CentroDTO centro = centroService.desactivarCentro(id);
             return ResponseEntity.ok(centro);
