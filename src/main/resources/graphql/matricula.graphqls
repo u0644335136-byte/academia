@@ -1,0 +1,32 @@
+type MatriculaDto {
+  id: ID
+  fecha: String
+  codigo: String
+  precio: Int
+  idConvocatoria: ID
+  convocatoriaCodigo: String
+  idAlumno: ID
+  alumnoEmail: String
+  nota: Int
+}
+
+input MatriculaInput {
+  fecha: String
+  codigo: String
+  precio: Int
+  idConvocatoria: ID
+  idAlumno: ID
+  nota: Int
+}
+
+extend type Query {
+  retornarTodasMatriculas: [MatriculaDto]
+  matriculaPorId(id: ID!): MatriculaDto
+}
+
+extend type Mutation {
+  crearMatricula(input: MatriculaInput!): MatriculaDto
+  actualizarMatricula(id: ID!, input: MatriculaInput!): MatriculaDto
+  eliminarMatricula(id: ID!): Boolean
+  actualizarNotaMatricula(id: ID!, nota: Int!): MatriculaDto
+}

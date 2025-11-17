@@ -7,5 +7,6 @@ public record MatriculaRequestDTO(
     String codigo,
     int precio,
     Long idConvocatoria,
-    Long idAlumno
+    Long idAlumno,
+    int nota
 ) {}
