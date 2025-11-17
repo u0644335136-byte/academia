@@ -8,12 +8,12 @@ type Comunidad {
     fechaActualizacion: String
 }
 
-type Query {
+extend type Query {
     comunidades: [Comunidad]
     comunidadById(idComunidad: ID!): Comunidad
 }
 
-type Mutation {
+extend type Mutation {
     crearComunidad(codigo: String!, nombre: String!, capital: String!): Comunidad
     desactivarComunidad(idComunidad: ID!): Boolean
 }
