@@ -5,13 +5,11 @@ import lombok.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="centro")
+@Table(name = "centro")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(onlyExplicitlyIncluded = true)
 @AttributeOverride(name = "id", column = @Column(name = "id_centro"))
 public class Centro extends BaseEntity implements Serializable {
 
@@ -24,6 +22,12 @@ public class Centro extends BaseEntity implements Serializable {
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
+
+    @Column(name = "id_empresa")
+    private Long id_empresa;
+
+    @Column(name = "id_comunidad")
+    private Long id_comunidad;
 
     @Column(name = "telefono")
     private Integer telefono;
@@ -55,13 +59,4 @@ public class Centro extends BaseEntity implements Serializable {
     @Column(name = "provincia")
     private String provincia;
 
-    // Campo gestionado por trigger o default en BD (solo lectura)
-    @Column(name= "fecha_creacion", insertable = false,updatable = false)
-    private java.time.LocalDateTime fechaCreacion;
-    @Column(name= "fecha_actualizacion", insertable = false,updatable = false)
-    private java.time.LocalDateTime fechaActualizacion;
-
-    @Column(name = "activo")
-    private Boolean activo;
-    
 }
