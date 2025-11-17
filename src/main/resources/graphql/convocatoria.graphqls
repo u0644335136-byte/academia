@@ -1,0 +1,35 @@
+"Objeto devuelto por las consultas de Convocatoria"
+type ConvocatoriaDto {
+  id: ID
+  codigo: String
+  fechaInicio: String
+  fechaFin: String
+  idCurso: ID
+  cursoNombre: String
+  idCatalogo: ID
+  idProfesor: ID
+  profesorEmail: String
+  idCentro: ID
+  centroNombre: String
+}
+
+input ConvocatoriaInput {
+  codigo: String
+  fechaInicio: String
+  fechaFin: String
+  idCurso: ID
+  idCatalogo: ID
+  idProfesor: ID
+  idCentro: ID
+}
+
+extend type Query {
+  retornarTodasConvocatorias: [ConvocatoriaDto]
+  convocatoriaPorId(id: ID!): ConvocatoriaDto
+}
+
+extend type Mutation {
+  crearConvocatoria(input: ConvocatoriaInput!): ConvocatoriaDto
+  actualizarConvocatoria(id: ID!, input: ConvocatoriaInput!): ConvocatoriaDto
+  eliminarConvocatoria(id: ID!): Boolean
+}

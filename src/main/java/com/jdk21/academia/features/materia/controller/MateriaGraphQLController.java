@@ -39,11 +39,15 @@ public class MateriaGraphQLController {
 
 
     //UPDATE
-    public Optional<MateriaDto> crearMateria(@Argument Long id, @Argument("input") MateriaDto dto){
-        return materiaService.actualizarMateria(id, dto);
+    @MutationMapping
+    public MateriaDto actualizarMateria(@Argument Long id, @Argument("input") MateriaDto dto) {
+        return materiaService.actualizarMateria(id, dto)
+                .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
     }
 
+
     //SOFT-DELETE
+    @MutationMapping
     public Optional<MateriaDto> eliminarMateria(@Argument Long id) {
         return materiaService.eliminarMateria(id);
     }
