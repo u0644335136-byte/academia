@@ -41,7 +41,7 @@ public class Curso implements Serializable {
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
     private LocalDateTime fechaCreacion;
 
-    @Column(name = "fecha_creacion", insertable = false, updatable = false) 
+    @Column(name = "fecha_actualizacion", insertable = false, updatable = false) 
     private LocalDateTime fechaActualizacion;
 
     @Column(name = "duracion_horas")
