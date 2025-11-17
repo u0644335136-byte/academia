@@ -1,0 +1,184 @@
+:root {
+    --bg: #edf2f7;
+    --surface: #ffffff;
+    --border: #d7e0ea;
+    --text: #1f2933;
+    --muted: #627d98;
+    --accent: #2563eb;
+    --accent-soft: rgba(37,99,235,.15);
+    --orange: #ff6b00;
+    --radius: 12px;
+    --shadow: 0 12px 25px rgba(15, 23, 42, 0.06);
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: linear-gradient(180deg, #edf2f7 0%, #e2e8f0 100%);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+header {
+    background: var(--surface);
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    padding: .8rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+header h1 {
+    font-size: 1.05rem;
+    margin: 0;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+.badge {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: .1rem .5rem;
+    border-radius: 999px;
+    font-size: .65rem;
+    text-transform: uppercase;
+    letter-spacing: .04rem;
+}
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    flex: 1;
+}
+.card {
+    background: var(--surface);
+    border: 1px solid rgba(215, 224, 234, .8);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem 1.2rem;
+    box-shadow: var(--shadow);
+}
+.card h2 {
+    margin-top: 0;
+    font-size: .9rem;
+    margin-bottom: .8rem;
+    color: #192e4d;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+label {
+    display: block;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .05rem;
+    color: var(--muted);
+    margin-bottom: .25rem;
+}
+input, select {
+    width: 100%;
+    background: #f8fafc;
+    border: 1px solid rgba(215,224,234,.9);
+    border-radius: 8px;
+    padding: .5rem .6rem;
+    font-size: .8rem;
+    color: var(--text);
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: rgba(37, 99, 235, .7);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, .12);
+    background: #fff;
+}
+button {
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    padding: .5rem .9rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: .75rem;
+    cursor: pointer;
+}
+button.secondary {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.03);
+    color: var(--text);
+}
+.checkbox-row {
+    display: flex;
+    gap: .4rem;
+    align-items: center;
+    font-size: .75rem;
+    margin-top: .4rem;
+}
+pre {
+    background: #f7fafc;
+    border: 1px solid rgba(0,0,0,0.03);
+    border-radius: 8px;
+    padding: .7rem .8rem;
+    font-size: .7rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+}
+.list {
+    display: grid;
+    gap: .5rem;
+}
+.list-item {
+    background: #fff;
+    border: 1px solid rgba(215, 224, 234, .6);
+    border-radius: 8px;
+    padding: .5rem .6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.pill {
+    background: rgba(255, 107, 0, .1);
+    color: #ff6b00;
+    border-radius: 999px;
+    padding: .18rem .55rem;
+    font-size: .6rem;
+    font-weight: 600;
+}
+.tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+}
+.tab-button {
+    padding: .7rem 1.5rem;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-size: .9rem;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+}
+.tab-button.active {
+    color: var(--accent);
+    border-bottom: 3px solid var(--accent);
+}
+.tab-content {
+    display: none;
+    grid-template-columns: 420px 1fr;
+    gap: 1.5rem;
+}
+.tab-content.active {
+    display: grid;
+}
+.form-group {
+    margin-bottom: .8rem;
+}
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .8rem;
+}
+@media (max-width: 900px) {
+    .tab-content { grid-template-columns: 1fr; }
+}
