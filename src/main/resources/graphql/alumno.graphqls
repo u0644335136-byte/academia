@@ -1,0 +1,36 @@
+type Alumno {
+  id_alumno: ID
+  nombre: String!
+  apellidos: String!
+  telefono: String!
+  email: String!
+  contrasenia: String!
+  fecha_nacimiento: String
+  localidad: String!
+  provincia: String!
+  activo: Boolean
+}
+
+input AlumnoInput {
+  nombre: String!
+  apellidos: String!
+  telefono: String!
+  email: String!
+  contrasenia: String!
+  fecha_nacimiento: String!
+  localidad: String!
+  provincia: String!
+  activo: Boolean
+}
+
+extend type Query {
+  allAlumnos: [Alumno!]!
+  alumnoById(id: ID!): Alumno
+}
+
+extend type Mutation {
+  createAlumno(input: AlumnoInput!): Alumno
+  updateAlumno(id: ID!, input: AlumnoInput!): Alumno
+  deleteAlumno(id: ID!): Boolean
+}
+
