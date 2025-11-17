@@ -12,6 +12,8 @@ public record CreateCentroDTO(
     
     @NotBlank(message = "El responsable es obligatorio")
     String responsable,
+    Long id_empresa,
+    Long id_comunidad,
     
     Integer capacidadMax,
     Boolean activo,

@@ -33,8 +33,8 @@ public interface CentroMapper {
     
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "codigo_postal", ignore = false)
-    @Mapping(target = "id_empresa", ignore = true)
-    @Mapping(target = "id_comunidad", ignore = true)
+    //@Mapping(target = "id_empresa", ignore = true)
+    //@Mapping(target = "id_comunidad", ignore = true)
     @Mapping(target = "fechaCreacion", ignore = true)
     @Mapping(target = "fechaActualizacion", ignore = true)
     @Mapping(target = "activo", ignore = true)

@@ -23,12 +23,10 @@ public class Centro extends BaseEntity implements Serializable {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    //@Column(name = "id_empresa", nullable = false)
-    @Transient
+    @Column(name = "id_empresa")
     private Long id_empresa;
 
-    // Campo no existe en la BD - marcado como @Transient para que Hibernate lo ignore
-    @Transient
+    @Column(name = "id_comunidad")
     private Long id_comunidad;
 
     @Column(name = "telefono")

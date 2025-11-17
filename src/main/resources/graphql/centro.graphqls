@@ -1,5 +1,7 @@
 type Centro {
     id_centro: ID!
+    id_empresa: ID
+    id_comunidad: ID
     codigo_centro: String
     nombre: String!
     responsable: String
@@ -23,6 +25,8 @@ input CreateCentroDTO {
     codigo_centro: String!
     nombre: String!
     responsable: String!
+    id_empresa: ID
+    id_comunidad: ID
     capacidadMax: Int
     activo: Boolean
     telefono: Int
@@ -55,14 +59,14 @@ input UpdateCentroDTO {
     provincia: String
 }
 
-type Query {
+extends type Query {
     getAllCentros: [Centro!]!
     getCentroById(id: ID!): Centro
     getCentroByCodigo(codigo_centro: String!): Centro!
     getCentrosActivos: [Centro]
 }
 
-type Mutation {
+extends type Mutation {
     createCentro(input: CreateCentroDTO!): Centro
     updateCentro(id: ID!, updateDTO: UpdateCentroDTO!): Centro
     desactivarCentro(id: ID!): Centro
