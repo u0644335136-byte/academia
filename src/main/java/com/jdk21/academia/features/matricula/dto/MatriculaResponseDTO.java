@@ -10,6 +10,7 @@ public record MatriculaResponseDTO (
     Long idConvocatoria,
     String convocatoriaCodigo,
     Long idAlumno,
-    String alumnoEmail
+    String alumnoEmail,
+    int nota
 ) {}
 

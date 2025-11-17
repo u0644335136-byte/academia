@@ -15,4 +15,15 @@ public class MatriculaService extends BaseService<Matricula, MatriculaRequestDTO
     public MatriculaService(BaseRepository<Matricula> repository, MatriculaMapper mapper) {
         super(repository, mapper);
     }
+
+
+    public MatriculaResponseDTO actualizarCalificacion (Long id, int nota) {
+        Matricula matricula = repository.findById((Long) id)
+                .orElseThrow(() -> new RuntimeException("Matricula no encontrada"));
+
+        matricula.setNota(nota);
+
+        return mapper.toDto(repository.save(matricula));
+    }
+
 }
