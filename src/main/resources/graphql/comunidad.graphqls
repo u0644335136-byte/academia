@@ -1,0 +1,19 @@
+type Comunidad {
+    idComunidad: ID
+    codigo: String
+    nombre: String
+    capital: String
+    activo: Boolean
+    fechaCreacion: String
+    fechaActualizacion: String
+}
+
+extend type Query {
+    comunidades: [Comunidad]
+    comunidadById(idComunidad: ID!): Comunidad
+}
+
+extend type Mutation {
+    crearComunidad(codigo: String!, nombre: String!, capital: String!): Comunidad
+    desactivarComunidad(idComunidad: ID!): Boolean
+}
