@@ -5,12 +5,16 @@
     --text: #1f2933;
     --muted: #627d98;
     --accent: #2563eb;
-    --accent-soft: rgba(37,99,235,.15);
+    --accent-soft: rgba(37, 99, 235, .15);
     --orange: #ff6b00;
     --radius: 12px;
     --shadow: 0 12px 25px rgba(15, 23, 42, 0.06);
 }
-* { box-sizing: border-box; }
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -20,15 +24,17 @@ body {
     display: flex;
     flex-direction: column;
 }
+
 header {
     background: var(--surface);
-    border-bottom: 1px solid rgba(0,0,0,0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     padding: .8rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: var(--shadow);
 }
+
 header h1 {
     font-size: 1.05rem;
     margin: 0;
@@ -36,6 +42,7 @@ header h1 {
     gap: .5rem;
     align-items: center;
 }
+
 .badge {
     background: var(--accent-soft);
     color: var(--accent);
@@ -45,6 +52,7 @@ header h1 {
     text-transform: uppercase;
     letter-spacing: .04rem;
 }
+
 .container {
     display: grid;
     grid-template-columns: 1fr;
@@ -52,6 +60,7 @@ header h1 {
     padding: 1.5rem;
     flex: 1;
 }
+
 .card {
     background: var(--surface);
     border: 1px solid rgba(215, 224, 234, .8);
@@ -59,6 +68,7 @@ header h1 {
     padding: 1rem 1.2rem 1.2rem;
     box-shadow: var(--shadow);
 }
+
 .card h2 {
     margin-top: 0;
     font-size: .9rem;
@@ -68,6 +78,7 @@ header h1 {
     gap: .5rem;
     align-items: center;
 }
+
 label {
     display: block;
     font-size: .7rem;
@@ -76,36 +87,53 @@ label {
     color: var(--muted);
     margin-bottom: .25rem;
 }
-input, select {
+
+input,
+select {
     width: 100%;
     background: #f8fafc;
-    border: 1px solid rgba(215,224,234,.9);
+    border: 1px solid rgba(215, 224, 234, .9);
     border-radius: 8px;
     padding: .5rem .6rem;
     font-size: .8rem;
     color: var(--text);
 }
-input:focus, select:focus {
+
+input:focus,
+select:focus {
     outline: none;
     border-color: rgba(37, 99, 235, .7);
     box-shadow: 0 0 0 2px rgba(37, 99, 235, .12);
     background: #fff;
 }
+
+/* Botones más pequeños y compactos */
 button {
     background: var(--accent);
     border: none;
     color: #fff;
-    padding: .5rem .9rem;
-    border-radius: 8px;
+    padding: .4rem .7rem;
+    border-radius: 6px;
     font-weight: 600;
-    font-size: .75rem;
+    font-size: .7rem;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
+
+button:hover {
+    background: #1e55d5;
+}
+
 button.secondary {
     background: #fff;
-    border: 1px solid rgba(0,0,0,0.03);
+    border: 1px solid rgba(0, 0, 0, 0.03);
     color: var(--text);
 }
+
+button.secondary:hover {
+    background: #f0f4f8;
+}
+
 .checkbox-row {
     display: flex;
     gap: .4rem;
@@ -113,19 +141,22 @@ button.secondary {
     font-size: .75rem;
     margin-top: .4rem;
 }
+
 pre {
     background: #f7fafc;
-    border: 1px solid rgba(0,0,0,0.03);
+    border: 1px solid rgba(0, 0, 0, 0.03);
     border-radius: 8px;
     padding: .7rem .8rem;
     font-size: .7rem;
     overflow-x: auto;
     white-space: pre-wrap;
 }
+
 .list {
     display: grid;
     gap: .5rem;
 }
+
 .list-item {
     background: #fff;
     border: 1px solid rgba(215, 224, 234, .6);
@@ -135,6 +166,7 @@ pre {
     justify-content: space-between;
     align-items: center;
 }
+
 .pill {
     background: rgba(255, 107, 0, .1);
     color: #ff6b00;
@@ -143,11 +175,13 @@ pre {
     font-size: .6rem;
     font-weight: 600;
 }
+
 .tabs {
     display: flex;
     border-bottom: 1px solid var(--border);
     margin-bottom: 1.5rem;
 }
+
 .tab-button {
     padding: .7rem 1.5rem;
     cursor: pointer;
@@ -159,26 +193,44 @@ pre {
     border-bottom: 3px solid transparent;
     transition: all .2s;
 }
+
+.tab-button:hover {
+    color: var(--text);
+}
+
 .tab-button.active {
     color: var(--accent);
     border-bottom: 3px solid var(--accent);
 }
+
+/* AJUSTE CLAVE: Usar 1fr 1fr para una división 50/50 de las dos tarjetas */
 .tab-content {
     display: none;
-    grid-template-columns: 420px 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
 }
+
 .tab-content.active {
     display: grid;
 }
+
 .form-group {
     margin-bottom: .8rem;
 }
+
+/* La cuadrícula interna del formulario para campos de dos columnas */
+
 .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    /* Esto divide los elementos hijos en dos columnas de igual ancho */
     gap: .8rem;
 }
+
 @media (max-width: 900px) {
-    .tab-content { grid-template-columns: 1fr; }
+
+    /* En pantallas pequeñas, volvemos a una sola columna (100% de ancho) */
+    .tab-content {
+        grid-template-columns: 1fr;
+    }
 }

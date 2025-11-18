@@ -1,0 +1,45 @@
+<div class="card">
+    <h2>👩‍🎓 CRUD Alumno</h2>
+    <div class="grid-2">
+        <div class="form-group"><label for="alumnoId">ID (Update/Delete/Get)</label>
+            <input id="alumnoId" type="text" placeholder="Auto-generado o para buscar" /></div>
+        <div class="form-group"><label for="nombre">Nombre</label><input id="nombre" type="text" value="Juan" /></div>
+        <div class="form-group"><label for="apellidos">Apellidos</label><input id="apellidos" type="text" value="Perez" /></div>
+        <div class="form-group"><label for="telefono">Teléfono</label><input id="telefono" type="text" value="600123456" /></div>
+        <div class="form-group"><label for="email">Email</label><input id="email" type="email" value="juan.perez@test.es" /></div>
+        <div class="form-group"><label for="contrasenia">Contraseña</label><input id="contrasenia" type="password" value="pass123" /></div>
+        <div class="form-group"><label for="fechaNacimiento">Fecha Nacimiento</label><input id="fechaNacimiento" type="date" value="1990-01-01" /></div>
+        <div class="form-group"><label for="localidad">Localidad</label><input id="localidad" type="text" value="Madrid" /></div>
+        <div class="form-group"><label for="provincia">Provincia</label><input id="provincia" type="text" value="Madrid" /></div>
+        <div class="checkbox-row">
+            <input id="activo" type="checkbox" checked />
+            <span>Activo</span>
+        </div>
+    </div>
+    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+        <button onclick="createAlumno()">Crear</button>
+        <button class="secondary" onclick="updateAlumno()">Actualizar</button>
+        <button class="secondary" onclick="getAlumnoById()">Buscar por ID</button>
+        <button class="secondary" onclick="deleteAlumno()">Eliminar</button>
+    </div>
+    <label style="margin-top:.7rem;">Respuesta</label>
+    <pre id="alumnoResult">Aquí verás las respuestas de las queries/mutations...</pre>
+</div>
+
+<div class="card">
+    <h2>📄 Alumnos <span id="alumnoCount" class="pill">0</span></h2>
+    <div style="margin-bottom:1rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;">
+        <input id="alumnoSearch" type="text" placeholder="Buscar por nombre, email o teléfono..." 
+               style="flex:1;min-width:200px;" />
+        <select id="alumnoActivoFilter" style="width:auto;">
+            <option value="all">Todos</option>
+            <option value="true">Activos</option>
+            <option value="false">Inactivos</option>
+        </select>
+    </div>
+    <div id="alumnoList" class="list">
+        <small style="color:var(--muted)">Cargando alumnos...</small>
+    </div>
+    <div id="paginationInfo" style="margin-top:.5rem;font-size:.7rem;color:var(--muted);"></div>
+    <div id="paginationControls" style="margin-top:.5rem;display:flex;gap:.5rem;align-items:center;"></div>
+</div>

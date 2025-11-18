@@ -1,157 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <title>Panel de Gestión de Academia</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <title>Panel de Gestión de Academia</title>
+    <meta name="viewport" content="width-device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-    <header>
-        <h1>🎓 Academia Panel <span class="badge">demo</span></h1>
-        <div style="display:flex;align-items:center;gap:.7rem;">
-            <small style="color:var(--muted);font-size:.7rem;">GraphQL & REST · Spring</small>
-            <img src="https://www.hacerta.es/wp-content/uploads/2022/02/logo-hacerta-blanco.png"
-                alt="Hacerta.es"
-                style="height:24px;background:var(--orange);padding:2px 6px;border-radius:6px;" />
-        </div>
-    </header>
+    <header>
+        <h1>🎓 Academia Panel <span class="badge">demo</span></h1>
+        <div style="display:flex;align-items:center;gap:.7rem;">
+            <small style="color:var(--muted);font-size:.7rem;">GraphQL & REST · Spring</small>
+            <img src="https://www.hacerta.es/wp-content/uploads/2022/02/logo-hacerta-blanco.png"
+                alt="Hacerta.es"
+                style="height:24px;background:var(--orange);padding:2px 6px;border-radius:6px;" />
+        </div>
+    </header>
 
-    <div class="container">
-        <div class="tabs">
-            <button class="tab-button" onclick="openTab(event, 'Convocatoria')">🗓️ Convocatoria</button>
-            <button class="tab-button" onclick="openTab(event, 'Matricula')">📝 Matrícula</button>
-            <button class="tab-button active" onclick="openTab(event, 'Alumno')">👩‍🎓 Alumno</button>
-        </div>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-button" onclick="openTab(event, 'Convocatoria')">🗓️ Convocatoria</button>
+            <button class="tab-button" onclick="openTab(event, 'Matricula')">📝 Matrícula</button>
+            <button class="tab-button active" onclick="openTab(event, 'Alumno')">👩‍🎓 Alumno</button>
+        </div>
 
-        <div id="Alumno" class="tab-content active">
-            <div id="alumno-view"></div>
-            <div class="card">
-                <h2>📄 Alumnos <span id="alumnoCount" class="pill">0</span></h2>
-                <div style="margin-bottom:1rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;">
-                    <input id="alumnoSearch" type="text" placeholder="Buscar por nombre, email o teléfono..." 
-                           style="flex:1;min-width:200px;" />
-                    <select id="alumnoActivoFilter" style="width:auto;">
-                        <option value="all">Todos</option>
-                        <option value="true">Activos</option>
-                        <option value="false">Inactivos</option>
-                    </select>
-                </div>
-                <div id="alumnoList" class="list">
-                    <small style="color:var(--muted)">Cargando alumnos...</small>
-                </div>
-                <div id="paginationInfo" style="margin-top:.5rem;font-size:.7rem;color:var(--muted);"></div>
-                <div id="paginationControls" style="margin-top:.5rem;display:flex;gap:.5rem;align-items:center;"></div>
-            </div>
-        </div>
+                <div id="Convocatoria" class="tab-content"></div>
+        <div id="Matricula" class="tab-content"></div>
+        <div id="Alumno" class="tab-content active"></div>
+    </div>
 
-        <div id="Matricula" class="tab-content">
-            <div id="matricula-view"></div>
-            <div class="card">
-                <h2>📄 Matrículas Activas <span id="matriculaCount" class="pill">0</span></h2>
-                <div id="matriculaList" class="list">
-                    <small style="color:var(--muted)">Cargando matrículas...</small>
-                </div>
-                <button style="margin-top:1rem;" onclick="loadMatriculas()">Recargar Matrículas</button>
-            </div>
-        </div>
-
-        <div id="Convocatoria" class="tab-content">
-            <div id="convocatoria-view"></div>
-            <div class="card">
-                <h2>📄 Convocatorias Activas <span id="convocatoriaCount" class="pill">0</span></h2>
-                <div id="convocatoriaList" class="list">
-                    <small style="color:var(--muted)">Cargando convocatorias...</small>
-                </div>
-                <button style="margin-top:1rem;" onclick="loadConvocatorias()">Recargar Convocatorias</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Templates -->
-    <template id="alumno-form-template">
-        <div class="card">
-            <h2>👩‍🎓 CRUD Alumno</h2>
-            <div class="grid-2">
-                <div class="form-group"><label for="alumnoId">ID (Update/Delete/Get)</label>
-                    <input id="alumnoId" type="text" placeholder="Auto-generado o para buscar" /></div>
-                <div class="form-group"><label for="nombre">Nombre</label><input id="nombre" type="text" value="Juan" /></div>
-                <div class="form-group"><label for="apellidos">Apellidos</label><input id="apellidos" type="text" value="Perez" /></div>
-                <div class="form-group"><label for="telefono">Teléfono</label><input id="telefono" type="text" value="600123456" /></div>
-                <div class="form-group"><label for="email">Email</label><input id="email" type="email" value="juan.perez@test.es" /></div>
-                <div class="form-group"><label for="contrasenia">Contraseña</label><input id="contrasenia" type="password" value="pass123" /></div>
-                <div class="form-group"><label for="fechaNacimiento">Fecha Nacimiento</label><input id="fechaNacimiento" type="date" value="1990-01-01" /></div>
-                <div class="form-group"><label for="localidad">Localidad</label><input id="localidad" type="text" value="Madrid" /></div>
-                <div class="form-group"><label for="provincia">Provincia</label><input id="provincia" type="text" value="Madrid" /></div>
-                <div class="checkbox-row">
-                    <input id="activo" type="checkbox" checked />
-                    <span>Activo</span>
-                </div>
-            </div>
-            <div style="display:flex;gap:.5rem;margin-top:.8rem;">
-                <button onclick="createAlumno()">Crear</button>
-                <button class="secondary" onclick="updateAlumno()">Actualizar</button>
-                <button class="secondary" onclick="getAlumnoById()">Buscar por ID</button>
-                <button class="secondary" onclick="deleteAlumno()">Eliminar</button>
-            </div>
-            <label style="margin-top:.7rem;">Respuesta</label>
-            <pre id="alumnoResult">Aquí verás las respuestas de las queries/mutations...</pre>
-        </div>
-    </template>
-
-    <template id="matricula-form-template">
-        <div class="card">
-            <h2>📝 CRUD Matrícula (GraphQL)</h2>
-            <div class="grid-2">
-                <div class="form-group"><label for="matriculaId">ID (Update/Delete/Get)</label>
-                    <input id="matriculaId" type="text" placeholder="Auto-generado o para buscar" /></div>
-                <div class="form-group"><label for="matriculaFecha">Fecha (YYYY-MM-DD)</label><input id="matriculaFecha" type="date" value="2025-11-17" /></div>
-                <div class="form-group"><label for="matriculaCodigo">Código</label><input id="matriculaCodigo" type="text" value="MATR-2025-001" /></div>
-                <div class="form-group"><label for="matriculaPrecio">Precio</label><input id="matriculaPrecio" type="number" value="1500" /></div>
-                <div class="form-group"><label for="matriculaIdConvocatoria">ID Convocatoria</label><input id="matriculaIdConvocatoria" type="text" value="1" /></div>
-                <div class="form-group"><label for="matriculaIdAlumno">ID Alumno</label><input id="matriculaIdAlumno" type="text" value="1" /></div>
-            </div>
-            <div style="display:flex;gap:.5rem;margin-top:.8rem;">
-                <button onclick="createMatricula()">Crear</button>
-                <button class="secondary" onclick="updateMatricula()">Actualizar</button>
-                <button class="secondary" onclick="getMatriculaById()">Buscar por ID</button>
-                <button class="secondary" onclick="deleteMatricula()">Eliminar</button>
-            </div>
-            <label style="margin-top:.7rem;">Respuesta</label>
-            <pre id="matriculaResult">Aquí verás las respuestas de las queries/mutations...</pre>
-        </div>
-    </template>
-
-    <template id="convocatoria-form-template">
-        <div class="card">
-            <h2>🗓️ CRUD Convocatoria</h2>
-            <div class="grid-2">
-                <div class="form-group"><label for="convocatoriaId">ID (Update/Delete/Get)</label>
-                    <input id="convocatoriaId" type="text" placeholder="Auto-generado o para buscar" /></div>
-                <div class="form-group"><label for="convocatoriaCodigo">Código</label><input id="convocatoriaCodigo" type="text" value="CONV-2025-001" /></div>
-                <div class="form-group"><label for="convocatoriaFechaInicio">Fecha Inicio</label><input id="convocatoriaFechaInicio" type="date" value="2026-01-15" /></div>
-                <div class="form-group"><label for="convocatoriaFechaFin">Fecha Fin</label><input id="convocatoriaFechaFin" type="date" value="2026-06-30" /></div>
-                <div class="form-group"><label for="convocatoriaIdCurso">ID Curso</label><input id="convocatoriaIdCurso" type="text" value="1" /></div>
-                <div class="form-group"><label for="convocatoriaIdCatalogo">ID Catálogo</label><input id="convocatoriaIdCatalogo" type="text" value="1" /></div>
-                <div class="form-group"><label for="convocatoriaIdProfesor">ID Profesor</label><input id="convocatoriaIdProfesor" type="text" value="1" /></div>
-                <div class="form-group"><label for="convocatoriaIdCentro">ID Centro</label><input id="convocatoriaIdCentro" type="text" value="1" /></div>
-            </div>
-            <div style="display:flex;gap:.5rem;margin-top:.8rem;">
-                <button onclick="createConvocatoria()">Crear</button>
-                <button class="secondary" onclick="updateConvocatoria()">Actualizar</button>
-                <button class="secondary" onclick="getConvocatoriaById()">Buscar por ID</button>
-                <button class="secondary" onclick="deleteConvocatoria()">Eliminar</button>
-            </div>
-            <label style="margin-top:.7rem;">Respuesta</label>
-            <pre id="convocatoriaResult">Aquí verás las respuestas de las queries/mutations...</pre>
-        </div>
-    </template>
-
-    <!-- Scripts -->
-    <script src="js/utils.js"></script>
-    <script src="js/alumno.js"></script>
-    <script src="js/matricula.js"></script>
-    <script src="js/convocatoria.js"></script>
-    <script src="js/app.js"></script>
+        <script src="js/utils.js"></script>
+    <script src="alumno/alumno.js"></script>
+    <script src="matricula/matricula.js"></script>
+    <script src="convocatoria/convocatoria.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
