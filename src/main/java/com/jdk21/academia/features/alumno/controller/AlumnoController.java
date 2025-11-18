@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jdk21.academia.features.alumno.dto.AlumnoCreateInputDto;
 import com.jdk21.academia.features.alumno.dto.AlumnoDto;
+import com.jdk21.academia.features.alumno.dto.AlumnoUpdateInputDto;
 import com.jdk21.academia.features.alumno.service.AlumnoService;
 
 import jakarta.validation.Valid;
@@ -24,13 +26,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/alumnos")
 public class AlumnoController {
 
-    // @Autowired: Inyecta service.
     @Autowired
     private AlumnoService alumnoService;
 
     @PostMapping
-    public ResponseEntity<AlumnoDto> createAlumno(@Valid @RequestBody AlumnoDto alumnoDto) {
-        AlumnoDto created = alumnoService.createAlumno(alumnoDto);
+    public ResponseEntity<AlumnoDto> createAlumno(@Valid @RequestBody AlumnoCreateInputDto alumnoCreateInputDto) {
+        AlumnoDto created = alumnoService.createAlumno(alumnoCreateInputDto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
@@ -48,8 +49,8 @@ public class AlumnoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlumnoDto> updateAlumno(@PathVariable Long id, @Valid @RequestBody AlumnoDto alumnoDTO) {
-        AlumnoDto updated = alumnoService.updateAlumno(id, alumnoDTO);
+    public ResponseEntity<AlumnoDto> updateAlumno(@PathVariable Long id, @Valid @RequestBody AlumnoUpdateInputDto alumnoUpdateInputDto) {
+        AlumnoDto updated = alumnoService.updateAlumno(id, alumnoUpdateInputDto);
         return ResponseEntity.ok(updated);
     }
 
@@ -59,10 +60,13 @@ public class AlumnoController {
         return ResponseEntity.noContent().build();
     }
 
-    // Manejo de errores: @ExceptionHandler para RuntimeException (de service).
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
-        // Try/catch implícito por Spring: Captura excepción, retorna 400 con mensaje.
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

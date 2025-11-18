@@ -19,19 +19,29 @@
 
     <div class="container">
         <div class="tabs">
-            <button class="tab-button active" onclick="openTab(event, 'Alumno')">👩‍🎓 Alumno</button>
-            <button class="tab-button" onclick="openTab(event, 'Matricula')">📝 Matrícula (REST)</button>
             <button class="tab-button" onclick="openTab(event, 'Convocatoria')">🗓️ Convocatoria</button>
+            <button class="tab-button" onclick="openTab(event, 'Matricula')">📝 Matrícula</button>
+            <button class="tab-button active" onclick="openTab(event, 'Alumno')">👩‍🎓 Alumno</button>
         </div>
 
         <div id="Alumno" class="tab-content active">
             <div id="alumno-view"></div>
             <div class="card">
-                <h2>📄 Alumnos Activos <span id="alumnoCount" class="pill">0</span></h2>
+                <h2>📄 Alumnos <span id="alumnoCount" class="pill">0</span></h2>
+                <div style="margin-bottom:1rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;">
+                    <input id="alumnoSearch" type="text" placeholder="Buscar por nombre, email o teléfono..." 
+                           style="flex:1;min-width:200px;" />
+                    <select id="alumnoActivoFilter" style="width:auto;">
+                        <option value="all">Todos</option>
+                        <option value="true">Activos</option>
+                        <option value="false">Inactivos</option>
+                    </select>
+                </div>
                 <div id="alumnoList" class="list">
                     <small style="color:var(--muted)">Cargando alumnos...</small>
                 </div>
-                <button style="margin-top:1rem;" onclick="loadAlumnos()">Recargar Alumnos</button>
+                <div id="paginationInfo" style="margin-top:.5rem;font-size:.7rem;color:var(--muted);"></div>
+                <div id="paginationControls" style="margin-top:.5rem;display:flex;gap:.5rem;align-items:center;"></div>
             </div>
         </div>
 
@@ -58,6 +68,7 @@
         </div>
     </div>
 
+    <!-- Templates -->
     <template id="alumno-form-template">
         <div class="card">
             <h2>👩‍🎓 CRUD Alumno</h2>
@@ -69,7 +80,7 @@
                 <div class="form-group"><label for="telefono">Teléfono</label><input id="telefono" type="text" value="600123456" /></div>
                 <div class="form-group"><label for="email">Email</label><input id="email" type="email" value="juan.perez@test.es" /></div>
                 <div class="form-group"><label for="contrasenia">Contraseña</label><input id="contrasenia" type="password" value="pass123" /></div>
-                <div class="form-group"><label for="fechaNacimiento">Fecha Nacimiento</label><input id="fechaNacimiento" type="text" value="1990-01-01" /></div>
+                <div class="form-group"><label for="fechaNacimiento">Fecha Nacimiento</label><input id="fechaNacimiento" type="date" value="1990-01-01" /></div>
                 <div class="form-group"><label for="localidad">Localidad</label><input id="localidad" type="text" value="Madrid" /></div>
                 <div class="form-group"><label for="provincia">Provincia</label><input id="provincia" type="text" value="Madrid" /></div>
                 <div class="checkbox-row">
@@ -90,11 +101,11 @@
 
     <template id="matricula-form-template">
         <div class="card">
-            <h2>📝 CRUD Matrícula (REST)</h2>
+            <h2>📝 CRUD Matrícula (GraphQL)</h2>
             <div class="grid-2">
                 <div class="form-group"><label for="matriculaId">ID (Update/Delete/Get)</label>
                     <input id="matriculaId" type="text" placeholder="Auto-generado o para buscar" /></div>
-                <div class="form-group"><label for="matriculaFecha">Fecha (YYYY-MM-DD)</label><input id="matriculaFecha" type="text" value="2025-11-17" /></div>
+                <div class="form-group"><label for="matriculaFecha">Fecha (YYYY-MM-DD)</label><input id="matriculaFecha" type="date" value="2025-11-17" /></div>
                 <div class="form-group"><label for="matriculaCodigo">Código</label><input id="matriculaCodigo" type="text" value="MATR-2025-001" /></div>
                 <div class="form-group"><label for="matriculaPrecio">Precio</label><input id="matriculaPrecio" type="number" value="1500" /></div>
                 <div class="form-group"><label for="matriculaIdConvocatoria">ID Convocatoria</label><input id="matriculaIdConvocatoria" type="text" value="1" /></div>
@@ -107,7 +118,7 @@
                 <button class="secondary" onclick="deleteMatricula()">Eliminar</button>
             </div>
             <label style="margin-top:.7rem;">Respuesta</label>
-            <pre id="matriculaResult">Aquí verás las respuestas de las peticiones REST...</pre>
+            <pre id="matriculaResult">Aquí verás las respuestas de las queries/mutations...</pre>
         </div>
     </template>
 
@@ -118,8 +129,8 @@
                 <div class="form-group"><label for="convocatoriaId">ID (Update/Delete/Get)</label>
                     <input id="convocatoriaId" type="text" placeholder="Auto-generado o para buscar" /></div>
                 <div class="form-group"><label for="convocatoriaCodigo">Código</label><input id="convocatoriaCodigo" type="text" value="CONV-2025-001" /></div>
-                <div class="form-group"><label for="convocatoriaFechaInicio">Fecha Inicio</label><input id="convocatoriaFechaInicio" type="text" value="2026-01-15" /></div>
-                <div class="form-group"><label for="convocatoriaFechaFin">Fecha Fin</label><input id="convocatoriaFechaFin" type="text" value="2026-06-30" /></div>
+                <div class="form-group"><label for="convocatoriaFechaInicio">Fecha Inicio</label><input id="convocatoriaFechaInicio" type="date" value="2026-01-15" /></div>
+                <div class="form-group"><label for="convocatoriaFechaFin">Fecha Fin</label><input id="convocatoriaFechaFin" type="date" value="2026-06-30" /></div>
                 <div class="form-group"><label for="convocatoriaIdCurso">ID Curso</label><input id="convocatoriaIdCurso" type="text" value="1" /></div>
                 <div class="form-group"><label for="convocatoriaIdCatalogo">ID Catálogo</label><input id="convocatoriaIdCatalogo" type="text" value="1" /></div>
                 <div class="form-group"><label for="convocatoriaIdProfesor">ID Profesor</label><input id="convocatoriaIdProfesor" type="text" value="1" /></div>
@@ -136,6 +147,11 @@
         </div>
     </template>
 
-    <script src="app.js"></script>
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/alumno.js"></script>
+    <script src="js/matricula.js"></script>
+    <script src="js/convocatoria.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
