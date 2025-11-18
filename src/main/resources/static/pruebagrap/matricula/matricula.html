@@ -1,28 +1,44 @@
 <div class="card">
-    <h2>📝 CRUD Matrícula (GraphQL)</h2>
-    <div class="grid-2">
-        <div class="form-group"><label for="matriculaId">ID (Update/Delete/Get)</label>
-            <input id="matriculaId" type="text" placeholder="Auto-generado o para buscar" /></div>
-        <div class="form-group"><label for="matriculaFecha">Fecha (YYYY-MM-DD)</label><input id="matriculaFecha" type="date" value="2025-11-17" /></div>
-        <div class="form-group"><label for="matriculaCodigo">Código</label><input id="matriculaCodigo" type="text" value="MATR-2025-001" /></div>
-        <div class="form-group"><label for="matriculaPrecio">Precio</label><input id="matriculaPrecio" type="number" value="1500" /></div>
-        <div class="form-group"><label for="matriculaIdConvocatoria">ID Convocatoria</label><input id="matriculaIdConvocatoria" type="text" value="1" /></div>
-        <div class="form-group"><label for="matriculaIdAlumno">ID Alumno</label><input id="matriculaIdAlumno" type="text" value="1" /></div>
-    </div>
-    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
-        <button onclick="createMatricula()">Crear</button>
-        <button class="secondary" onclick="updateMatricula()">Actualizar</button>
-        <button class="secondary" onclick="getMatriculaById()">Buscar por ID</button>
-        <button class="secondary" onclick="deleteMatricula()">Eliminar</button>
-    </div>
-    <label style="margin-top:.7rem;">Respuesta</label>
-    <pre id="matriculaResult">Aquí verás las respuestas de las queries/mutations...</pre>
+        <h2>📝 CRUD Matrícula (GraphQL)</h2>
+        <div class="grid-2">
+                <div class="form-group"><label for="matriculaId">ID (Update/Delete/Get)</label>
+                        <input id="matriculaId" type="text" placeholder="Auto-generado o para buscar" /></div>
+                <div class="form-group"><label for="matriculaFecha">Fecha (YYYY-MM-DD)</label><input id="matriculaFecha"
+                type="date" value="2025-11-17" /></div>
+                <div class="form-group"><label for="matriculaCodigo">Código</label><input id="matriculaCodigo"
+                type="text" value="MATR-2025-001" /></div>
+                <div class="form-group"><label for="matriculaPrecio">Precio</label><input id="matriculaPrecio"
+                type="number" value="1500" /></div>
+
+        <div class="form-group">
+            <label for="matriculaIdConvocatoria">ID Convocatoria</label>
+            <select id="matriculaIdConvocatoria">
+                <option value="">-- Cargando convocatorias --</option>
+            </select>
+        </div>
+
+                <div class="form-group">
+            <label for="matriculaIdAlumno">ID Alumno</label>
+            <select id="matriculaIdAlumno">
+                <option value="">-- Cargando alumnos --</option>
+            </select>
+        </div>
+            </div>
+        <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+                <button onclick="createMatricula()">Crear</button>
+                <button class="secondary" onclick="updateMatricula()">Actualizar</button>
+                <button class="secondary" onclick="getMatriculaById()">Buscar por ID</button>
+                <button class="secondary" onclick="deleteMatricula()">Eliminar</button>
+            </div>
+        <label style="margin-top:.7rem;">Respuesta</label>
+       
+    <pre id="matriculaResult">Aquí verás las respuestas de las queries/mutations...</pre>
 </div>
 
 <div class="card">
-    <h2>📄 Matrículas Activas <span id="matriculaCount" class="pill">0</span></h2>
-    <div id="matriculaList" class="list">
-        <small style="color:var(--muted)">Cargando matrículas...</small>
-    </div>
-    <button style="margin-top:1rem;" onclick="loadMatriculas()">Recargar Matrículas</button>
+        <h2>📄 Matrículas Activas <span id="matriculaCount" class="pill">0</span></h2>
+        <div id="matriculaList" class="list">
+                <small style="color:var(--muted)">Cargando matrículas...</small>
+            </div>
+        <button style="margin-top:1rem;" onclick="loadMatriculas()">Recargar Matrículas</button>
 </div>

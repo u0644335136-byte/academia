@@ -1,39 +1,263 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8" />
-    <title>Panel de Gestión de Academia</title>
-    <meta name="viewport" content="width-device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css">
+       
+    <meta charset="UTF-8" />
+        <title>Panel de Gestión de Academia</title>
+       
+    <meta name="viewport" content="width-device-width, initial-scale=1" />
+       
+    <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
-    <header>
-        <h1>🎓 Academia Panel <span class="badge">demo</span></h1>
-        <div style="display:flex;align-items:center;gap:.7rem;">
-            <small style="color:var(--muted);font-size:.7rem;">GraphQL & REST · Spring</small>
-            <img src="https://www.hacerta.es/wp-content/uploads/2022/02/logo-hacerta-blanco.png"
-                alt="Hacerta.es"
-                style="height:24px;background:var(--orange);padding:2px 6px;border-radius:6px;" />
-        </div>
-    </header>
+        <header>
+                <h1>🎓 Academia Panel <span class="badge">demo</span></h1>
+                <div style="display:flex;align-items:center;gap:.7rem;">
+                        <small style="color:var(--muted);font-size:.7rem;">GraphQL & REST · Spring</small>
+                        <img src="https://www.hacerta.es/wp-content/uploads/2022/02/logo-hacerta-blanco.png"            
+                    alt="Hacerta.es"                
+                style="height:24px;background:var(--orange);padding:2px 6px;border-radius:6px;" />
+                    </div>
+            </header>
 
-    <div class="container">
-        <div class="tabs">
-            <button class="tab-button" onclick="openTab(event, 'Convocatoria')">🗓️ Convocatoria</button>
-            <button class="tab-button" onclick="openTab(event, 'Matricula')">📝 Matrícula</button>
-            <button class="tab-button active" onclick="openTab(event, 'Alumno')">👩‍🎓 Alumno</button>
-        </div>
+        <div class="container">
+                <div class="tabs">
+                        <button class="tab-button" onclick="openTab(event, 'Convocatoria')">🗓️ Convocatoria</button>
+                        <button class="tab-button" onclick="openTab(event, 'Matricula')">📝 Matrícula</button>
+                        <button class="tab-button active" onclick="openTab(event, 'Alumno')">👩‍🎓 Alumno</button>
+                    </div>
 
-                <div id="Convocatoria" class="tab-content"></div>
-        <div id="Matricula" class="tab-content"></div>
-        <div id="Alumno" class="tab-content active"></div>
-    </div>
+                        <div id="Convocatoria" class="tab-content"></div>
+                <div id="Matricula" class="tab-content"></div>
+                <div id="Alumno" class="tab-content active"></div>
+            </div>
 
-        <script src="js/utils.js"></script>
-    <script src="alumno/alumno.js"></script>
-    <script src="matricula/matricula.js"></script>
-    <script src="convocatoria/convocatoria.js"></script>
-    <script src="js/app.js"></script>
+           
+    <script src="js/utils.js"></script>
+       
+    <script src="alumno/alumno.js"></script>
+       
+    <script src="matricula/matricula.js"></script>
+       
+    <script src="convocatoria/convocatoria.js"></script>
+       
+    <script src="js/app.js"></script>
+
+    <script>
+    // Función para hacer peticiones GraphQL
+    async function fetchGraphQL(query, variables = {}) {
+        try {
+            const response = await fetch('http://localhost:8080/graphql', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: query,
+                    variables: variables
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error en fetchGraphQL:', error);
+            return { errors: [{ message: error.message }] };
+        }
+    }
+
+    // Función para cargar convocatorias en el desplegable - CORREGIDA
+    async function loadConvocatoriasDropdown() {
+        const dropdown = document.getElementById("matriculaIdConvocatoria");
+
+        try {
+            console.log(" Cargando convocatorias desde GraphQL...");
+
+            // QUERY CORREGIDA - usa retornarTodasConvocatorias sin parámetros
+            const query = `query {
+                retornarTodasConvocatorias {
+                    id
+                    codigo
+                }
+            }`;
+
+            const json = await fetchGraphQL(query);
+
+            console.log(" Respuesta recibida:", json);
+
+            if (json.errors) {
+                console.error(" Error en GraphQL:", json.errors);
+                dropdown.innerHTML = '<option value="">-- Error cargando convocatorias --</option>';
+                return;
+            }
+
+            // CORREGIDO: La respuesta viene directamente como array, no hay pageData
+            const convocatorias = json.data?.retornarTodasConvocatorias || [];
+            console.log(` Encontradas ${convocatorias.length} convocatorias`);
+
+            // Limpiar opciones existentes
+            dropdown.innerHTML = '';
+
+            // Agregar opción por defecto
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "-- Selecciona una convocatoria --";
+            dropdown.appendChild(defaultOption);
+
+            // Agregar opciones para cada convocatoria
+            if (convocatorias.length === 0) {
+                const noConvocatoriasOption = document.createElement("option");
+                noConvocatoriasOption.value = "";
+                noConvocatoriasOption.textContent = "-- No hay convocatorias disponibles --";
+                dropdown.appendChild(noConvocatoriasOption);
+            } else {
+                convocatorias.forEach(convocatoria => {
+                    const option = document.createElement("option");
+                    option.value = convocatoria.id;
+                    option.textContent = `${convocatoria.id} - ${convocatoria.codigo}`;
+                    dropdown.appendChild(option);
+                });
+            }
+
+            console.log(" Desplegable de convocatorias cargado correctamente");
+
+        } catch (error) {
+            console.error(" Error al cargar convocatorias:", error);
+            dropdown.innerHTML = '<option value="">-- Error cargando convocatorias --</option>';
+        }
+    }
+
+    // Cargar las convocatorias cuando la página esté lista
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log(" DOM cargado, iniciando carga de convocatorias...");
+        loadConvocatoriasDropdown();
+    });
+
+    // También puedes agregar un botón para recargar si necesitas
+    function recargarConvocatorias() {
+        console.log(" Recargando convocatorias...");
+        loadConvocatoriasDropdown();
+    }
+</script>
+    <script>
+        // Función para hacer peticiones GraphQL ID Alumno
+        async function fetchGraphQL(query, variables = {}) {
+            try {
+                const response = await fetch('http://localhost:8080/graphql', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        variables: variables
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error('Error en fetchGraphQL:', error);
+                return { errors: [{ message: error.message }] };
+            }
+        }
+
+        // Función para cargar alumno en el desplegable
+        async function loadAlumnosDropdown() {
+            const dropdown = document.getElementById("matriculaIdAlumno");
+
+            try {
+                console.log(" Cargando alumnos desde GraphQL...");
+
+                const query = `query {
+            searchAlumnos(search: "", activo: true, page: 0, size: 100) {
+                alumnos {
+                    id_alumno
+                    nombre
+                    apellidos
+                    
+                }
+                totalElements
+            }
+        }`;
+
+                const json = await fetchGraphQL(query);
+
+                console.log(" Respuesta recibida:", json);
+
+                if (json.errors) {
+                    console.error(" Error en GraphQL:", json.errors);
+                    dropdown.innerHTML = '<option value="">-- Error cargando alumnos --</option>';
+                    return;
+                }
+
+                const pageData = json.data?.searchAlumnos;
+                if (!pageData) {
+                    console.error(" No se encontraron datos de alumnos");
+                    dropdown.innerHTML = '<option value="">-- No hay alumnos --</option>';
+                    return;
+                }
+
+                const alumnos = pageData.alumnos || [];
+                console.log(` Encontrados ${alumnos.length} alumnos`);
+
+                // Limpiar opciones existentes
+                dropdown.innerHTML = '';
+
+                // Agregar opción por defecto
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "-- Selecciona un alumno --";
+                dropdown.appendChild(defaultOption);
+
+                // Agregar opciones para cada alumno
+                if (alumnos.length === 0) {
+                    const noAlumnosOption = document.createElement("option");
+                    noAlumnosOption.value = "";
+                    noAlumnosOption.textContent = "-- No hay alumnos disponibles --";
+                    dropdown.appendChild(noAlumnosOption);
+                } else {
+                    alumnos.forEach(alumno => {
+                        const option = document.createElement("option");
+                        option.value = alumno.id_alumno;
+                        option.textContent = `${alumno.id_alumno} - ${alumno.nombre} ${alumno.apellidos}`;
+                        dropdown.appendChild(option);
+                    });
+                }
+
+                console.log(" Desplegable cargado correctamente");
+
+            } catch (error) {
+                console.error(" Error al cargar alumnos:", error);
+                dropdown.innerHTML = '<option value="">-- Error cargando alumnos --</option>';
+            }
+        }
+
+        // Cargar los alumnos cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log(" DOM cargado, iniciando carga de alumnos...");
+            loadAlumnosDropdown();
+        });
+
+        // También puedes agregar un botón para recargar si necesitas
+        function recargarAlumnos() {
+            console.log(" Recargando alumnos...");
+            loadAlumnosDropdown();
+
+
+        }
+    </script>
+
+
 </body>
+
 </html>
