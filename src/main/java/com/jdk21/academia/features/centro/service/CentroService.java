@@ -105,7 +105,7 @@ public class CentroService {
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró el centro con ID: " + id));
 
         // Validar unicidad de código si se está cambiando
-        if (updateCentroDTO.codigo_centro() != null && 
+        if (updateCentroDTO.codigo_centro() != null &&
             !updateCentroDTO.codigo_centro().equals(centro.getCodigo_centro())) {
             Optional<Centro> existingByCodigo = centroRepository.findByCodigo_centro(updateCentroDTO.codigo_centro());
             if (existingByCodigo.isPresent()) {
