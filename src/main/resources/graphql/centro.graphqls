@@ -27,7 +27,7 @@ input CreateCentroDTO {
     responsable: String!
     id_empresa: ID
     id_comunidad: ID
-    capacidadMax: Int
+    capacidad_maxima: Int
     activo: Boolean
     telefono: Int
     email: String
@@ -45,7 +45,7 @@ input UpdateCentroDTO {
     codigo_centro: String
     nombre: String
     responsable: String
-    capacidadMax: Int
+    capacidad_maxima: Int
     activo: Boolean
     telefono: Int
     email: String

@@ -26,7 +26,7 @@ public class Calificacion extends BaseEntity implements Serializable {
     @Column(name = "nota")
     private int nota;
 
-    //Llaves foraneas 
+    //Llaves foraneas
     @OneToOne
     @JoinColumn(name = "id_matricula", referencedColumnName = "id_matricula")
     private Matricula matricula;

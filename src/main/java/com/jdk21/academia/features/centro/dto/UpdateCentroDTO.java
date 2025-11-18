@@ -6,7 +6,7 @@ public record UpdateCentroDTO(
     String codigo_centro,
     String nombre,
     String responsable,
-    Integer capacidadMax,
+    Integer capacidad_maxima,
     Boolean activo,
     Integer telefono,
     String email,

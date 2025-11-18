@@ -14,8 +14,7 @@ public record CreateCentroDTO(
     String responsable,
     Long id_empresa,
     Long id_comunidad,
-    
-    Integer capacidadMax,
+    Integer capacidad_maxima,
     Boolean activo,
     Integer telefono,
     String email,

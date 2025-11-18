@@ -23,6 +23,9 @@ public class Centro extends BaseEntity implements Serializable {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
+    @Column(name = "capacidad_maxima", nullable = false)
+    private Integer capacidad_maxima;
+
     @Column(name = "id_empresa")
     private Long id_empresa;
 
