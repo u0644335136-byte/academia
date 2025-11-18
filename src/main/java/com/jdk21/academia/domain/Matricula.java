@@ -27,6 +27,9 @@ public class Matricula extends BaseEntity implements Serializable {
     @Column(name = "precio")
     private int precio;
 
+    @Column(name = "nota")
+    private int nota;
+
     //Llaves foraneas 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_convocatoria", referencedColumnName = "id_convocatoria")
