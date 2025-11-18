@@ -11,7 +11,7 @@ type Alumno {
   activo: Boolean
 }
 
-input AlumnoInput {
+input AlumnoCreateInput {
   nombre: String!
   apellidos: String!
   telefono: String!
@@ -23,14 +23,35 @@ input AlumnoInput {
   activo: Boolean
 }
 
+input AlumnoUpdateInput {
+  nombre: String
+  apellidos: String
+  telefono: String
+  email: String
+  contrasenia: String
+  fecha_nacimiento: String
+  localidad: String
+  provincia: String
+  activo: Boolean
+}
+
+type AlumnoPage {
+  alumnos: [Alumno!]!
+  totalElements: Int!
+  totalPages: Int!
+  currentPage: Int!
+  pageSize: Int!
+}
+
 extend type Query {
   allAlumnos: [Alumno!]!
   alumnoById(id: ID!): Alumno
+  searchAlumnos(search: String, activo: Boolean, page: Int, size: Int): AlumnoPage
 }
 
 extend type Mutation {
-  createAlumno(input: AlumnoInput!): Alumno
-  updateAlumno(id: ID!, input: AlumnoInput!): Alumno
+  createAlumno(input: AlumnoCreateInput!): Alumno
+  updateAlumno(id: ID!, input: AlumnoUpdateInput!): Alumno
   deleteAlumno(id: ID!): Boolean
 }
 
