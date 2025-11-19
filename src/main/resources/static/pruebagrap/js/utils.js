@@ -108,7 +108,15 @@ function openTab(evt, tabName) {
             
         } else if (tabName === 'Convocatoria' && targetTab.getAttribute('data-loaded')) {
             loadConvocatorias();
-            
+            if (typeof loadCursosForSelect === 'function') {
+                loadCursosForSelect();
+            }
+            if (typeof loadProfesoresForSelect === 'function') {
+                loadProfesoresForSelect();
+            }
+            if (typeof loadCentrosForSelect === 'function') {
+                loadCentrosForSelect();
+            }
         }
     }
     
