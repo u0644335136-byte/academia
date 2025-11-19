@@ -1,0 +1,51 @@
+# Definición del tipo Comunidad (OUTPUT)
+type Comunidad {
+    # Campos que tienen nombres diferentes o son IDs
+    id_comunidad: ID!
+    codigo: String!
+
+    # Campos que coinciden con la entidad
+    nombre: String
+    capital: String
+    activo: Boolean
+    
+    # Campos de auditoría (fechas)
+    fechaCreacion: String
+    fechaActualizacion: String
+}
+
+# Definición del Input para CREAR (debe coincidir con un DTO en Java)
+input CreateComunidadDTO {
+    codigo: String!
+    nombre: String!
+    capital: String
+    activo: Boolean
+}
+
+# Definición del Input para ACTUALIZAR (todos los campos son opcionales)
+input UpdateComunidadDTO {
+    codigo: String
+    nombre: String
+    capital: String
+    activo: Boolean
+}
+
+# Extensión de la Query para los métodos de consulta
+extend type Query {
+    # Leer todos
+    allComunidades: [Comunidad!]!
+    # Leer por ID
+    comunidadById(id: ID!): Comunidad
+    # Leer por código
+    comunidadByCodigo(codigo: String!): Comunidad
+}
+
+# Extensión de la Mutation para los métodos de modificación
+extend type Mutation {
+    # Crear
+    createComunidad(input: CreateComunidadDTO!): Comunidad
+    # Actualizar
+    updateComunidad(id: ID!, input: UpdateComunidadDTO!): Comunidad
+    # Eliminar (soft delete o lógico)
+    deleteComunidad(id: ID!): Boolean
+}

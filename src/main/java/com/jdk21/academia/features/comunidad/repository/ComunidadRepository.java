@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ComunidadRepository extends JpaRepository<Comunidad, Long> {
+    Comunidad findByCodigo(String codigo);
 }
