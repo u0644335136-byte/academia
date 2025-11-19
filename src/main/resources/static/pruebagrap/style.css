@@ -54,11 +54,14 @@ header h1 {
 }
 
 .container {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
     padding: 1.5rem;
     flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
 }
 
 .card {
@@ -139,7 +142,8 @@ button.secondary:hover {
     gap: .4rem;
     align-items: center;
     font-size: .75rem;
-    margin-top: .4rem;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 pre {
@@ -180,6 +184,8 @@ pre {
     display: flex;
     border-bottom: 1px solid var(--border);
     margin-bottom: 1.5rem;
+    width: 100%;
+    flex-shrink: 0;
 }
 
 .tab-button {
@@ -192,7 +198,11 @@ pre {
     font-weight: 500;
     border-bottom: 3px solid transparent;
     transition: all .2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: fit-content;
 }
+
 
 .tab-button:hover {
     color: var(--text);
@@ -203,11 +213,15 @@ pre {
     border-bottom: 3px solid var(--accent);
 }
 
-/* AJUSTE CLAVE: Usar 1fr 1fr para una división 50/50 de las dos tarjetas */
+/* AJUSTE CLAVE: Usar 1fr 1fr para una división 50/50 de las dos tarjetas*/
 .tab-content {
     display: none;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
 }
 
 .tab-content.active {
@@ -219,18 +233,35 @@ pre {
 }
 
 /* La cuadrícula interna del formulario para campos de dos columnas */
+.card .grid-2 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: .8rem !important;
+    width: 100%;
+    margin-bottom: 0;
+}
 
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    /* Esto divide los elementos hijos en dos columnas de igual ancho */
-    gap: .8rem;
+/* Asegurar que los form-group dentro de grid-2 se comporten como elementos de grid */
+.card .grid-2 > .form-group {
+    display: block;
+    width: 100%;
+    margin-bottom: 0 !important;
+}
+
+/* El checkbox-row también debe tener el mismo tratamiento */
+.card .grid-2 > .checkbox-row {
+    margin-bottom: 0 !important;
+    margin-top: 0;
 }
 
 @media (max-width: 900px) {
-
     /* En pantallas pequeñas, volvemos a una sola columna (100% de ancho) */
     .tab-content {
         grid-template-columns: 1fr;
+    }
+    
+    /* En pantallas pequeñas, los formularios también vuelven a una columna */
+    .card .grid-2 {
+        grid-template-columns: 1fr !important;
     }
 }
