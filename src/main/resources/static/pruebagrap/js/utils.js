@@ -103,7 +103,9 @@ function openTab(evt, tabName) {
         if (tabName === 'Alumno' && targetTab.getAttribute('data-loaded')) {
             loadAlumnos();
         } else if (tabName === 'Matricula' && targetTab.getAttribute('data-loaded')) {
-            loadMatriculas();
+            loadAlumnosDropdown();
+            loadConvocatoriasDropdown();
+            
         } else if (tabName === 'Convocatoria' && targetTab.getAttribute('data-loaded')) {
             loadConvocatorias();
             if (typeof loadCursosForSelect === 'function') {
@@ -117,6 +119,7 @@ function openTab(evt, tabName) {
             }
         }
     }
+    
 
     // Activa el botón que fue clickeado
     if (evt && evt.currentTarget) {

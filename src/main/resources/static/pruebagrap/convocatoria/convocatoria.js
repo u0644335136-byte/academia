@@ -24,7 +24,7 @@ async function loadConvocatorias() {
     try {
         const query = `query {
             retornarTodasConvocatorias {
-                id codigo fechaInicio fechaFin centroNombre profesorEmail
+                id codigo codigo
             }
         }`;
         const json = await fetchGraphQL(query);
