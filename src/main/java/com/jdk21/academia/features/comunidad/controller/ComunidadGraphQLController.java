@@ -1,7 +1,7 @@
 package com.jdk21.academia.features.comunidad.controller;
 
-import com.jdk21.academia.domain.Comunidad;
-import com.jdk21.academia.features.comunidad.repository.ComunidadRepository;
+import com.jdk21.academia.features.comunidad.dto.ComunidadDto;
+import com.jdk21.academia.features.comunidad.service.ComunidadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -9,54 +9,46 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class ComunidadGraphQLController {
 
-    private final ComunidadRepository repository;
+    private final ComunidadService servicio;
 
-    // ✅ CONSULTA: obtener todas las comunidades
+    // --- QUERIES ---
     @QueryMapping
-    public List<Comunidad> comunidades() {
-        return repository.findAll();
+    public List<ComunidadDto> allComunidades() {
+        return servicio.listarTodas();
     }
 
-    // ✅ CONSULTA: obtener comunidad por ID
-@QueryMapping
-public Comunidad comunidadById(@Argument Long idComunidad) {
-    if (idComunidad == null) {
-        throw new IllegalArgumentException("El parámetro idComunidad no puede ser nulo.");
-    }
-
-    return repository.findById(idComunidad)
-            .orElseThrow(() -> new RuntimeException("No se encontró la comunidad con id " + idComunidad));
-}
-
-    // ✅ MUTACIÓN: crear una nueva comunidad
-    @MutationMapping
-    public Comunidad crearComunidad(@Argument String codigo,
-                                    @Argument String nombre,
-                                    @Argument String capital) {
-        Comunidad c = new Comunidad();
-        c.setCodigo(codigo);
-        c.setNombre(nombre);
-        c.setCapital(capital);
-        c.setActivo(true);
-        return repository.save(c);
-    }
-
-    // ✅ MUTACIÓN: desactivar una comunidad (borrado lógico)
-    @MutationMapping
-    public boolean desactivarComunidad(@Argument Long idComunidad) {
-        Optional<Comunidad> comunidadOpt = repository.findById(idComunidad);
-        if (comunidadOpt.isPresent()) {
-            Comunidad c = comunidadOpt.get();
-            c.setActivo(false);
-            repository.save(c);
-            return true;
+    @QueryMapping
+    public ComunidadDto comunidadById(@Argument Long id) {
+        ComunidadDto dto = servicio.obtenerPorId(id);
+        if (dto == null) {
+            throw new RuntimeException("Comunidad no encontrada con id " + id);
         }
-        return false;
+        return dto;
+    }
+
+    // --- MUTATIONS ---
+    @MutationMapping
+    public ComunidadDto createComunidad(@Argument("input") ComunidadDto input) {
+        return servicio.guardar(input);
+    }
+
+    @MutationMapping
+    public ComunidadDto updateComunidad(@Argument Long id, @Argument("input") ComunidadDto input) {
+        ComunidadDto updated = servicio.actualizar(id, input);
+        if (updated == null) {
+            throw new RuntimeException("Comunidad no encontrada con id " + id);
+        }
+        return updated;
+    }
+
+    @MutationMapping
+    public Boolean deleteComunidad(@Argument Long id) {
+        servicio.deleteComunidad(id);
+        return true;
     }
 }
