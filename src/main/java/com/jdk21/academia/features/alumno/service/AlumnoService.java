@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -134,7 +135,15 @@ public class AlumnoService {
     public AlumnoPageDto searchAlumnos(String search, Boolean activo, Integer page, Integer size) {
         int pageNumber = page != null && page > 0 ? page - 1 : 0;
         int pageSize = size != null && size > 0 ? size : 10;
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        // 🚨 MODIFICACIÓN: Añadir ordenación por ID descendente
+        // Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = PageRequest.of(
+            pageNumber,
+            pageSize,
+            Sort.by(Sort.Direction.DESC, "fechaCreacion") // Asegúrate que "id" es el nombre del campo en tu entidad Alumno
+        );
+
         String searchTerm = search != null && !search.trim().isEmpty() ? search.trim() : null;
         Specification<Alumno> spec = AlumnoSpecification.searchAndFilter(searchTerm, activo);
         Page<Alumno> pageResult = alumnoRepository.findAll(spec, pageable);
