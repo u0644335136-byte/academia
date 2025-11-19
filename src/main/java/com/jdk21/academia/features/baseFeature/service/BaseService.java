@@ -4,11 +4,12 @@ package com.jdk21.academia.features.baseFeature.service;
 import com.jdk21.academia.domain.BaseEntity;
 import com.jdk21.academia.features.baseFeature.repository.BaseRepository;
 import com.jdk21.academia.features.baseFeature.mapper.BaseMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 
 //El objetivo de esta clase es simplificar el CRUD
@@ -55,11 +56,11 @@ public abstract class BaseService<E extends BaseEntity, I, O, ID> {
                 .map(mapper::toDto);
     }
 
-    // Recoge todos los datos
-    public List<O> getAll() {
-        return repository.findAll().stream()
-                .filter(BaseEntity::getActivo)
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
-    }
+    // Recoge todos los datos ordenados por fecha de creación descendente
+public List<O> getAll() {
+    return repository.findAll(Sort.by(Sort.Direction.DESC, "fechaCreacion")).stream()
+            .filter(BaseEntity::getActivo)
+            .map(mapper::toDto)
+            .collect(Collectors.toList());
+}
 }
