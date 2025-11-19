@@ -1,23 +1,32 @@
 <div class="card">
-        <h2>🗓️ CRUD Convocatoria</h2>
-        <div class="grid-2">
-                <div class="form-group"><label for="convocatoriaId">ID (Update/Delete/Get)</label>
-                        <input id="convocatoriaId" type="text" placeholder="Auto-generado o para buscar" /></div>
-                <div class="form-group"><label for="convocatoriaCodigo">Código</label><input id="convocatoriaCodigo"
-                type="text" value="CONV-2025-001" /></div>
-                <div class="form-group"><label for="convocatoriaFechaInicio">Fecha Inicio</label><input
-                id="convocatoriaFechaInicio" type="date" value="2026-01-15" /></div>
-                <div class="form-group"><label for="convocatoriaFechaFin">Fecha Fin</label><input
-                id="convocatoriaFechaFin" type="date" value="2026-06-30" /></div>
+    <h2>🗓️ CRUD Convocatoria</h2>
+    <div class="grid-2">
+        <div class="form-group">
+            <label for="convocatoriaId">ID (Update/Delete/Get)</label>
+            <input id="convocatoriaId" type="text" placeholder="Auto-generado o para buscar" />
+        </div>
+        <div class="form-group">
+            <label for="convocatoriaCodigo">Código</label>
+            <input id="convocatoriaCodigo" type="text" value="CONV-2025-001" />
+        </div>
+        <div class="form-group">
+            <label for="convocatoriaFechaInicio">Fecha Inicio</label>
+            <input id="convocatoriaFechaInicio" type="date" value="2026-01-15" />
+        </div>
+        <div class="form-group">
+            <label for="convocatoriaFechaFin">Fecha Fin</label>
+            <input id="convocatoriaFechaFin" type="date" value="2026-06-30" />
+        </div>
         <div class="form-group">
             <label for="convocatoriaIdCurso">ID Curso</label>
             <select id="convocatoriaIdCurso">
                 <option value="" selected>Cargando cursos...</option>
             </select>
         </div>
-                <div class="form-group"><label for="convocatoriaIdCatalogo">ID Catálogo</label><input
-                id="convocatoriaIdCatalogo" type="text" value="1" /></div>
-
+        <div class="form-group">
+            <label for="convocatoriaIdCatalogo">ID Catálogo</label>
+            <input id="convocatoriaIdCatalogo" type="text" value="1" />
+        </div>
         <div class="form-group">
             <label for="convocatoriaIdProfesor">ID Profesor</label>
             <select id="convocatoriaIdProfesor">
@@ -26,27 +35,25 @@
         </div>
         <div class="form-group">
             <label for="convocatoriaIdCentro">ID Centro</label>
-            <select id="convocatoriaIdCentro" disabled>
-                <option value="" selected disabled>Cargando centros...</option>
+            <select id="convocatoriaIdCentro">
+                <option value="" selected>Cargando centros...</option>
             </select>
         </div>
-           
     </div>
-        <div style="display:flex;gap:.5rem;margin-top:.8rem;">
-                <button onclick="createConvocatoria()">Crear</button>
-                <button class="secondary" onclick="updateConvocatoria()">Actualizar</button>
-                <button class="secondary" onclick="getConvocatoriaById()">Buscar por ID</button>
-                <button class="secondary" onclick="deleteConvocatoria()">Eliminar</button>
-            </div>
-        <label style="margin-top:.7rem;">Respuesta</label>
-       
+    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+        <button onclick="createConvocatoria()">Crear</button>
+        <button class="secondary" onclick="updateConvocatoria()">Actualizar</button>
+        <button class="secondary" onclick="getConvocatoriaById()">Buscar por ID</button>
+        <button class="secondary" onclick="deleteConvocatoria()">Eliminar</button>
+    </div>
+    <label style="margin-top:.7rem;">Respuesta</label>
     <pre id="convocatoriaResult">Aquí verás las respuestas de las queries/mutations...</pre>
 </div>
 
 <div class="card">
-        <h2>📄 Convocatorias Activas <span id="convocatoriaCount" class="pill">0</span></h2>
-        <div id="convocatoriaList" class="list">
-                <small style="color:var(--muted)">Cargando convocatorias...</small>
-            </div>
-        <button style="margin-top:1rem;" onclick="loadConvocatorias()">Recargar Convocatorias</button>
+    <h2>📄 Convocatorias Activas <span id="convocatoriaCount" class="pill">0</span></h2>
+    <div id="convocatoriaList" class="list">
+        <small style="color:var(--muted)">Cargando convocatorias...</small>
+    </div>
+    <button style="margin-top:1rem;" onclick="loadConvocatorias()">Recargar Convocatorias</button>
 </div>
