@@ -1,7 +1,6 @@
 // js/utils.js
 
-// --- Simulación de Entorno GraphQL y REST ---
-const GRAPHQL_ENDPOINT = "http://localhost:8080/graphql";
+const GRAPHQL_ENDPOINT = "/graphql";
 const REST_ENDPOINT = "http://httpbin.org/post";
 
 /**
