@@ -1,33 +1,27 @@
-version: '3.8'
+# version: '3.8'  # Compose file version (obsolete in newer Docker Compose versions)
 
 services:
-  postgres-db:
-    image: postgres
-    container_name: postgres-db
-    restart: always
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: escuela
-    ports:
-      - "5436:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data  # Changed to named volume
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: ${DB_PASSWORD}
+  backend:  # Spring Boot backend service
+    build:
+      context: .  # Path to backend Dockerfile (current directory)
+      dockerfile: Dockerfile
+    container_name: spring-backend  # Optional, sets a friendly container name
     ports:
-      - "8081:80"
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - "8080:8080"  # Map host port 8080 to container port 8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod  # Optional env variable for Spring
+
+  frontend:  # React frontend service
+    build:
+      # Usa variable de entorno FRONTEND_PATH o ruta por defecto
+      # En Windows: $env:FRONTEND_PATH="C:\Users\diego\java-front-react\Front-JDK21"
+      # En Linux/Mac: export FRONTEND_PATH="/ruta/al/frontend/Front-JDK21"
+      #context: ${FRONTEND_PATH:-../../java-front-react/Front-JDK21}  # Path to frontend Dockerfile
+      context: ../../java-front-react/Front-JDK21  # Path to frontend Dockerfile
+      dockerfile: Dockerfile
+    container_name: react-frontend  # Friendly container name
+    ports:
+      - "3000:80"  # Map host port 3000 to container port 80 (Nginx)
     depends_on:
-      - postgres-db
-
-volumes:
-  pgadmin-data:
-  postgres-data:  # Added named volume for PostgreSQL
+      - backend  # Ensure backend starts before frontend(Revisar rutas)

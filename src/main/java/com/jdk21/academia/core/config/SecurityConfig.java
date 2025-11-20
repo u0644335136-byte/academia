@@ -21,8 +21,11 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // **Añade el origen de tu frontend React (5173)**
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); 
+        // **Añade los orígenes de tu frontend React (desarrollo y producción)**
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:5173",  // Vite dev server
+            "http://localhost:3000"   // Docker Nginx production
+        )); 
         
         // Define los métodos HTTP permitidos
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
