@@ -2,6 +2,7 @@ package com.jdk21.academia.core.config;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,13 +17,17 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
+
+    @Value("${cors.allowed-origins}")
+    private List<String> allowedOrigins;
+
     // 1. Define la fuente de configuración de CORS como un Bean
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // **Añade el origen de tu frontend React (5173)**
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); 
+        //Permite todas las IPs
+        configuration.setAllowedOrigins(allowedOrigins); 
         
         // Define los métodos HTTP permitidos
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
