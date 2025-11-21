@@ -1,6 +1,8 @@
 package com.jdk21.academia.core.config;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,15 +21,29 @@ public class SecurityConfig {
 
 
     @Value("${cors.allowed-origins}")
-    private List<String> allowedOrigins;
+    private String allowedOriginsString;
+
+    /**
+     * Parsea la lista de orígenes permitidos desde una cadena separada por comas.
+     * Funciona tanto con listas YAML como con variables de entorno.
+     */
+    private List<String> parseAllowedOrigins() {
+        if (allowedOriginsString == null || allowedOriginsString.trim().isEmpty()) {
+            return List.of("http://localhost:3000", "http://localhost:8080");
+        }
+        return Arrays.stream(allowedOriginsString.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+    }
 
     // 1. Define la fuente de configuración de CORS como un Bean
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        //Permite todas las IPs
-        configuration.setAllowedOrigins(allowedOrigins); 
+        // Permite los orígenes configurados (parsea desde variable de entorno o YAML)
+        configuration.setAllowedOrigins(parseAllowedOrigins()); 
         
         // Define los métodos HTTP permitidos
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
