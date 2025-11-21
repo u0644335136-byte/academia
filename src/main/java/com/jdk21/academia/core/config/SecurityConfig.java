@@ -29,7 +29,7 @@ public class SecurityConfig {
      */
     private List<String> parseAllowedOrigins() {
         if (allowedOriginsString == null || allowedOriginsString.trim().isEmpty()) {
-            return List.of("http://localhost:3000", "http://localhost:8080");
+            return List.of("http://localhost:3000", "http://localhost:8080", "http://localhost:5173");
         }
         return Arrays.stream(allowedOriginsString.split(","))
                 .map(String::trim)
