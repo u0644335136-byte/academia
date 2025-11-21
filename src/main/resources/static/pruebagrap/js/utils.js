@@ -1,14 +1,48 @@
 // js/utils.js
 
-const GRAPHQL_ENDPOINT = "/graphql";
+/**
+ * Obtiene la URL base del servidor automáticamente desde la URL actual.
+ * Esto permite que funcione tanto en localhost como desde otros equipos.
+ * @returns {string} URL base del servidor (ej: "http://192.168.0.14:8080")
+ */
+function getBaseUrl() {
+    // Asegura que window.location esté disponible
+    if (typeof window === 'undefined' || !window.location) {
+        console.error('[GraphQL] window.location no está disponible');
+        return 'http://localhost:8080'; // Fallback solo si es necesario
+    }
+    
+    // Obtiene el origen de la URL actual (protocolo + host + puerto)
+    const origin = window.location.origin;
+    console.log(`[GraphQL] URL base detectada: ${origin}`);
+    return origin;
+}
+
+/**
+ * Construye la URL completa del endpoint GraphQL.
+ * Se calcula dinámicamente para funcionar desde cualquier origen.
+ * @returns {string} URL completa del endpoint GraphQL
+ */
+function getGraphQLEndpoint() {
+    const endpoint = `${getBaseUrl()}/graphql`;
+    console.log(`[GraphQL] Endpoint construido: ${endpoint}`);
+    return endpoint;
+}
+
 const REST_ENDPOINT = "http://httpbin.org/post";
 
 /**
  * Realiza una petición GraphQL POST.
+ * La URL se calcula dinámicamente desde window.location.origin para funcionar
+ * tanto en localhost como desde otros equipos en la red.
  */
 async function fetchGraphQL(query, variables = {}) {
     try {
-        const response = await fetch(GRAPHQL_ENDPOINT, {
+        // Calcula el endpoint dinámicamente cada vez para asegurar que use la URL correcta
+        const graphqlEndpoint = getGraphQLEndpoint();
+        console.log(`[GraphQL] Conectando a: ${graphqlEndpoint}`);
+        
+        const response = await fetch(graphqlEndpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query, variables }),

@@ -1,4 +1,16 @@
 services:
+  postgres-db:
+    image: postgres:17-alpine
+    container_name: postgres-academia
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: escuela
+    ports:
+      - "5436:5432"  # Host:5436 -> Container:5432
+    volumes:
+      - academia_postgres-data:/var/lib/postgresql/data
 
   backend:  # Spring Boot backend service
     build:
@@ -7,14 +19,17 @@ services:
     container_name: spring-backend  # Optional, sets a friendly container name
     ports:
       - "8080:8080"  # Map host port 8080 to container port 8080
+    depends_on:
+      - postgres-db
     environment:
       - SPRING_PROFILES_ACTIVE=prod  # Optional env variable for Spring
       # CORS: Permite conexiones desde localhost y desde la IP de la red local
-      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:80,http://localhost:8080,http://192.168.0.14:3000,http://192.168.0.14:80,http://192.168.0.14:8080
+      # Incluye todas las posibles combinaciones para acceso desde otros equipos
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:80,http://localhost:8080,http://192.168.0.14:3000,http://192.168.0.14:80,http://192.168.0.14:8080,http://127.0.0.1:8080
       # Database: Configuración de conexión a PostgreSQL
-      # Usa el nombre del contenedor Docker si la DB está en Docker, o la IP si está en otro servidor
-      - DB_HOST=localhost
-      - DB_PORT=5436
+      # Usa el nombre del contenedor Docker (postgres-academia) para comunicación interna
+      - DB_HOST=postgres-academia
+      - DB_PORT=5432
       - DB_NAME=escuela
       - DB_USERNAME=admin
       - DB_PASSWORD=admin123
@@ -31,3 +46,7 @@ services:
       - "3000:80"  # Map host port 3000 to container port 80 (Nginx)
     depends_on:
       - backend  # Ensure backend starts before frontend
+
+volumes:
+  academia_postgres-data:
+    external: true

@@ -2,6 +2,9 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Panel de Gestión de Academia</title>
     <meta name="viewport" content="width-device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
@@ -44,7 +47,7 @@
       <div id="Alumno" class="tab-content "></div>
     </div>
 
-    <script src="js/utils.js"></script>
+    <script src="js/utils.js?v=2.0"></script>
     <script src="alumno/alumno.js"></script>
     <script src="matricula/matricula.js"></script>
     <script src="convocatoria/convocatoria.js"></script>
@@ -54,30 +57,8 @@
     <script src="js/app.js"></script>
 
     <script>
-    // Función para hacer peticiones GraphQL
-    async function fetchGraphQL(query, variables = {}) {
-        try {
-            const response = await fetch('http://localhost:8080/graphql', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    query: query,
-                    variables: variables
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error HTTP: ${response.status}`);
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error('Error en fetchGraphQL:', error);
-            return { errors: [{ message: error.message }] };
-        }
-    }
+    // Nota: fetchGraphQL está definida en js/utils.js y se carga automáticamente
+    // La función detecta automáticamente la URL base del servidor
 
     // Función para cargar convocatorias en el desplegable - CORREGIDA
     async function loadConvocatoriasDropdown() {
@@ -153,30 +134,8 @@
     }
 </script>
     <script>
-        // Función para hacer peticiones GraphQL ID Alumno
-        async function fetchGraphQL(query, variables = {}) {
-            try {
-                const response = await fetch('http://localhost:8080/graphql', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        query: query,
-                        variables: variables
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
-                }
-
-                return await response.json();
-            } catch (error) {
-                console.error('Error en fetchGraphQL:', error);
-                return { errors: [{ message: error.message }] };
-            }
-        }
+        // Nota: fetchGraphQL está definida en js/utils.js y se carga automáticamente
+        // La función detecta automáticamente la URL base del servidor
 
         // Función para cargar alumno en el desplegable
         async function loadAlumnosDropdown() {
