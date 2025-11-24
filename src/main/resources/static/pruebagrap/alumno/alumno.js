@@ -172,6 +172,61 @@ function handleFilterActivo() {
 }
 
 /**
+ * Limpia el formulario de alumno
+ */
+function clearAlumnoForm() {
+    document.getElementById("alumnoId").value = "";
+    document.getElementById("nombre").value = "Juan";
+    document.getElementById("apellidos").value = "Perez";
+    document.getElementById("telefono").value = "600123456";
+    document.getElementById("email").value = "juan.perez@test.es";
+    document.getElementById("contrasenia").value = "pass123";
+    document.getElementById("fechaNacimiento").value = "1990-01-01";
+    document.getElementById("localidad").value = "Madrid";
+    document.getElementById("provincia").value = "Madrid";
+    document.getElementById("activo").checked = true;
+    setAlumnoFormMode('create');
+}
+
+/**
+ * Establece el modo del formulario (create/update)
+ */
+function setAlumnoFormMode(mode) {
+    const formCard = document.getElementById("alumnoFormCard");
+    const idField = document.getElementById("alumnoId");
+    
+    if (mode === 'create') {
+        formCard.classList.remove('form-mode-update');
+        formCard.classList.add('form-mode-create');
+        
+        idField.value = "";
+    } else {
+        formCard.classList.remove('form-mode-create');
+        formCard.classList.add('form-mode-update');
+        idField.disabled = false;
+    }
+}
+
+/**
+ * Carga los datos de un alumno en el formulario
+ */
+function loadAlumnoIntoForm(alumno) {
+    if (!alumno) return;
+    
+    document.getElementById("alumnoId").value = alumno.id_alumno || "";
+    document.getElementById("nombre").value = alumno.nombre || "";
+    document.getElementById("apellidos").value = alumno.apellidos || "";
+    document.getElementById("telefono").value = alumno.telefono || "";
+    document.getElementById("email").value = alumno.email || "";
+    document.getElementById("fechaNacimiento").value = alumno.fecha_nacimiento || "1990-01-01";
+    document.getElementById("localidad").value = alumno.localidad || "";
+    document.getElementById("provincia").value = alumno.provincia || "";
+    document.getElementById("activo").checked = alumno.activo !== false;
+    
+    setAlumnoFormMode('update');
+}
+
+/**
  * Crea un nuevo alumno
  */
 async function createAlumno() {
@@ -183,7 +238,19 @@ async function createAlumno() {
             }
         }`;
         const json = await fetchGraphQL(query, { input });
-        document.getElementById("alumnoResult").textContent = JSON.stringify(json.data || json.errors, null, 2);
+        
+        if (json.errors) {
+            document.getElementById("alumnoResult").textContent = JSON.stringify(json.errors, null, 2);
+            return;
+        }
+        
+        document.getElementById("alumnoResult").textContent = JSON.stringify(json.data, null, 2);
+        
+        // Limpiar formulario si la creación fue exitosa
+        if (json.data && json.data.createAlumno) {
+            clearAlumnoForm();
+        }
+        
         currentPage = 1;
         await loadAlumnos();
     } catch (error) {
@@ -219,7 +286,9 @@ async function updateAlumno() {
  * Obtiene un alumno por ID
  */
 async function getAlumnoById() {
-    const id = document.getElementById("alumnoId").value;
+    const idSearch = document.getElementById("alumnoIdSearch");
+    const id = idSearch ? idSearch.value : document.getElementById("alumnoId").value;
+    
     if (!id) {
         document.getElementById("alumnoResult").textContent = "ID de Alumno es obligatorio para buscar.";
         return;
@@ -231,7 +300,20 @@ async function getAlumnoById() {
             }
         }`;
         const json = await fetchGraphQL(query, { id });
-        document.getElementById("alumnoResult").textContent = JSON.stringify(json.data || json.errors, null, 2);
+        
+        if (json.errors) {
+            document.getElementById("alumnoResult").textContent = JSON.stringify(json.errors, null, 2);
+            return;
+        }
+        
+        const alumno = json.data?.alumnoById;
+        if (alumno) {
+            // Cargar datos en el formulario
+            loadAlumnoIntoForm(alumno);
+            document.getElementById("alumnoResult").textContent = JSON.stringify(json.data, null, 2);
+        } else {
+            document.getElementById("alumnoResult").textContent = "Alumno no encontrado.";
+        }
     } catch (error) {
         document.getElementById("alumnoResult").textContent = `Error: ${error.message}`;
     }
@@ -241,7 +323,9 @@ async function getAlumnoById() {
  * Elimina un alumno
  */
 async function deleteAlumno() {
-    const id = document.getElementById("alumnoId").value;
+    const idSearch = document.getElementById("alumnoIdSearch");
+    const id = idSearch ? idSearch.value : document.getElementById("alumnoId").value;
+    
     if (!id) {
         document.getElementById("alumnoResult").textContent = "ID de Alumno es obligatorio para eliminar.";
         return;
@@ -251,7 +335,23 @@ async function deleteAlumno() {
             deleteAlumno(id: $id)
         }`;
         const json = await fetchGraphQL(query, { id });
-        document.getElementById("alumnoResult").textContent = JSON.stringify(json.data || json.errors, null, 2);
+        
+        if (json.errors) {
+            document.getElementById("alumnoResult").textContent = JSON.stringify(json.errors, null, 2);
+            return;
+        }
+        
+        const result = json.data?.deleteAlumno;
+        document.getElementById("alumnoResult").textContent = result 
+            ? "Alumno eliminado con éxito." 
+            : JSON.stringify(json.data, null, 2);
+        
+        // Limpiar campos después de eliminar
+        if (idSearch) idSearch.value = "";
+        if (result) {
+            clearAlumnoForm();
+        }
+        
         await loadAlumnos();
     } catch (error) {
         document.getElementById("alumnoResult").textContent = `Error: ${error.message}`;

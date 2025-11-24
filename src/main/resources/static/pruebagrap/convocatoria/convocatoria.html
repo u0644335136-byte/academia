@@ -1,9 +1,9 @@
-<div class="card">
-    <h2>🗓️ CRUD Convocatoria</h2>
+<div class="card form-mode-create" id="convocatoriaFormCard">
+    <h2>🗓️ Crear / Actualizar Convocatoria</h2>
     <div class="grid-2">
-        <div class="form-group">
-            <label for="convocatoriaId">ID (Update/Delete/Get)</label>
-            <input id="convocatoriaId" type="text" placeholder="Auto-generado o para buscar" />
+        <div class="form-group id-field">
+            <label for="convocatoriaId">ID (solo para actualizar)</label>
+            <input id="convocatoriaId" type="text" placeholder="Dejar vacío para crear nuevo" />
         </div>
         <div class="form-group">
             <label for="convocatoriaCodigo">Código</label>
@@ -43,8 +43,6 @@
     <div style="display:flex;gap:.5rem;margin-top:.8rem;">
         <button onclick="createConvocatoria()">Crear</button>
         <button class="secondary" onclick="updateConvocatoria()">Actualizar</button>
-        <button class="secondary" onclick="getConvocatoriaById()">Buscar por ID</button>
-        <button class="secondary" onclick="deleteConvocatoria()">Eliminar</button>
     </div>
     <label style="margin-top:.7rem;">Respuesta</label>
     <pre id="convocatoriaResult">Aquí verás las respuestas de las queries/mutations...</pre>
@@ -57,3 +55,18 @@
     </div>
     <button style="margin-top:1rem;" onclick="loadConvocatorias()">Recargar Convocatorias</button>
 </div>
+
+<div class="card action-card">
+    <h2>🔍 Buscar / Eliminar Convocatoria</h2>
+    <div class="grid-2">
+        <div class="form-group">
+            <label for="convocatoriaIdSearch">ID Convocatoria</label>
+            <input id="convocatoriaIdSearch" type="text" placeholder="Ingresa el ID para buscar o eliminar" />
+        </div>
+    </div>
+    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+        <button class="secondary" onclick="getConvocatoriaById()">Buscar por ID</button>
+        <button class="danger" onclick="deleteConvocatoria()">Eliminar</button>
+    </div>
+</div>
+

@@ -57,6 +57,57 @@ async function loadConvocatorias() {
 }
 
 /**
+ * Limpia el formulario de convocatoria
+ */
+function clearConvocatoriaForm() {
+    document.getElementById("convocatoriaId").value = "";
+    document.getElementById("convocatoriaCodigo").value = "CONV-2025-001";
+    document.getElementById("convocatoriaFechaInicio").value = "2026-01-15";
+    document.getElementById("convocatoriaFechaFin").value = "2026-06-30";
+    document.getElementById("convocatoriaIdCurso").value = "";
+    document.getElementById("convocatoriaIdCatalogo").value = "1";
+    document.getElementById("convocatoriaIdProfesor").value = "";
+    document.getElementById("convocatoriaIdCentro").value = "";
+    setConvocatoriaFormMode('create');
+}
+
+/**
+ * Establece el modo del formulario (create/update)
+ */
+function setConvocatoriaFormMode(mode) {
+    const formCard = document.getElementById("convocatoriaFormCard");
+    const idField = document.getElementById("convocatoriaId");
+    
+    if (mode === 'create') {
+        formCard.classList.remove('form-mode-update');
+        formCard.classList.add('form-mode-create');
+        idField.value = "";
+    } else {
+        formCard.classList.remove('form-mode-create');
+        formCard.classList.add('form-mode-update');
+        idField.disabled = false;
+    }
+}
+
+/**
+ * Carga los datos de una convocatoria en el formulario
+ */
+function loadConvocatoriaIntoForm(convocatoria) {
+    if (!convocatoria) return;
+    
+    document.getElementById("convocatoriaId").value = convocatoria.id || "";
+    document.getElementById("convocatoriaCodigo").value = convocatoria.codigo || "";
+    document.getElementById("convocatoriaFechaInicio").value = convocatoria.fechaInicio || "2026-01-15";
+    document.getElementById("convocatoriaFechaFin").value = convocatoria.fechaFin || "2026-06-30";
+    document.getElementById("convocatoriaIdCurso").value = convocatoria.idCurso || "";
+    document.getElementById("convocatoriaIdCatalogo").value = convocatoria.idCatalogo || "1";
+    document.getElementById("convocatoriaIdProfesor").value = convocatoria.idProfesor || "";
+    document.getElementById("convocatoriaIdCentro").value = convocatoria.idCentro || "";
+    
+    setConvocatoriaFormMode('update');
+}
+
+/**
  * Crea una nueva convocatoria
  */
 async function createConvocatoria() {
@@ -68,7 +119,19 @@ async function createConvocatoria() {
             }
         }`;
         const json = await fetchGraphQL(query, { input });
-        document.getElementById("convocatoriaResult").textContent = JSON.stringify(json.data || json.errors, null, 2);
+        
+        if (json.errors) {
+            document.getElementById("convocatoriaResult").textContent = JSON.stringify(json.errors, null, 2);
+            return;
+        }
+        
+        document.getElementById("convocatoriaResult").textContent = JSON.stringify(json.data, null, 2);
+        
+        // Limpiar formulario si la creación fue exitosa
+        if (json.data && json.data.crearConvocatoria) {
+            clearConvocatoriaForm();
+        }
+        
         await loadConvocatorias();
     } catch (error) {
         document.getElementById("convocatoriaResult").textContent = `Error: ${error.message}`;
@@ -103,7 +166,9 @@ async function updateConvocatoria() {
  * Obtiene una convocatoria por ID
  */
 async function getConvocatoriaById() {
-    const id = document.getElementById("convocatoriaId").value;
+    const idSearch = document.getElementById("convocatoriaIdSearch");
+    const id = idSearch ? idSearch.value : document.getElementById("convocatoriaId").value;
+    
     if (!id) {
         document.getElementById("convocatoriaResult").textContent = "ID de Convocatoria es obligatorio para buscar.";
         return;
@@ -115,7 +180,20 @@ async function getConvocatoriaById() {
             }
         }`;
         const json = await fetchGraphQL(query, { id });
-        document.getElementById("convocatoriaResult").textContent = JSON.stringify(json.data || json.errors, null, 2);
+        
+        if (json.errors) {
+            document.getElementById("convocatoriaResult").textContent = JSON.stringify(json.errors, null, 2);
+            return;
+        }
+        
+        const convocatoria = json.data?.convocatoriaPorId;
+        if (convocatoria) {
+            // Cargar datos en el formulario
+            loadConvocatoriaIntoForm(convocatoria);
+            document.getElementById("convocatoriaResult").textContent = JSON.stringify(json.data, null, 2);
+        } else {
+            document.getElementById("convocatoriaResult").textContent = "Convocatoria no encontrada.";
+        }
     } catch (error) {
         document.getElementById("convocatoriaResult").textContent = `Error: ${error.message}`;
     }
@@ -125,7 +203,9 @@ async function getConvocatoriaById() {
  * Elimina una convocatoria
  */
 async function deleteConvocatoria() {
-    const id = document.getElementById("convocatoriaId").value;
+    const idSearch = document.getElementById("convocatoriaIdSearch");
+    const id = idSearch ? idSearch.value : document.getElementById("convocatoriaId").value;
+    
     if (!id) {
         document.getElementById("convocatoriaResult").textContent = "ID de Convocatoria es obligatorio para eliminar.";
         return;
@@ -135,7 +215,23 @@ async function deleteConvocatoria() {
             eliminarConvocatoria(id: $id)
         }`;
         const json = await fetchGraphQL(query, { id });
-        document.getElementById("convocatoriaResult").textContent = JSON.stringify(json.data || json.errors, null, 2);
+        
+        if (json.errors) {
+            document.getElementById("convocatoriaResult").textContent = JSON.stringify(json.errors, null, 2);
+            return;
+        }
+        
+        const result = json.data?.eliminarConvocatoria;
+        document.getElementById("convocatoriaResult").textContent = result 
+            ? "Convocatoria eliminada con éxito." 
+            : JSON.stringify(json.data, null, 2);
+        
+        // Limpiar campos después de eliminar
+        if (idSearch) idSearch.value = "";
+        if (result) {
+            clearConvocatoriaForm();
+        }
+        
         await loadConvocatorias();
     } catch (error) {
         document.getElementById("convocatoriaResult").textContent = `Error: ${error.message}`;

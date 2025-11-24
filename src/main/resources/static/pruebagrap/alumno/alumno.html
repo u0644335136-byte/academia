@@ -1,9 +1,9 @@
-<div class="card">
-    <h2>👩‍🎓 CRUD Alumno</h2>
+<div class="card form-mode-create" id="alumnoFormCard">
+    <h2>👩‍🎓 Crear / Actualizar Alumno</h2>
     <div class="grid-2">
-        <div class="form-group">
-            <label for="alumnoId">ID (Update/Delete/Get)</label>
-            <input id="alumnoId" type="text" placeholder="Auto-generado o para buscar" />
+        <div class="form-group id-field">
+            <label for="alumnoId">ID (solo para actualizar)</label>
+            <input id="alumnoId" type="text" placeholder="Dejar vacío para crear nuevo" />
         </div>
         <div class="form-group">
             <label for="nombre">Nombre</label>
@@ -45,8 +45,6 @@
     <div style="display:flex;gap:.5rem;margin-top:.8rem;">
         <button onclick="createAlumno()">Crear</button>
         <button class="secondary" onclick="updateAlumno()">Actualizar</button>
-        <button class="secondary" onclick="getAlumnoById()">Buscar por ID</button>
-        <button class="secondary" onclick="deleteAlumno()">Eliminar</button>
     </div>
     <label style="margin-top:.7rem;">Respuesta</label>
     <pre id="alumnoResult">Aquí verás las respuestas de las queries/mutations...</pre>
@@ -69,3 +67,18 @@
     <div id="paginationInfo" style="margin-top:.5rem;font-size:.7rem;color:var(--muted);"></div>
     <div id="paginationControls" style="margin-top:.5rem;display:flex;gap:.5rem;align-items:center;"></div>
 </div>
+
+<div class="card action-card">
+    <h2>🔍 Buscar / Eliminar Alumno</h2>
+    <div class="grid-2">
+        <div class="form-group">
+            <label for="alumnoIdSearch">ID Alumno</label>
+            <input id="alumnoIdSearch" type="text" placeholder="Ingresa el ID para buscar o eliminar" />
+        </div>
+    </div>
+    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+        <button class="secondary" onclick="getAlumnoById()">Buscar por ID</button>
+        <button class="danger" onclick="deleteAlumno()">Eliminar</button>
+    </div>
+</div>
+

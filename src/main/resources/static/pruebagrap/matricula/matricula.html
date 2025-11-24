@@ -1,9 +1,9 @@
-<div class="card">
-    <h2>📝 CRUD Matrícula (GraphQL)</h2>
+<div class="card form-mode-create" id="matriculaFormCard">
+    <h2>📝 Crear / Actualizar Matrícula</h2>
     <div class="grid-2">
-        <div class="form-group">
-            <label for="matriculaId">ID (Update/Delete/Get)</label>
-            <input id="matriculaId" type="text" placeholder="Auto-generado o para buscar" />
+        <div class="form-group id-field">
+            <label for="matriculaId">ID (solo para actualizar)</label>
+            <input id="matriculaId" type="text" placeholder="Dejar vacío para crear nuevo" />
         </div>
         <div class="form-group">
             <label for="matriculaFecha">Fecha</label>
@@ -33,12 +33,12 @@
     <div style="display:flex;gap:.5rem;margin-top:.8rem;">
         <button onclick="createMatricula()">Crear</button>
         <button class="secondary" onclick="updateMatricula()">Actualizar</button>
-        <button class="secondary" onclick="getMatriculaById()">Buscar por ID</button>
-        <button class="secondary" onclick="deleteMatricula()">Eliminar</button>
     </div>
     <label style="margin-top:.7rem;">Respuesta</label>
     <pre id="matriculaResult">Aquí verás las respuestas de las queries/mutations...</pre>
 </div>
+
+
 
 <div class="card">
     <h2>📄 Matrículas Activas <span id="matriculaCount" class="pill">0</span></h2>
@@ -46,4 +46,18 @@
         <small style="color:var(--muted)">Cargando matrículas...</small>
     </div>
     <button style="margin-top:1rem;" onclick="loadMatriculas()">Recargar Matrículas</button>
+</div>
+
+<div class="card action-card">
+    <h2>🔍 Buscar / Eliminar Matrícula</h2>
+    <div class="grid-2">
+        <div class="form-group">
+            <label for="matriculaIdSearch">ID Matrícula</label>
+            <input id="matriculaIdSearch" type="text" placeholder="Ingresa el ID para buscar o eliminar" />
+        </div>
+    </div>
+    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+        <button class="secondary" onclick="getMatriculaById()">Buscar por ID</button>
+        <button class="danger" onclick="deleteMatricula()">Eliminar</button>
+    </div>
 </div>

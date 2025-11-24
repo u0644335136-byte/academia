@@ -65,6 +65,54 @@ async function loadMatriculas() {
 }
 
 /**
+ * Limpia el formulario de matrícula
+ */
+function clearMatriculaForm() {
+    document.getElementById("matriculaId").value = "";
+    document.getElementById("matriculaFecha").value = "2025-11-17";
+    document.getElementById("matriculaCodigo").value = "MATR-2025-001";
+    document.getElementById("matriculaPrecio").value = "1500";
+    document.getElementById("matriculaIdConvocatoria").value = "";
+    document.getElementById("matriculaIdAlumno").value = "";
+    setMatriculaFormMode('create');
+}
+
+/**
+ * Establece el modo del formulario (create/update)
+ */
+function setMatriculaFormMode(mode) {
+    const formCard = document.getElementById("matriculaFormCard");
+    const idField = document.getElementById("matriculaId");
+    
+    if (mode === 'create') {
+        formCard.classList.remove('form-mode-update');
+        formCard.classList.add('form-mode-create');
+       
+        idField.value = "";
+    } else {
+        formCard.classList.remove('form-mode-create');
+        formCard.classList.add('form-mode-update');
+        idField.disabled = false;
+    }
+}
+
+/**
+ * Carga los datos de una matrícula en el formulario
+ */
+function loadMatriculaIntoForm(matricula) {
+    if (!matricula) return;
+    
+    document.getElementById("matriculaId").value = matricula.id || "";
+    document.getElementById("matriculaFecha").value = matricula.fecha || "2025-11-17";
+    document.getElementById("matriculaCodigo").value = matricula.codigo || "";
+    document.getElementById("matriculaPrecio").value = matricula.precio || "";
+    document.getElementById("matriculaIdConvocatoria").value = matricula.idConvocatoria || "";
+    document.getElementById("matriculaIdAlumno").value = matricula.idAlumno || "";
+    
+    setMatriculaFormMode('update');
+}
+
+/**
  * Crea una nueva matrícula
  */
 async function createMatricula() {
@@ -76,7 +124,19 @@ async function createMatricula() {
             }
         }`;
         const json = await fetchGraphQL(query, { input });
-        document.getElementById("matriculaResult").textContent = JSON.stringify(json.data || json.errors, null, 2);
+        
+        if (json.errors) {
+            document.getElementById("matriculaResult").textContent = JSON.stringify(json.errors, null, 2);
+            return;
+        }
+        
+        document.getElementById("matriculaResult").textContent = JSON.stringify(json.data, null, 2);
+        
+        // Limpiar formulario si la creación fue exitosa
+        if (json.data && json.data.crearMatricula) {
+            clearMatriculaForm();
+        }
+        
         await loadMatriculas();
     } catch (error) {
         document.getElementById("matriculaResult").textContent = "Error al crear matrícula: " + error.message;
@@ -100,7 +160,13 @@ async function updateMatricula() {
             }
         }`;
         const json = await fetchGraphQL(query, { id, input });
-        document.getElementById("matriculaResult").textContent = JSON.stringify(json.data || json.errors, null, 2);
+        
+        if (json.errors) {
+            document.getElementById("matriculaResult").textContent = JSON.stringify(json.errors, null, 2);
+            return;
+        }
+        
+        document.getElementById("matriculaResult").textContent = JSON.stringify(json.data, null, 2);
         await loadMatriculas();
     } catch (error) {
         document.getElementById("matriculaResult").textContent = "Error al actualizar matrícula: " + error.message;
@@ -111,7 +177,9 @@ async function updateMatricula() {
  * Obtiene una matrícula por ID
  */
 async function getMatriculaById() {
-    const id = document.getElementById("matriculaId").value;
+    const idSearch = document.getElementById("matriculaIdSearch");
+    const id = idSearch ? idSearch.value : document.getElementById("matriculaId").value;
+    
     if (!id) {
         document.getElementById("matriculaResult").textContent = "ID de Matrícula es obligatorio para buscar.";
         return;
@@ -123,7 +191,20 @@ async function getMatriculaById() {
             }
         }`;
         const json = await fetchGraphQL(query, { id });
-        document.getElementById("matriculaResult").textContent = JSON.stringify(json.data || json.errors, null, 2);
+        
+        if (json.errors) {
+            document.getElementById("matriculaResult").textContent = JSON.stringify(json.errors, null, 2);
+            return;
+        }
+        
+        const matricula = json.data?.matriculaPorId;
+        if (matricula) {
+            // Cargar datos en el formulario
+            loadMatriculaIntoForm(matricula);
+            document.getElementById("matriculaResult").textContent = JSON.stringify(json.data, null, 2);
+        } else {
+            document.getElementById("matriculaResult").textContent = "Matrícula no encontrada.";
+        }
     } catch (error) {
         document.getElementById("matriculaResult").textContent = "Error al buscar matrícula: " + error.message;
     }
@@ -133,7 +214,9 @@ async function getMatriculaById() {
  * Elimina una matrícula
  */
 async function deleteMatricula() {
-    const id = document.getElementById("matriculaId").value;
+    const idSearch = document.getElementById("matriculaIdSearch");
+    const id = idSearch ? idSearch.value : document.getElementById("matriculaId").value;
+    
     if (!id) {
         document.getElementById("matriculaResult").textContent = "ID de Matrícula es obligatorio para eliminar.";
         return;
@@ -147,6 +230,13 @@ async function deleteMatricula() {
         document.getElementById("matriculaResult").textContent = result 
             ? "Matrícula eliminada (soft delete) con éxito." 
             : JSON.stringify(json.errors || json.data, null, 2);
+        
+        // Limpiar campos después de eliminar
+        if (idSearch) idSearch.value = "";
+        if (result) {
+            clearMatriculaForm();
+        }
+        
         await loadMatriculas();
     } catch (error) {
         document.getElementById("matriculaResult").textContent = "Error al eliminar matrícula: " + error.message;
