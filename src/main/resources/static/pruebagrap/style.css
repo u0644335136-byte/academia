@@ -205,6 +205,88 @@ pre {
     align-items: center;
 }
 
+/* Cards desplegables */
+.expandable-card {
+    background: #fff;
+    border: 1px solid rgba(215, 224, 234, .6);
+    border-radius: 8px;
+    margin-bottom: .5rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+
+.expandable-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.expandable-card-header {
+    padding: .6rem .8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.expandable-card-header:hover {
+    background-color: #f8fafc;
+}
+
+.expandable-card-title {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.expandable-card-actions {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.expand-icon {
+    font-size: .7rem;
+    color: var(--muted);
+    transition: transform 0.2s ease;
+    user-select: none;
+}
+
+.expandable-card-content {
+    padding: 0 .8rem .8rem;
+    border-top: 1px solid rgba(215, 224, 234, .3);
+    background-color: #fafbfc;
+}
+
+.card-details {
+    padding-top: .8rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+}
+
+.detail-row {
+    display: flex;
+    gap: .5rem;
+    align-items: flex-start;
+}
+
+.detail-label {
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .03rem;
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+.detail-value {
+    font-size: .75rem;
+    color: var(--text);
+    flex: 1;
+}
+
 .pill {
     background: rgba(255, 107, 0, .15);
     color: #FF6B00;
@@ -262,6 +344,14 @@ pre {
     flex: 1;
     min-height: 0;
     overflow: auto;
+    align-items: start;
+}
+
+/* Contenedor para la columna izquierda que agrupa formulario y buscar/eliminar */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .tab-content.active {
@@ -305,7 +395,7 @@ pre {
 
 /* Estilos para cards de acciones */
 .action-card {
-    margin-top: 1rem;
+    margin-top: 0;
 }
 
 .action-card h3 {

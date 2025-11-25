@@ -35,6 +35,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadMatriculas();
         loadConvocatorias();
         
+        // Inicializar dropdowns del formulario de matrícula
+        if (typeof initMatriculaDropdowns === 'function') {
+            initMatriculaDropdowns();
+        }
+        
     } catch(e) {
         console.error("Error durante la carga inicial de datos/eventos:", e);
     }

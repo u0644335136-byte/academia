@@ -1,44 +1,58 @@
-<div class="card form-mode-create" id="matriculaFormCard">
-    <h2>📝 Crear / Actualizar Matrícula</h2>
-    <div class="grid-2">
-        <div class="form-group id-field">
-            <label for="matriculaId">ID (solo para actualizar)</label>
-            <input id="matriculaId" type="text" placeholder="Dejar vacío para crear nuevo" />
+<div class="left-column">
+    <div class="card form-mode-create" id="matriculaFormCard">
+        <h2>📝 Crear / Actualizar Matrícula</h2>
+        <div class="grid-2">
+            <div class="form-group id-field">
+                <label for="matriculaId">ID (solo para actualizar)</label>
+                <input id="matriculaId" type="text" placeholder="Dejar vacío para crear nuevo" />
+            </div>
+            <div class="form-group">
+                <label for="matriculaFecha">Fecha</label>
+                <input id="matriculaFecha" type="date" value="2025-11-17" />
+            </div>
+            <div class="form-group">
+                <label for="matriculaCodigo">Código</label>
+                <input id="matriculaCodigo" type="text" value="MATR-2025-001" />
+            </div>
+            <div class="form-group">
+                <label for="matriculaPrecio">Precio</label>
+                <input id="matriculaPrecio" type="number" value="1500" />
+            </div>
+            <div class="form-group">
+                <label for="matriculaIdConvocatoria">ID Convocatoria</label>
+                <select id="matriculaIdConvocatoria">
+                    <option value="">-- Cargando convocatorias --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="matriculaIdAlumno">ID Alumno</label>
+                <select id="matriculaIdAlumno">
+                    <option value="">-- Cargando alumnos --</option>
+                </select>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="matriculaFecha">Fecha</label>
-            <input id="matriculaFecha" type="date" value="2025-11-17" />
+        <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+            <button onclick="createMatricula()">Crear</button>
+            <button class="secondary" onclick="updateMatricula()">Actualizar</button>
         </div>
-        <div class="form-group">
-            <label for="matriculaCodigo">Código</label>
-            <input id="matriculaCodigo" type="text" value="MATR-2025-001" />
+        <label style="margin-top:.7rem;">Respuesta</label>
+        <pre id="matriculaResult">Aquí verás las respuestas de las queries/mutations...</pre>
+    </div>
+
+    <div class="card action-card">
+        <h2>🔍 Buscar / Eliminar Matrícula</h2>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="matriculaIdSearch">ID Matrícula</label>
+                <input id="matriculaIdSearch" type="text" placeholder="Ingresa el ID para buscar o eliminar" />
+            </div>
         </div>
-        <div class="form-group">
-            <label for="matriculaPrecio">Precio</label>
-            <input id="matriculaPrecio" type="number" value="1500" />
-        </div>
-        <div class="form-group">
-            <label for="matriculaIdConvocatoria">ID Convocatoria</label>
-            <select id="matriculaIdConvocatoria">
-                <option value="">-- Cargando convocatorias --</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="matriculaIdAlumno">ID Alumno</label>
-            <select id="matriculaIdAlumno">
-                <option value="">-- Cargando alumnos --</option>
-            </select>
+        <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+            <button class="secondary" onclick="getMatriculaById()">Buscar por ID</button>
+            <button class="danger" onclick="deleteMatricula()">Eliminar</button>
         </div>
     </div>
-    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
-        <button onclick="createMatricula()">Crear</button>
-        <button class="secondary" onclick="updateMatricula()">Actualizar</button>
-    </div>
-    <label style="margin-top:.7rem;">Respuesta</label>
-    <pre id="matriculaResult">Aquí verás las respuestas de las queries/mutations...</pre>
 </div>
-
-
 
 <div class="card">
     <h2>📄 Matrículas Activas <span id="matriculaCount" class="pill">0</span></h2>
@@ -46,18 +60,4 @@
         <small style="color:var(--muted)">Cargando matrículas...</small>
     </div>
     <button style="margin-top:1rem;" onclick="loadMatriculas()">Recargar Matrículas</button>
-</div>
-
-<div class="card action-card">
-    <h2>🔍 Buscar / Eliminar Matrícula</h2>
-    <div class="grid-2">
-        <div class="form-group">
-            <label for="matriculaIdSearch">ID Matrícula</label>
-            <input id="matriculaIdSearch" type="text" placeholder="Ingresa el ID para buscar o eliminar" />
-        </div>
-    </div>
-    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
-        <button class="secondary" onclick="getMatriculaById()">Buscar por ID</button>
-        <button class="danger" onclick="deleteMatricula()">Eliminar</button>
-    </div>
 </div>

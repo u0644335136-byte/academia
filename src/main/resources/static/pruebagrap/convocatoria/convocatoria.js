@@ -24,7 +24,7 @@ async function loadConvocatorias() {
     try {
         const query = `query {
             retornarTodasConvocatorias {
-                id codigo codigo
+                id codigo fechaInicio fechaFin idCurso cursoNombre idProfesor profesorEmail idCentro centroNombre
             }
         }`;
         const json = await fetchGraphQL(query);
@@ -41,14 +41,7 @@ async function loadConvocatorias() {
         }
 
         convocatorias.forEach(c => {
-            const item = document.createElement("div");
-            item.className = "list-item";
-            item.innerHTML = `
-                <div>
-                    <strong>ID: ${c.id} - ${c.codigo}</strong><br>
-                    <small style="color:#738496">${c.fechaInicio} a ${c.fechaFin} | Centro: ${c.centroNombre}</small>
-                </div>
-                <span class="pill">${c.profesorEmail ? c.profesorEmail.split('@')[0] : 'Sin Prof'}</span>`;
+            const item = createConvocatoriaCard(c);
             lista.appendChild(item);
         });
     } catch (error) {
@@ -197,6 +190,61 @@ async function getConvocatoriaById() {
     } catch (error) {
         document.getElementById("convocatoriaResult").textContent = `Error: ${error.message}`;
     }
+}
+
+/**
+ * Crea una card desplegable para una convocatoria
+ */
+function createConvocatoriaCard(convocatoria) {
+    const card = document.createElement("div");
+    card.className = "expandable-card";
+    
+    const fechaInicio = convocatoria.fechaInicio ? new Date(convocatoria.fechaInicio).toLocaleDateString('es-ES') : 'N/A';
+    const fechaFin = convocatoria.fechaFin ? new Date(convocatoria.fechaFin).toLocaleDateString('es-ES') : 'N/A';
+    const profesorNombre = convocatoria.profesorEmail ? convocatoria.profesorEmail.split('@')[0] : 'Sin Profesor';
+    
+    card.innerHTML = `
+        <div class="expandable-card-header" onclick="toggleCard(this)">
+            <div class="expandable-card-title">
+                <strong>ID: ${convocatoria.id} - ${convocatoria.codigo || 'N/A'}</strong>
+                <small style="color:#738496;margin-left:0.5rem">${fechaInicio} a ${fechaFin}</small>
+            </div>
+            <div class="expandable-card-actions">
+                <span class="pill">${profesorNombre}</span>
+                <span class="expand-icon">▼</span>
+            </div>
+        </div>
+        <div class="expandable-card-content" style="display:none;">
+            <div class="card-details">
+                <div class="detail-row">
+                    <span class="detail-label">Código:</span>
+                    <span class="detail-value">${convocatoria.codigo || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Fecha Inicio:</span>
+                    <span class="detail-value">${fechaInicio}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Fecha Fin:</span>
+                    <span class="detail-value">${fechaFin}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Curso:</span>
+                    <span class="detail-value">${convocatoria.cursoNombre || `ID: ${convocatoria.idCurso || 'N/A'}`}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Profesor:</span>
+                    <span class="detail-value">${convocatoria.profesorEmail || 'Sin asignar'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Centro:</span>
+                    <span class="detail-value">${convocatoria.centroNombre || `ID: ${convocatoria.idCentro || 'N/A'}`}</span>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    return card;
 }
 
 /**

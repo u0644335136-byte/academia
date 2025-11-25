@@ -1,53 +1,69 @@
-<div class="card form-mode-create" id="alumnoFormCard">
-    <h2>👩‍🎓 Crear / Actualizar Alumno</h2>
-    <div class="grid-2">
-        <div class="form-group id-field">
-            <label for="alumnoId">ID (solo para actualizar)</label>
-            <input id="alumnoId" type="text" placeholder="Dejar vacío para crear nuevo" />
+<div class="left-column">
+    <div class="card form-mode-create" id="alumnoFormCard">
+        <h2>👩‍🎓 Crear / Actualizar Alumno</h2>
+        <div class="grid-2">
+            <div class="form-group id-field">
+                <label for="alumnoId">ID (solo para actualizar)</label>
+                <input id="alumnoId" type="text" placeholder="Dejar vacío para crear nuevo" />
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" type="text" value="Juan" />
+            </div>
+            <div class="form-group">
+                <label for="apellidos">Apellidos</label>
+                <input id="apellidos" type="text" value="Perez" />
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input id="telefono" type="text" value="600123456" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" value="juan.perez@test.es" />
+            </div>
+            <div class="form-group">
+                <label for="contrasenia">Contraseña</label>
+                <input id="contrasenia" type="password" value="pass123" />
+            </div>
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha Nacimiento</label>
+                <input id="fechaNacimiento" type="date" value="1990-01-01" />
+            </div>
+            <div class="form-group">
+                <label for="localidad">Localidad</label>
+                <input id="localidad" type="text" value="Madrid" />
+            </div>
+            <div class="form-group">
+                <label for="provincia">Provincia</label>
+                <input id="provincia" type="text" value="Madrid" />
+            </div>
+            <div class="checkbox-row">
+                <input id="activo" type="checkbox" checked />
+                <span>Activo</span>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" type="text" value="Juan" />
+        <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+            <button onclick="createAlumno()">Crear</button>
+            <button class="secondary" onclick="updateAlumno()">Actualizar</button>
         </div>
-        <div class="form-group">
-            <label for="apellidos">Apellidos</label>
-            <input id="apellidos" type="text" value="Perez" />
+        <label style="margin-top:.7rem;">Respuesta</label>
+        <pre id="alumnoResult">Aquí verás las respuestas de las queries/mutations...</pre>
+    </div>
+
+    <div class="card action-card">
+        <h2>🔍 Buscar / Eliminar Alumno</h2>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="alumnoIdSearch">ID Alumno</label>
+                <input id="alumnoIdSearch" type="text" placeholder="Ingresa el ID para buscar o eliminar" />
+            </div>
         </div>
-        <div class="form-group">
-            <label for="telefono">Teléfono</label>
-            <input id="telefono" type="text" value="600123456" />
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email" type="email" value="juan.perez@test.es" />
-        </div>
-        <div class="form-group">
-            <label for="contrasenia">Contraseña</label>
-            <input id="contrasenia" type="password" value="pass123" />
-        </div>
-        <div class="form-group">
-            <label for="fechaNacimiento">Fecha Nacimiento</label>
-            <input id="fechaNacimiento" type="date" value="1990-01-01" />
-        </div>
-        <div class="form-group">
-            <label for="localidad">Localidad</label>
-            <input id="localidad" type="text" value="Madrid" />
-        </div>
-        <div class="form-group">
-            <label for="provincia">Provincia</label>
-            <input id="provincia" type="text" value="Madrid" />
-        </div>
-        <div class="checkbox-row">
-            <input id="activo" type="checkbox" checked />
-            <span>Activo</span>
+        <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+            <button class="secondary" onclick="getAlumnoById()">Buscar por ID</button>
+            <button class="danger" onclick="deleteAlumno()">Eliminar</button>
         </div>
     </div>
-    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
-        <button onclick="createAlumno()">Crear</button>
-        <button class="secondary" onclick="updateAlumno()">Actualizar</button>
-    </div>
-    <label style="margin-top:.7rem;">Respuesta</label>
-    <pre id="alumnoResult">Aquí verás las respuestas de las queries/mutations...</pre>
 </div>
 
 <div class="card">
@@ -66,19 +82,5 @@
     </div>
     <div id="paginationInfo" style="margin-top:.5rem;font-size:.7rem;color:var(--muted);"></div>
     <div id="paginationControls" style="margin-top:.5rem;display:flex;gap:.5rem;align-items:center;"></div>
-</div>
-
-<div class="card action-card">
-    <h2>🔍 Buscar / Eliminar Alumno</h2>
-    <div class="grid-2">
-        <div class="form-group">
-            <label for="alumnoIdSearch">ID Alumno</label>
-            <input id="alumnoIdSearch" type="text" placeholder="Ingresa el ID para buscar o eliminar" />
-        </div>
-    </div>
-    <div style="display:flex;gap:.5rem;margin-top:.8rem;">
-        <button class="secondary" onclick="getAlumnoById()">Buscar por ID</button>
-        <button class="danger" onclick="deleteAlumno()">Eliminar</button>
-    </div>
 </div>
 

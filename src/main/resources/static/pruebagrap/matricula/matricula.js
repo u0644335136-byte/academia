@@ -49,14 +49,7 @@ async function loadMatriculas() {
         }
 
         matriculas.forEach(m => {
-            const item = document.createElement("div");
-            item.className = "list-item";
-            item.innerHTML = `
-                <div>
-                    <strong>ID: ${m.id} - ${m.codigo} (${m.precio}€)</strong><br>
-                    <small style="color:#738496">Alumno: ${m.alumnoEmail || 'N/A'} | Conv: ${m.convocatoriaCodigo || 'N/A'}</small>
-                </div>
-                <span class="pill">${m.fecha || 'Sin fecha'}</span>`;
+            const item = createMatriculaCard(m);
             lista.appendChild(item);
         });
     } catch (error) {
@@ -208,6 +201,233 @@ async function getMatriculaById() {
     } catch (error) {
         document.getElementById("matriculaResult").textContent = "Error al buscar matrícula: " + error.message;
     }
+}
+
+/**
+ * Crea una card desplegable para una matrícula
+ */
+function createMatriculaCard(matricula) {
+    const card = document.createElement("div");
+    card.className = "expandable-card";
+    
+    const fecha = matricula.fecha ? new Date(matricula.fecha).toLocaleDateString('es-ES') : 'N/A';
+    const alumnoDisplay = matricula.alumnoEmail || 'N/A';
+    
+    card.innerHTML = `
+        <div class="expandable-card-header" onclick="toggleCard(this)">
+            <div class="expandable-card-title">
+                <strong>ID: ${matricula.id} - ${matricula.codigo || 'N/A'}</strong>
+                <small style="color:#738496;margin-left:0.5rem">${matricula.precio || 0}€ | ${fecha}</small>
+            </div>
+            <div class="expandable-card-actions">
+                <span class="pill">${alumnoDisplay}</span>
+                <span class="expand-icon">▼</span>
+            </div>
+        </div>
+        <div class="expandable-card-content" style="display:none;">
+            <div class="card-details">
+                <div class="detail-row">
+                    <span class="detail-label">Código:</span>
+                    <span class="detail-value">${matricula.codigo || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Fecha:</span>
+                    <span class="detail-value">${fecha}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Precio:</span>
+                    <span class="detail-value">${matricula.precio || 0}€</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Alumno:</span>
+                    <span class="detail-value">${alumnoDisplay}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">ID Alumno:</span>
+                    <span class="detail-value">${matricula.idAlumno || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Convocatoria:</span>
+                    <span class="detail-value">${matricula.convocatoriaCodigo || `ID: ${matricula.idConvocatoria || 'N/A'}`}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">ID Convocatoria:</span>
+                    <span class="detail-value">${matricula.idConvocatoria || 'N/A'}</span>
+                </div>
+                ${matricula.nota !== null && matricula.nota !== undefined ? `
+                <div class="detail-row">
+                    <span class="detail-label">Nota:</span>
+                    <span class="detail-value">${matricula.nota}</span>
+                </div>
+                ` : ''}
+            </div>
+        </div>
+    `;
+    
+    return card;
+}
+
+/**
+ * Carga convocatorias en el dropdown del formulario de matrícula
+ */
+async function loadConvocatoriasDropdown() {
+    const dropdown = document.getElementById("matriculaIdConvocatoria");
+    
+    if (!dropdown) {
+        console.warn("Dropdown de convocatorias no encontrado, reintentando...");
+        setTimeout(loadConvocatoriasDropdown, 100);
+        return;
+    }
+
+    try {
+        console.log("Cargando convocatorias desde GraphQL...");
+
+        const query = `query {
+            retornarTodasConvocatorias {
+                id
+                codigo
+            }
+        }`;
+
+        const json = await fetchGraphQL(query);
+
+        console.log("Respuesta recibida:", json);
+
+        if (json.errors) {
+            console.error("Error en GraphQL:", json.errors);
+            dropdown.innerHTML = '<option value="">-- Error cargando convocatorias --</option>';
+            return;
+        }
+
+        const convocatorias = json.data?.retornarTodasConvocatorias || [];
+        console.log(`Encontradas ${convocatorias.length} convocatorias`);
+
+        dropdown.innerHTML = '';
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "-- Selecciona una convocatoria --";
+        dropdown.appendChild(defaultOption);
+
+        if (convocatorias.length === 0) {
+            const noConvocatoriasOption = document.createElement("option");
+            noConvocatoriasOption.value = "";
+            noConvocatoriasOption.textContent = "-- No hay convocatorias disponibles --";
+            dropdown.appendChild(noConvocatoriasOption);
+        } else {
+            convocatorias.forEach(convocatoria => {
+                const option = document.createElement("option");
+                option.value = convocatoria.id;
+                option.textContent = `${convocatoria.id} - ${convocatoria.codigo}`;
+                dropdown.appendChild(option);
+            });
+        }
+
+        console.log("Desplegable de convocatorias cargado correctamente");
+
+    } catch (error) {
+        console.error("Error al cargar convocatorias:", error);
+        if (dropdown) {
+            dropdown.innerHTML = '<option value="">-- Error cargando convocatorias --</option>';
+        }
+    }
+}
+
+/**
+ * Carga alumnos en el dropdown del formulario de matrícula
+ */
+async function loadAlumnosDropdown() {
+    const dropdown = document.getElementById("matriculaIdAlumno");
+    
+    if (!dropdown) {
+        console.warn("Dropdown de alumnos no encontrado, reintentando...");
+        setTimeout(loadAlumnosDropdown, 100);
+        return;
+    }
+
+    try {
+        console.log("Cargando alumnos desde GraphQL...");
+
+        const query = `query {
+            searchAlumnos(search: "", activo: true, page: 0, size: 100) {
+                alumnos {
+                    id_alumno
+                    nombre
+                    apellidos
+                }
+                totalElements
+            }
+        }`;
+
+        const json = await fetchGraphQL(query);
+
+        console.log("Respuesta recibida:", json);
+
+        if (json.errors) {
+            console.error("Error en GraphQL:", json.errors);
+            dropdown.innerHTML = '<option value="">-- Error cargando alumnos --</option>';
+            return;
+        }
+
+        const pageData = json.data?.searchAlumnos;
+        if (!pageData) {
+            console.error("No se encontraron datos de alumnos");
+            dropdown.innerHTML = '<option value="">-- No hay alumnos --</option>';
+            return;
+        }
+
+        const alumnos = pageData.alumnos || [];
+        console.log(`Encontrados ${alumnos.length} alumnos`);
+
+        dropdown.innerHTML = '';
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "-- Selecciona un alumno --";
+        dropdown.appendChild(defaultOption);
+
+        if (alumnos.length === 0) {
+            const noAlumnosOption = document.createElement("option");
+            noAlumnosOption.value = "";
+            noAlumnosOption.textContent = "-- No hay alumnos disponibles --";
+            dropdown.appendChild(noAlumnosOption);
+        } else {
+            alumnos.forEach(alumno => {
+                const option = document.createElement("option");
+                option.value = alumno.id_alumno;
+                option.textContent = `${alumno.id_alumno} - ${alumno.nombre} ${alumno.apellidos}`;
+                dropdown.appendChild(option);
+            });
+        }
+
+        console.log("Desplegable de alumnos cargado correctamente");
+
+    } catch (error) {
+        console.error("Error al cargar alumnos:", error);
+        if (dropdown) {
+            dropdown.innerHTML = '<option value="">-- Error cargando alumnos --</option>';
+        }
+    }
+}
+
+/**
+ * Inicializa los dropdowns del formulario de matrícula
+ */
+function initMatriculaDropdowns() {
+    // Esperar a que el HTML esté cargado
+    const checkAndLoad = () => {
+        const convocatoriaDropdown = document.getElementById("matriculaIdConvocatoria");
+        const alumnoDropdown = document.getElementById("matriculaIdAlumno");
+        
+        if (convocatoriaDropdown && alumnoDropdown) {
+            loadConvocatoriasDropdown();
+            loadAlumnosDropdown();
+        } else {
+            setTimeout(checkAndLoad, 100);
+        }
+    };
+    
+    checkAndLoad();
 }
 
 /**

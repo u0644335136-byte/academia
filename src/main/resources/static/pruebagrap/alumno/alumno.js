@@ -32,7 +32,7 @@ async function loadAlumnos() {
         const query = `query ($search: String, $activo: Boolean, $page: Int, $size: Int) {
             searchAlumnos(search: $search, activo: $activo, page: $page, size: $size) {
                 alumnos {
-                    id_alumno nombre apellidos email telefono activo
+                    id_alumno nombre apellidos email telefono fecha_nacimiento localidad provincia activo
                 }
                 totalElements
                 totalPages
@@ -71,14 +71,7 @@ async function loadAlumnos() {
             lista.innerHTML = '<small style="color:var(--muted)">No hay alumnos encontrados...</small>';
         } else {
             alumnos.forEach(a => {
-                const item = document.createElement("div");
-                item.className = "list-item";
-                item.innerHTML = `
-                    <div>
-                        <strong>ID: ${a.id_alumno} - ${a.nombre} ${a.apellidos}</strong><br>
-                        <small style="color:#738496">${a.email} | ${a.telefono}</small>
-                    </div>
-                    <span class="pill">${a.activo ? "Activo" : "Inactivo"}</span>`;
+                const item = createAlumnoCard(a);
                 lista.appendChild(item);
             });
         }
@@ -316,6 +309,78 @@ async function getAlumnoById() {
         }
     } catch (error) {
         document.getElementById("alumnoResult").textContent = `Error: ${error.message}`;
+    }
+}
+
+/**
+ * Crea una card desplegable para un alumno
+ */
+function createAlumnoCard(alumno) {
+    const card = document.createElement("div");
+    card.className = "expandable-card";
+    
+    const fechaNac = alumno.fecha_nacimiento ? new Date(alumno.fecha_nacimiento).toLocaleDateString('es-ES') : 'N/A';
+    const isExpanded = false;
+    
+    card.innerHTML = `
+        <div class="expandable-card-header" onclick="toggleCard(this)">
+            <div class="expandable-card-title">
+                <strong>ID: ${alumno.id_alumno} - ${alumno.nombre} ${alumno.apellidos}</strong>
+                <small style="color:#738496;margin-left:0.5rem">${alumno.email} | ${alumno.telefono}</small>
+            </div>
+            <div class="expandable-card-actions">
+                <span class="pill">${alumno.activo ? "Activo" : "Inactivo"}</span>
+                <span class="expand-icon">▼</span>
+            </div>
+        </div>
+        <div class="expandable-card-content" style="display:none;">
+            <div class="card-details">
+                <div class="detail-row">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value">${alumno.email || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Teléfono:</span>
+                    <span class="detail-value">${alumno.telefono || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Fecha de Nacimiento:</span>
+                    <span class="detail-value">${fechaNac}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Localidad:</span>
+                    <span class="detail-value">${alumno.localidad || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Provincia:</span>
+                    <span class="detail-value">${alumno.provincia || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Estado:</span>
+                    <span class="detail-value">${alumno.activo ? "Activo" : "Inactivo"}</span>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    return card;
+}
+
+/**
+ * Toggle para expandir/colapsar cards
+ */
+function toggleCard(header) {
+    const card = header.closest('.expandable-card');
+    const content = card.querySelector('.expandable-card-content');
+    const icon = header.querySelector('.expand-icon');
+    
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.textContent = '▲';
+        icon.style.transform = 'rotate(0deg)';
+    } else {
+        content.style.display = 'none';
+        icon.textContent = '▼';
     }
 }
 
