@@ -12,9 +12,11 @@ import com.jdk21.academia.features.baseFeature.service.BaseService;
 import com.jdk21.academia.features.convocatoria.dto.ConvocatoriaRequestDTO;
 import com.jdk21.academia.features.convocatoria.dto.ConvocatoriaResponseDTO;
 import com.jdk21.academia.features.convocatoria.mapper.ConvocatoriaMapper;
+import com.jdk21.academia.features.convocatoria.repository.ConvocatoriaRepository;
 import com.jdk21.academia.features.matricula.service.MatriculaService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,9 +31,43 @@ public class ConvocatoriaService extends BaseService<Convocatoria, ConvocatoriaR
     
     @Autowired
     private AlumnoMapper alumnoMapper;
+    
+    private final ConvocatoriaRepository convocatoriaRepository;
 
     public ConvocatoriaService(BaseRepository<Convocatoria> repository, ConvocatoriaMapper mapper) {
         super(repository, mapper);
+        // Necesitamos el repositorio específico para usar métodos personalizados
+        this.convocatoriaRepository = (ConvocatoriaRepository) repository;
+    }
+    
+    /**
+     * ============================================
+     * SOBRESCRITURA DEL MÉTODO getById
+     * ============================================
+     * Sobrescribimos el método del BaseService para cargar explícitamente
+     * las relaciones (curso, profesor, centro) cuando se obtiene una convocatoria.
+     * 
+     * ¿POR QUÉ SOBRESCRIBIR?
+     * - El BaseService.getById() usa repository.findById() que NO carga relaciones lazy
+     * - Necesitamos las relaciones cargadas para que el mapper pueda acceder a:
+     *   - curso.nombre → cursoNombre
+     *   - centro.nombre → centroNombre
+     *   - profesor.email → profesorEmail
+     * 
+     * ¿POR QUÉ NO CAMBIAR A EAGER?
+     * - EAGER carga SIEMPRE las relaciones, incluso cuando no las necesitas
+     * - Si solo necesitas el ID y código de la convocatoria, EAGER haría JOINs innecesarios
+     * - Con este método, cargas las relaciones SOLO cuando las necesitas
+     * - Mantiene el lazy loading por defecto (eficiente para otros casos)
+     * ============================================
+     */
+    @Override
+    public Optional<ConvocatoriaResponseDTO> getById(Long id) {
+        // Usamos el método personalizado que carga las relaciones con @EntityGraph
+        // Esto ejecuta una query SQL con JOINs para cargar curso, profesor y centro
+        return convocatoriaRepository.findByIdWithRelations(id)
+                .filter(Convocatoria::getActivo)  // Filtramos solo activas
+                .map(mapper::toDto);  // Ahora el mapper puede acceder a curso.nombre, centro.nombre, profesor.email
     }
     
     /**
