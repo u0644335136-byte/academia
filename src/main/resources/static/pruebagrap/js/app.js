@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadHtmlContent('alumno/alumno.html', 'Alumno'),
         loadHtmlContent('matricula/matricula.html', 'Matricula'),
         loadHtmlContent('convocatoria/convocatoria.html', 'Convocatoria'),
+        loadHtmlContent('convocatoria-detalle/convocatoria-detalle.html', 'ConvocatoriaDetalle'),
     ];
 
     // Espera a que todo el HTML se haya cargado antes de intentar cargar los datos.
@@ -38,6 +39,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Inicializar dropdowns del formulario de matrícula
         if (typeof initMatriculaDropdowns === 'function') {
             initMatriculaDropdowns();
+        }
+        
+        // Inicializar el módulo de detalles de convocatoria
+        if (typeof initConvocatoriaDetalle === 'function') {
+            initConvocatoriaDetalle();
         }
         
     } catch(e) {

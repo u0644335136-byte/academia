@@ -1,0 +1,32 @@
+<div class="card">
+    <h2>📋 Seleccionar Convocatoria</h2>
+    <div class="form-group">
+        <label for="convocatoriaSelect">Convocatoria</label>
+        <select id="convocatoriaSelect">
+            <option value="">-- Cargando convocatorias --</option>
+        </select>
+    </div>
+    <button onclick="loadConvocatoriaDetalle()" style="margin-top: 0.8rem;">
+        Cargar Detalles
+    </button>
+</div>
+
+<div class="card" id="convocatoriaInfoCard" style="display: none;">
+    <h2>📄 Información de la Convocatoria</h2>
+    <div id="convocatoriaInfo" class="card-details"></div>
+</div>
+
+<div class="card" id="matriculasCard" style="display: none;">
+    <h2>📝 Matrículas de esta Convocatoria <span id="matriculasCount" class="pill">0</span></h2>
+    <div id="matriculasList" class="list">
+        <small style="color:var(--muted)">Cargando matrículas...</small>
+    </div>
+</div>
+
+<div class="card" id="alumnosCard" style="display: none;">
+    <h2>👩‍🎓 Alumnos de esta Convocatoria <span id="alumnosCount" class="pill">0</span></h2>
+    <div id="alumnosList" class="list">
+        <small style="color:var(--muted)">Cargando alumnos...</small>
+    </div>
+</div>
+

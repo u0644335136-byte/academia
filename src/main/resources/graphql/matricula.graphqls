@@ -8,6 +8,37 @@ type MatriculaDto {
   idAlumno: ID
   alumnoEmail: String
   nota: Int
+  
+  # ============================================
+  # RELACIONES ANIDADAS (NUEVA FUNCIONALIDAD)
+  # ============================================
+  # Permite navegar desde una matrícula hacia sus entidades relacionadas
+  # Ejemplo de uso:
+  #   query {
+  #     matriculaPorId(id: "456") {
+  #       codigo
+  #       precio
+  #       convocatoria {  # ← Obtiene la convocatoria completa
+  #         codigo
+  #         fechaInicio
+  #       }
+  #       alumno {  # ← Obtiene el alumno completo
+  #         nombre
+  #         apellidos
+  #         email
+  #       }
+  #     }
+  #   }
+  # ============================================
+  
+  # Obtiene la convocatoria completa asociada a esta matrícula
+  # Útil cuando necesitas más datos de la convocatoria (fechas, curso, etc.)
+  convocatoria: ConvocatoriaDto
+  
+  # Obtiene el alumno completo asociado a esta matrícula
+  # En lugar de solo tener idAlumno y alumnoEmail, ahora puedes obtener
+  # todos los datos del alumno (nombre, apellidos, teléfono, etc.)
+  alumno: Alumno
 }
 
 input MatriculaInput {

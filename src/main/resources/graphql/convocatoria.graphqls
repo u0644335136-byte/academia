@@ -11,6 +11,35 @@ type ConvocatoriaDto {
   profesorEmail: String
   idCentro: ID
   centroNombre: String
+  
+  # ============================================
+  # RELACIONES ANIDADAS (NUEVA FUNCIONALIDAD)
+  # ============================================
+  # Esta es la VENTAJA PRINCIPAL de GraphQL sobre REST:
+  # En lugar de hacer múltiples peticiones HTTP separadas:
+  #   1. GET /convocatoria/123
+  #   2. GET /matriculas?convocatoriaId=123
+  #   3. GET /alumnos?ids=1,2,3...
+  # 
+  # Con GraphQL puedes obtener TODO en UNA SOLA query anidada:
+  #   query { convocatoriaPorId(id: "123") { matriculas { alumno { nombre } } } }
+  #
+  # VENTAJAS:
+  # - Menos latencia (1 request vs 3+ requests)
+  # - Menos ancho de banda (solo pides los campos que necesitas)
+  # - Más flexible (puedes pedir solo matrículas, o solo alumnos, o ambos)
+  # - Mejor para móviles (menos batería, menos datos)
+  # ============================================
+  
+  # Obtiene todas las matrículas asociadas a esta convocatoria
+  # GraphQL resuelve esto automáticamente cuando se solicita en la query
+  # El resolver (@SchemaMapping) se ejecuta solo si el cliente pide este campo
+  matriculas: [MatriculaDto]
+  
+  # Obtiene todos los alumnos únicos que tienen matrícula en esta convocatoria
+  # Esto es un ejemplo de query compuesta: convocatoria -> matrículas -> alumnos
+  # Útil para reportes: "¿Qué alumnos están en esta convocatoria?"
+  alumnos: [Alumno]
 }
 
 input ConvocatoriaInput {
